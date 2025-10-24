@@ -359,7 +359,7 @@ const RaritiesPage: React.FC<RaritiesPageProps> = ({
     editingRarity && rarities.find((r) => r.id === editingRarity.id);
 
   const vanillaRarities = [
-    { name: "Common", weight: "0.70", color: "#009dff" },
+    { name: "普通", weight: "0.70", color: "#009dff" },
     { name: "Uncommon", weight: "0.25", color: "#4BC292" },
     { name: "Rare", weight: "0.05", color: "#fe5f55" },
     { name: "Legendary", weight: "0.00", color: "#b26cbb" },

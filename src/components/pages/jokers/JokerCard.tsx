@@ -260,15 +260,15 @@ const JokerCard: React.FC<JokerCardProps> = ({
     {
       icon: <WrenchIcon className="w-full h-full" />,
       tooltip: blueprintCompat
-        ? "Visually Blueprint Compatbile"
-        : "Visually Blueprint Incompatible",
+        ? "兼容蓝图"
+        : "不兼容蓝图",
       variant: "disabled" as const,
       isEnabled: blueprintCompat,
       onClick: () => onQuickUpdate({ blueprint_compat: !blueprintCompat }),
     },
     {
       icon: <StarIcon className="w-full h-full" />,
-      tooltip: eternalCompat ? "Eternal Compatible" : "Cannot be made Eternal",
+      tooltip: eternalCompat ? "兼容永恒" : "不兼容永恒",
       variant: "disabled" as const,
       isEnabled: eternalCompat,
       onClick: () => onQuickUpdate({ eternal_compat: !eternalCompat }),
@@ -276,8 +276,8 @@ const JokerCard: React.FC<JokerCardProps> = ({
     {
       icon: <SparklesIcon className="w-full h-full" />,
       tooltip: perishableCompat
-        ? "Perishable Compatibility"
-        : "Cannot be made Perishable",
+        ? "兼容易腐"
+        : "不兼容易腐",
       variant: "disabled" as const,
       isEnabled: perishableCompat,
       onClick: () => onQuickUpdate({ perishable_compat: !perishableCompat }),
@@ -288,7 +288,7 @@ const JokerCard: React.FC<JokerCardProps> = ({
       ) : (
         <LockClosedIcon className="w-full h-full" />
       ),
-      tooltip: isUnlocked ? "Unlocked by Default" : "Locked by Default",
+      tooltip: isUnlocked ? "默认未锁定" : "默认锁定",
       variant: "warning" as const,
       isEnabled: isUnlocked,
       onClick: () => onQuickUpdate({ unlocked: !isUnlocked }),
@@ -299,7 +299,7 @@ const JokerCard: React.FC<JokerCardProps> = ({
       ) : (
         <EyeSlashIcon className="w-full h-full" />
       ),
-      tooltip: isDiscovered ? "Visible in Collection" : "Hidden in Collection",
+      tooltip: isDiscovered ? "初始在收藏中可见" : "初始在收藏中不可见",
       variant: "info" as const,
       isEnabled: isDiscovered,
       onClick: () => onQuickUpdate({ discovered: !isDiscovered }),
@@ -307,8 +307,8 @@ const JokerCard: React.FC<JokerCardProps> = ({
     {
       icon: <ExclamationCircleIcon className="w-full h-full" />,
       tooltip: forceEternal
-        ? "Always Spawns Eternal"
-        : "Normal Eternal Spawning",
+        ? "总是生成永恒"
+        : "正常生成永恒",
       variant: "special" as const,
       isEnabled: forceEternal,
       onClick: () => onQuickUpdate({ force_eternal: !forceEternal }),
@@ -316,15 +316,15 @@ const JokerCard: React.FC<JokerCardProps> = ({
     {
       icon: <ClockIcon className="w-full h-full" />,
       tooltip: forcePerishable
-        ? "Always Spawns Perishable"
-        : "Normal Perishable Spawning",
+        ? "总是生成易腐"
+        : "正常生成易腐",
       variant: "warning" as const,
       isEnabled: forcePerishable,
       onClick: () => onQuickUpdate({ force_perishable: !forcePerishable }),
     },
     {
       icon: <CurrencyDollarIcon className="w-full h-full" />,
-      tooltip: forceRental ? "Always Spawns Rental" : "Normal Rental Spawning",
+      tooltip: forceRental ? "总是生成租用" : "正常生成租用",
       variant: "info" as const,
       isEnabled: forceRental,
       onClick: () => onQuickUpdate({ force_rental: !forceRental }),
@@ -337,9 +337,9 @@ const JokerCard: React.FC<JokerCardProps> = ({
       ),
       tooltip: appearsInShop
         ? joker.rarity === 4
-          ? "Forced Shop Appearance"
-          : "Appears in Shop"
-        : "Doesn't Appear in Shop",
+          ? "强制在商店生成"
+          : "正常在商店生成"
+        : "不在商店生成",
       variant:
         appearsInShop && joker.rarity === 4
           ? ("special" as const)
@@ -650,7 +650,7 @@ const JokerCard: React.FC<JokerCardProps> = ({
               </div>
             </Tooltip>
             <div className="w-px bg-black-lighter py-3"></div>
-            <Tooltip content="Edit Rules" show={hoveredButton === "rules"}>
+            <Tooltip content="编辑规则" show={hoveredButton === "rules"}>
               <div
                 className="flex flex-1 hover:text-mint-light transition-colors cursor-pointer group"
                 onClick={onEditRules}
@@ -670,7 +670,7 @@ const JokerCard: React.FC<JokerCardProps> = ({
               </div>
             </Tooltip>
             <div className="w-px bg-black-lighter py-3"></div>
-            <Tooltip content="Export Joker" show={hoveredButton === "export"}>
+            <Tooltip content="导出小丑" show={hoveredButton === "export"}>
               <div
                 className="flex flex-1 transition-colors cursor-pointer group"
                 onClick={onExport}
@@ -683,7 +683,7 @@ const JokerCard: React.FC<JokerCardProps> = ({
               </div>
             </Tooltip>
             <div className="w-px bg-black-lighter py-3"></div>
-            <Tooltip content="Duplicate" show={hoveredButton === "duplicate"}>
+            <Tooltip content="复制小丑" show={hoveredButton === "duplicate"}>
               <div
                 className="flex flex-1 transition-colors cursor-pointer group"
                 onClick={onDuplicate}
@@ -696,7 +696,7 @@ const JokerCard: React.FC<JokerCardProps> = ({
               </div>
             </Tooltip>
             <div className="w-px bg-black-lighter py-3"></div>
-            <Tooltip content="Showcase" show={hoveredButton === "showcase"}>
+            <Tooltip content="预览小丑" show={hoveredButton === "showcase"}>
               <div
                 className="flex flex-1 transition-colors cursor-pointer group"
                 onClick={onShowcase}

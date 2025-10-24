@@ -676,9 +676,9 @@ function AppContent() {
       const defaultMetadata = DEFAULT_MOD_METADATA;
 
       const significantFields: (keyof ModMetadata)[] = [
-        "名称",
-        "作者",
-        "简介",
+        "name",
+        "author",
+        "description",
         "id",
         "prefix",
       ];
@@ -931,15 +931,15 @@ function AppContent() {
 
         showAlert(
           "success",
-          "Project Loaded",
-          "Your auto-saved project has been loaded successfully!"
+          "项目已加载",
+          "您的自动保存项目已成功加载！"
         );
       } catch (error) {
-        console.error("Failed to restore autosave due to invalid data:", error);
+        console.error("因数据无效，恢复自动保存失败:", error);
         showAlert(
           "error",
-          "Restore Failed",
-          "The auto-saved data is corrupted and could not be restored. Starting a fresh project."
+          "恢复失败",
+          "自动保存数据已损坏，无法恢复。正在启动新项目。"
         );
         clearAutoSave();
       }
@@ -1039,7 +1039,7 @@ function AppContent() {
     } catch (error) {
       console.error("Export failed:", error);
 
-      let errorMessage = "Failed to export mod files. Please try again.";
+      let errorMessage = "导出模组失败，请重试";
       if (error instanceof Error) {
         if (error.message.includes("Missing required metadata")) {
           errorMessage =
@@ -1710,7 +1710,7 @@ const handleDiscardAndStartFresh = () => {
                   : "bg-mint-light text-black-dark border border-mint-lighter"
               }`}
             >
-              {autoSaveStatus === "saving" ? "Auto-saving..." : "Auto-saved"}
+              {autoSaveStatus === "saving" ? "自动保存中..." : "已自动保存"}
             </div>
           </motion.div>
         )}

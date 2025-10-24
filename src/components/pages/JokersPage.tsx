@@ -224,49 +224,49 @@ const JokersPage: React.FC<JokersPageProps> = ({
     () => [
       {
         value: "id",
-        label: "Id Value",
+        label: "ID",
         sortFn: (a, b) => a.orderValue - b.orderValue,
-        ascText: "Least to Most",
-        descText: "Most to Least",
+        ascText: "从少到多",
+        descText: "从多到少",
       },
       {
         value: "name",
-        label: "Name",
+        label: "名称",
         sortFn: (a, b) => a.name.localeCompare(b.name),
         ascText: "A-Z",
         descText: "Z-A",
       },
       {
         value: "rarity",
-        label: "Rarity",
+        label: "稀有程度",
         sortFn: (a, b) => {
           const aNum = typeof a.rarity === "number" ? a.rarity : 999;
           const bNum = typeof b.rarity === "number" ? b.rarity : 999;
           return aNum - bNum;
         },
-        ascText: "Low to High",
-        descText: "High to Low",
+        ascText: "从低到高",
+        descText: "从高到低",
       },
       {
         value: "cost",
-        label: "Cost",
+        label: "价格",
         sortFn: (a, b) => (a.cost || 0) - (b.cost || 0),
-        ascText: "Low to High",
-        descText: "High to Low",
+        ascText: "从低到高",
+        descText: "从高到低",
       },
       {
         value: "rules",
-        label: "Rules",
+        label: "规则数量",
         sortFn: (a, b) => (a.rules?.length || 0) - (b.rules?.length || 0),
-        ascText: "Least to Most",
-        descText: "Most to Least",
+        ascText: "从少到多",
+        descText: "从多到少",
       },
       {
         value: "edit",
-        label: "Last Edited",
+        label: "编辑时间",
         sortFn: (a, b) => (editData.indexOf(a.objectKey) || 0) - (editData.indexOf(b.objectKey) || 0),
-        ascText: "Oldest to Newest",
-        descText: "Newest to Oldest",
+        ascText: "从旧到新",
+        descText: "从新到旧",
       },
     ],
     [editData]
@@ -529,25 +529,25 @@ const JokersPage: React.FC<JokersPageProps> = ({
   }, [jokers, searchTerm, rarityFilter, sortBy, sortOptions, sortDirection]);
 
   const rarityOptions = [
-    { value: null, label: "All Rarities", count: jokers.length },
+    { value: null, label: "全部稀有度", count: jokers.length },
     {
       value: 1,
-      label: "Common",
+      label: "普通",
       count: jokers.filter((j) => j.rarity === 1).length,
     },
     {
       value: 2,
-      label: "Uncommon",
+      label: "罕见",
       count: jokers.filter((j) => j.rarity === 2).length,
     },
     {
       value: 3,
-      label: "Rare",
+      label: "稀有",
       count: jokers.filter((j) => j.rarity === 3).length,
     },
     {
       value: 4,
-      label: "Legendary",
+      label: "传奇",
       count: jokers.filter((j) => j.rarity === 4).length,
     },
   ];
@@ -581,7 +581,7 @@ const JokersPage: React.FC<JokersPageProps> = ({
     <div className="min-h-screen">
       <div className="p-8 font-lexend max-w-7xl mx-auto">
         <h1 className="text-3xl text-white-light tracking-widest text-center">
-          Jokers
+          小丑
         </h1>
         <h1 className="text-xl text-white-dark font-light tracking-widest mb-6 text-center">
           {modName}
@@ -594,7 +594,7 @@ const JokersPage: React.FC<JokersPageProps> = ({
             size="md"
             className="shadow-lg hover:shadow-2xl transition-shadow"
           >
-            Add New Joker
+            添加新的小丑
           </Button>
         </div>
         <div className="flex items-center mb-2">
@@ -602,8 +602,8 @@ const JokersPage: React.FC<JokersPageProps> = ({
             <div className="flex items-center gap-6 text-white-darker text-sm">
               <div className="flex items-center">
                 <DocumentTextIcon className="h-4 w-4 mr-2 text-mint" />
-                {modName} • {filteredAndSortedJokers.length} of {jokers.length}{" "}
-                joker{jokers.length !== 1 ? "s" : ""}
+                {modName} • {filteredAndSortedJokers.length} / {jokers.length}{" "}
+                个小丑牌
               </div>
             </div>
           </div>
@@ -615,7 +615,7 @@ const JokersPage: React.FC<JokersPageProps> = ({
               <MagnifyingGlassIcon className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-white-darker group-focus-within:text-mint transition-colors" />
               <input
                 type="text"
-                placeholder="Search jokers by name or description..."
+                placeholder="搜索小丑牌的名字或描述..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="w-full bg-black-darker shadow-2xl border-2 border-black-lighter rounded-lg pl-12 pr-4 py-4 text-white-light tracking-wider placeholder-white-darker focus:outline-none focus:border-mint transition-all duration-200"
@@ -651,7 +651,7 @@ const JokersPage: React.FC<JokersPageProps> = ({
                 }`}
               >
                 <FunnelIcon className="h-4 w-4" />
-                <span>Filters</span>
+                <span>过滤器</span>
               </button>
             </div>
           </div>
@@ -662,11 +662,10 @@ const JokersPage: React.FC<JokersPageProps> = ({
             <div className="rounded-2xl p-8 max-w-md">
               <MagnifyingGlassIcon className="h-16 w-16 text-mint opacity-60 mb-4 mx-auto" />
               <h3 className="text-white-light text-xl font-light mb-3">
-                No Jokers Found
+                没有这个小丑
               </h3>
               <p className="text-white-darker text-sm mb-6 leading-relaxed">
-                No jokers match your current search and filter criteria. Try
-                adjusting your filters or search terms.
+                没有小丑匹配您当前的搜索和过滤条件。试着调整你的过滤器或搜索词。
               </p>
               <Button
                 variant="secondary"
@@ -676,7 +675,7 @@ const JokersPage: React.FC<JokersPageProps> = ({
                 }}
                 fullWidth
               >
-                Clear All Filters
+                清除所有过滤条件
               </Button>
             </div>
           </div>
@@ -685,7 +684,7 @@ const JokersPage: React.FC<JokersPageProps> = ({
             <div className="rounded-2xl p-8 max-w-md">
               <DocumentTextIcon className="h-16 w-16 text-mint opacity-60 mb-4 mx-auto" />
               <h3 className="text-white-light text-xl font-light mb-3">
-                No Jokers Yet :(
+                还没有小丑 :(
               </h3>
               <p className="text-white-darker text-sm mb-6 leading-relaxed">
                 Create your first joker to get started with editing its
@@ -778,7 +777,7 @@ const JokersPage: React.FC<JokersPageProps> = ({
           >
             <div className="p-2">
               <h3 className="text-white-light font-medium text-sm mb-2 px-3 py-1">
-                Sort By
+                排序方式
               </h3>
               <div className="space-y-1">
                 {sortOptions.map((option) => (
@@ -827,7 +826,7 @@ const JokersPage: React.FC<JokersPageProps> = ({
           >
             <div className="p-3 border-b border-black-lighter">
               <h3 className="text-white-light font-medium text-sm mb-3">
-                Filter by Rarity
+                按稀有程度筛选
               </h3>
               <div className="space-y-1">
                 {rarityOptions.map((option) => (

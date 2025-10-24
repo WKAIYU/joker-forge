@@ -506,7 +506,7 @@ const EditVoucherInfo: React.FC<EditVoucherInfoProps> = ({
   };
 
   const tabs = [
-    { id: "visual", label: "Visual & Properties", icon: PhotoIcon },
+    { id: "visual", label: "视觉与属性", icon: PhotoIcon },
     { id: "description", label: "Description", icon: DocumentTextIcon },
   ];
 
@@ -584,7 +584,7 @@ const EditVoucherInfo: React.FC<EditVoucherInfoProps> = ({
                     <div>
                       <h4 className="text-white-light font-medium text-base mb-4 flex items-center gap-2">
                         <PhotoIcon className="h-5 w-5 text-mint" />
-                        Visual Assets
+                        图片样式
                       </h4>
                       <div className="flex gap-6">
                         <div className="flex-shrink-0">
@@ -753,8 +753,7 @@ const EditVoucherInfo: React.FC<EditVoucherInfoProps> = ({
                             size="md"
                           />
                           <p className="text-xs text-white-darker -mt-2">
-                            Used in code generation. Auto-fills when you type
-                            the name.
+                            用于代码生成。当您键入名称时自动填充。
                           </p>
 
                           <div className="grid grid-cols-2 gap-4">

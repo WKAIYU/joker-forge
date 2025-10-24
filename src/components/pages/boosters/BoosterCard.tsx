@@ -515,7 +515,7 @@ const BoosterCard: React.FC<BoosterCardProps> = ({
               </div>
             </Tooltip>
             <div className="w-px bg-black-lighter py-3"></div>
-            <Tooltip content="Edit Rules" show={hoveredButton === "rules"}>
+            <Tooltip content="编辑规则" show={hoveredButton === "rules"}>
               <div
                 className="flex flex-1 transition-colors cursor-pointer group"
                 onClick={onEditRules}

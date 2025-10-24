@@ -567,7 +567,7 @@ const handleCreateNewmod = async () => {
             >
               <ArrowUpTrayIcon className="h-4 w-4" />
               <span className="text-sm tracking-wide">
-                {exportLoading ? "Exporting..." : "Export Mod Files"}
+                {exportLoading ? "导出中..." : "导出模组文件"}
               </span>
             </button>
 

@@ -504,7 +504,7 @@ const EditionsPage: React.FC<EditionsPageProps> = ({
           >
             <div className="p-2">
               <h3 className="text-white-light font-medium text-sm mb-2 px-3 py-1">
-                Sort By
+                排序方式
               </h3>
               <div className="space-y-1">
                 {sortOptions.map((option) => (

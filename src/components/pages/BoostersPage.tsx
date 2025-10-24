@@ -642,24 +642,24 @@ const BoostersPage: React.FC<BoostersPageProps> = ({
     () => [
       {
         value: "id",
-        label: "Id Value",
+        label: "ID",
         sortFn: (a, b) => a.orderValue - b.orderValue,
         ascText: "Least to Most",
         descText: "Most to Least",
       },
       {
         value: "name",
-        label: "Name",
+        label: "名称",
         sortFn: (a, b) => a.name.localeCompare(b.name),
         ascText: "A-Z",
         descText: "Z-A",
       },
       {
         value: "cost",
-        label: "Cost",
+        label: "价格",
         sortFn: (a, b) => a.cost - b.cost,
-        ascText: "Low to High",
-        descText: "High to Low",
+        ascText: "从低到高",
+        descText: "从高到低",
       },
       {
         value: "weight",
@@ -1104,7 +1104,7 @@ const BoostersPage: React.FC<BoostersPageProps> = ({
           >
             <div className="p-2">
               <h3 className="text-white-light font-medium text-sm mb-2 px-3 py-1">
-                Sort By
+                排序方式
               </h3>
               <div className="space-y-1">
                 {sortOptions.map((option) => (

@@ -435,7 +435,7 @@ const ModMetadataPage: React.FC<ModMetadataPageProps> = ({
                 placeholder="mycustom"
                 darkmode={true}
                 icon={<TagIcon className="h-5 w-5 text-mint stroke-2" />}
-                label="Prefix"
+                label="前缀"
               />
               {validation.errors.prefix && (
                 <p className="text-red-400 text-xs mt-1">
@@ -443,7 +443,7 @@ const ModMetadataPage: React.FC<ModMetadataPageProps> = ({
                 </p>
               )}
               <p className="text-white-darker text-xs mt-1">
-                添加到所有对象key，必须是唯一的
+                添加到所有对象前缀，必须是唯一的
               </p>
             </div>
 
@@ -475,7 +475,7 @@ const ModMetadataPage: React.FC<ModMetadataPageProps> = ({
                 icon={
                   <CodeBracketIcon className="h-5 w-5 text-mint stroke-2" />
                 }
-                label="Main File"
+                label="主文件"
               />
               {validation.errors.main_file && (
                 <p className="text-red-400 text-xs mt-1">
@@ -502,7 +502,7 @@ const ModMetadataPage: React.FC<ModMetadataPageProps> = ({
         <div className="border-t border-black-light pt-8">
           <h2 className="text-lg text-white-light font-medium mb-6 flex items-center gap-2">
             <PaintBrushIcon className="h-5 w-5 text-mint" />
-            Appearance & Display
+            外观与展示
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
             <div>
@@ -514,10 +514,10 @@ const ModMetadataPage: React.FC<ModMetadataPageProps> = ({
                 placeholder={metadata.name || "Short name for badge"}
                 darkmode={true}
                 icon={<TagIcon className="h-5 w-5 text-mint stroke-2" />}
-                label="Display Name"
+                label="显示名称"
               />
               <p className="text-white-darker text-xs mt-1">
-                Shown on mod badge, defaults to mod name
+                在模组徽章上显示，默认为模组名称
               </p>
             </div>
 
@@ -530,7 +530,7 @@ const ModMetadataPage: React.FC<ModMetadataPageProps> = ({
                 placeholder="666665"
                 darkmode={true}
                 icon={<span className="text-mint">#</span>}
-                label="Badge Color"
+                label="徽章颜色"
               />
               {validation.warnings.badge_colour && (
                 <p className="text-yellow-400 text-xs mt-1">
@@ -538,7 +538,7 @@ const ModMetadataPage: React.FC<ModMetadataPageProps> = ({
                 </p>
               )}
               <p className="text-white-darker text-xs mt-1">
-                Hex color without #
+                十六进制颜色，不带“#”
               </p>
             </div>
 
@@ -551,7 +551,7 @@ const ModMetadataPage: React.FC<ModMetadataPageProps> = ({
                 placeholder="FFFFFF"
                 darkmode={true}
                 icon={<span className="text-mint">#</span>}
-                label="Badge Text Color"
+                label="徽章文字颜色"
               />
               {validation.warnings.badge_text_colour && (
                 <p className="text-yellow-400 text-xs mt-1">
@@ -559,7 +559,7 @@ const ModMetadataPage: React.FC<ModMetadataPageProps> = ({
                 </p>
               )}
               <p className="text-white-darker text-xs mt-1">
-                Hex color without #
+                十六进制颜色，不带“#”
               </p>
             </div>
           </div>
@@ -591,7 +591,7 @@ const ModMetadataPage: React.FC<ModMetadataPageProps> = ({
 <div className="border-t border-black-lighter pt-6 mt-6">
           <h4 className="text-white-light font-medium text-sm mb-4 tracking-wider flex items-center gap-2">
             <PhotoIcon className="h-4 w-4 text-mint" />
-            BALATRO LOGO (333x216px)
+            小丑牌LOGO (333×216px)
           </h4>
           <div className="flex flex-col items-center">
             <div className="w-233 h-151 rounded-lg flex flex-col items-center justify-center relative">
@@ -606,9 +606,9 @@ const ModMetadataPage: React.FC<ModMetadataPageProps> = ({
                 <>
                   <PhotoIcon className="h-8 w-8 text-white-darker mb-2" />
                   <span className="text-white-darker text-xs text-center">
-                    No Logo uploaded
+                    未上传Logo
                     <br />
-                    333x216 recommended
+                    推荐尺寸 333×216
                   </span>
                 </>
               )}
@@ -646,7 +646,7 @@ const ModMetadataPage: React.FC<ModMetadataPageProps> = ({
                 }
               }}
             >
-              Change Logo
+              更改LOGO
             </Button>
           </div>
         </div>
@@ -654,7 +654,7 @@ const ModMetadataPage: React.FC<ModMetadataPageProps> = ({
         <div className="border-t border-black-lighter pt-6 mt-6">
           <h4 className="text-white-light font-medium text-sm mb-4 tracking-wider flex items-center gap-2">
             <PhotoIcon className="h-4 w-4 text-mint" />
-            MOD ICON (34x34px)
+            模组图标 (34×34px)
           </h4>
           <div className="flex flex-col items-center">
             <div className="w-34 h-34 rounded-lg flex flex-col items-center justify-center relative">
@@ -669,9 +669,9 @@ const ModMetadataPage: React.FC<ModMetadataPageProps> = ({
                 <>
                   <PhotoIcon className="h-8 w-8 text-white-darker mb-2" />
                   <span className="text-white-darker text-xs text-center">
-                    No icon uploaded
+                    未上传图标
                     <br />
-                    34x34 recommended
+                    推荐尺寸 34×34
                   </span>
                 </>
               )}
@@ -709,7 +709,7 @@ const ModMetadataPage: React.FC<ModMetadataPageProps> = ({
                 }
               }}
             >
-              Change Icon
+              更改图标
             </Button>
           </div>
         </div>
@@ -719,7 +719,7 @@ const ModMetadataPage: React.FC<ModMetadataPageProps> = ({
             <div>
               <h2 className="text-lg text-white-light font-medium mb-6 flex items-center gap-2">
                 <ClockIcon className="h-5 w-5 text-mint" />
-                Version & Loading
+                版本与加载
               </h2>
               <div className="space-y-6">
                 <div>
@@ -733,7 +733,7 @@ const ModMetadataPage: React.FC<ModMetadataPageProps> = ({
                     icon={
                       <HashtagIcon className="h-5 w-5 text-mint stroke-2" />
                     }
-                    label="Version"
+                    label="版本"
                   />
                   {validation.warnings.version && (
                     <p className="text-yellow-400 text-xs mt-1">
@@ -741,7 +741,7 @@ const ModMetadataPage: React.FC<ModMetadataPageProps> = ({
                     </p>
                   )}
                   <p className="text-white-darker text-xs mt-1">
-                    Format: (major).(minor).(patch), use ~ for beta
+                    格式: (主版本号).(次版本号).(补丁版本号), 用“~”表示beta版本。
                   </p>
                 </div>
 
@@ -758,10 +758,10 @@ const ModMetadataPage: React.FC<ModMetadataPageProps> = ({
                     placeholder="0"
                     darkmode={true}
                     icon={<CubeIcon className="h-5 w-5 text-mint stroke-2" />}
-                    label="Priority"
+                    label="优先级"
                   />
                   <p className="text-white-darker text-xs mt-1">
-                    Negative values load first, positive load last
+                    值为负先加载，值为正后加载
                   </p>
                 </div>
               </div>
@@ -769,29 +769,29 @@ const ModMetadataPage: React.FC<ModMetadataPageProps> = ({
 
             <div className="border border-black-lighter rounded-lg p-4">
               <h4 className="text-white-light font-medium text-sm mb-3 tracking-wider">
-                MOD SUMMARY
+                模组概览
               </h4>
               <div className="space-y-2 text-xs">
                 <div className="flex justify-between">
-                  <span className="text-white-darker">Name:</span>
+                  <span className="text-white-darker">模组名称:</span>
                   <span className="text-white-light">
                     {metadata.name || "N/A"}
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-white-darker">ID:</span>
+                  <span className="text-white-darker">模组ID:</span>
                   <span className="text-white-light">
                     {metadata.id || "N/A"}
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-white-darker">Version:</span>
+                  <span className="text-white-darker">模组版本:</span>
                   <span className="text-white-light">
                     {metadata.version || "N/A"}
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-white-darker">Author:</span>
+                  <span className="text-white-darker">模组作者:</span>
                   <span className="text-white-light">
                     {(metadata.author || []).join(", ") || "N/A"}
                   </span>
@@ -804,12 +804,12 @@ const ModMetadataPage: React.FC<ModMetadataPageProps> = ({
         <div className="border-t border-black-light pt-8">
           <h2 className="text-lg text-white-light font-medium mb-6 flex items-center gap-2">
             <ShieldCheckIcon className="h-5 w-5 text-mint" />
-            Dependencies & Conflicts
+            依赖和冲突
           </h2>
           <div className="space-y-6">
             <div>
               <label className="block text-white-light text-sm font-medium mb-2">
-                Dependencies
+                依赖
               </label>
               <textarea
                 value={dependenciesString}
@@ -818,14 +818,14 @@ const ModMetadataPage: React.FC<ModMetadataPageProps> = ({
                 className="w-full h-20 px-4 py-3 bg-black-darker border-2 border-black-light rounded-lg text-white-light placeholder-white-darker focus:border-mint focus:outline-none resize-none"
               />
               <p className="text-white-darker text-xs mt-1">
-                One dependency per line, with version constraints (&gt;=, ==,
+                每行一个依赖项，可指定版本号 (&gt;=, ==,
                 &lt;&lt;, etc.)
               </p>
             </div>
 
             <div>
               <label className="block text-white-light text-sm font-medium mb-2">
-                Conflicts
+                冲突
               </label>
               <textarea
                 value={conflictsString}
@@ -834,7 +834,7 @@ const ModMetadataPage: React.FC<ModMetadataPageProps> = ({
                 className="w-full h-16 px-4 py-3 bg-black-darker border-2 border-black-light rounded-lg text-white-light placeholder-white-darker focus:border-mint focus:outline-none resize-none"
               />
               <p className="text-white-darker text-xs mt-1">
-                Mods that cannot be installed alongside this mod
+                禁止与该模组一起加载的模组
               </p>
             </div>
 
@@ -849,7 +849,7 @@ const ModMetadataPage: React.FC<ModMetadataPageProps> = ({
                 className="w-full h-16 px-4 py-3 bg-black-darker border-2 border-black-light rounded-lg text-white-light placeholder-white-darker focus:border-mint focus:outline-none resize-none"
               />
               <p className="text-white-darker text-xs mt-1">
-                Alternative mod IDs this mod can fulfill dependencies for
+                本模组可替代的依赖项模组ID
               </p>
             </div>
           </div>
@@ -858,7 +858,7 @@ const ModMetadataPage: React.FC<ModMetadataPageProps> = ({
         <div className="border-t border-black-light pt-8">
           <div className="border border-black-lighter rounded-lg p-4">
             <h4 className="text-white-light font-medium text-sm mb-3 tracking-wider">
-              JSON PREVIEW
+              JSON预览
             </h4>
             <div className="bg-black border border-black-light rounded p-3 max-h-60 overflow-y-auto custom-scrollbar">
               <pre className="text-white-darker text-xs font-mono whitespace-pre-wrap">

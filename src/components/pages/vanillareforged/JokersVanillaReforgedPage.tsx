@@ -244,25 +244,25 @@ const JokersVanillaReforgedPage: React.FC<JokersVanillaReforgedPageProps> = ({
 
   const rarityOptions = useMemo(
     () => [
-      { value: null, label: "All Rarities", count: vanillaJokers.length },
+      { value: null, label: "所有稀有度", count: vanillaJokers.length },
       {
         value: 1,
-        label: "Common",
+        label: "普通",
         count: vanillaJokers.filter((j) => j.rarity === 1).length,
       },
       {
         value: 2,
-        label: "Uncommon",
+        label: "罕见",
         count: vanillaJokers.filter((j) => j.rarity === 2).length,
       },
       {
         value: 3,
-        label: "Rare",
+        label: "稀有",
         count: vanillaJokers.filter((j) => j.rarity === 3).length,
       },
       {
         value: 4,
-        label: "Legendary",
+        label: "传奇",
         count: vanillaJokers.filter((j) => j.rarity === 4).length,
       },
     ],
@@ -593,7 +593,7 @@ const JokersVanillaReforgedPage: React.FC<JokersVanillaReforgedPageProps> = ({
           >
             <div className="p-2">
               <h3 className="text-white-light font-medium text-sm mb-2 px-3 py-1">
-                Sort By
+                排序方式
               </h3>
               <div className="space-y-1">
                 {sortOptions.map((option) => (
@@ -639,7 +639,7 @@ const JokersVanillaReforgedPage: React.FC<JokersVanillaReforgedPageProps> = ({
           >
             <div className="p-3 border-b border-black-lighter">
               <h3 className="text-white-light font-medium text-sm mb-3">
-                Filter by Rarity
+                按稀有程度筛选
               </h3>
               <div className="space-y-1">
                 {rarityOptions.map((option) => (
@@ -754,12 +754,12 @@ const VanillaJokerCard: React.FC<VanillaJokerCardProps> = ({
 
   const getRarityText = (rarity: number): string => {
     const rarityMap: Record<number, string> = {
-      1: "Common",
-      2: "Uncommon",
-      3: "Rare",
-      4: "Legendary",
+      1: "普通",
+      2: "罕见",
+      3: "稀有",
+      4: "传奇",
     };
-    return rarityMap[rarity] || "Common";
+    return rarityMap[rarity] || "普通";
   };
 
   const getRarityStyles = (rarity: number) => {

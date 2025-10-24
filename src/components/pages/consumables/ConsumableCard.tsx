@@ -557,7 +557,7 @@ const ConsumableCard: React.FC<ConsumableCardProps> = ({
               </div>
             </Tooltip>
             <div className="w-px bg-black-lighter py-3"></div>
-            <Tooltip content="Edit Rules" show={hoveredButton === "rules"}>
+            <Tooltip content="编辑规则" show={hoveredButton === "rules"}>
               <div
                 className="flex flex-1 hover:text-mint-light transition-colors cursor-pointer group"
                 onClick={handleEditRules}
