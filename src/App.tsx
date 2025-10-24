@@ -169,7 +169,7 @@ const FloatingTabDock: React.FC<{
     {
       id: "jokers" as const,
       icon: PuzzlePieceIcon,
-      label: "Jokers",
+      label: "小丑",
     },
     {
       id: "rarities" as const,
@@ -182,12 +182,12 @@ const FloatingTabDock: React.FC<{
     {
       id: "jokers" as const,
       icon: DocumentTextIcon,
-      label: "Jokers",
+      label: "小丑",
     },
     {
       id: "consumables" as const,
       icon: CakeIcon,
-      label: "Consumables",
+      label: "消耗牌",
     },
     {
       id: "boosters" as const,
@@ -676,9 +676,9 @@ function AppContent() {
       const defaultMetadata = DEFAULT_MOD_METADATA;
 
       const significantFields: (keyof ModMetadata)[] = [
-        "name",
-        "author",
-        "description",
+        "名称",
+        "作者",
+        "简介",
         "id",
         "prefix",
       ];

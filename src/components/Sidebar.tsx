@@ -46,7 +46,7 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({
   selectedSection = "overview",
   onSectionChange,
-  projectName = "mycustommod",
+  projectName = "我的自定义模组",
   onExport,
   onNewmod,
   onExportJSON,
@@ -113,65 +113,65 @@ const handleCreateNewmod = async () => {
   };
 
   const navigationItems = [
-    { id: "overview", label: "Overview", icon: HomeIcon },
-    { id: "metadata", label: "Mod Metadata", icon: DocumentTextIcon },
-    { id: "jokers", label: "Jokers", icon: PuzzlePieceIcon },
+    { id: "overview", label: "概览", icon: HomeIcon },
+    { id: "metadata", label: "模组元数据", icon: DocumentTextIcon },
+    { id: "jokers", label: "小丑", icon: PuzzlePieceIcon },
   ];
 
   const dropdownResourceCardModification = [
-    { id: "enhancements", label: "Enhancements", icon: StarIcon },
-    { id: "seals", label: "Seals", icon: CpuChipIcon },
-    { id: "editions", label: "Editions", icon: SparklesIcon },
+    { id: "enhancements", label: "增强卡牌", icon: StarIcon },
+    { id: "seals", label: "蜡封", icon: CpuChipIcon },
+    { id: "editions", label: "版本", icon: SparklesIcon },
   ];
 
   const dropdownResourceShopandConsumables = [
-    { id: "consumables", label: "Consumables", icon: CakeIcon },
-    { id: "boosters", label: "Booster Packs", icon: GiftIcon },
-    { id: "vouchers", label: "Vouchers", icon: BookOpenIcon },
+    { id: "consumables", label: "消耗牌", icon: CakeIcon },
+    { id: "boosters", label: "补充包", icon: GiftIcon },
+    { id: "vouchers", label: "优惠券", icon: BookOpenIcon },
   ];
 
   const dropdownResourceMisc = [
-    { id: "sounds", label: "Sounds", icon: MusicalNoteIcon },
+    { id: "sounds", label: "音乐", icon: MusicalNoteIcon },
   ];
 
   const visibleResourceItems = [
     // { id: "support", label: "Support", icon: HeartIcon },
-    { id: "vanilla", label: "Vanilla Reforged", icon: FolderIcon },
+    { id: "vanilla", label: "原版卡牌", icon: FolderIcon },
   ];
 
   const dropdownResourceItems = [
-    { id: "docs", label: "Docs", icon: DocumentTextIcon },
-    { id: "github", label: "GitHub Repository", icon: LinkIcon },
-    { id: "discord", label: "Discord Server", icon: ChatBubbleLeftRightIcon },
-    { id: "acknowledgements", label: "Acknowledgements", icon: StarIcon },
-    { id: "keys", label: "Keys Reference", icon: KeyIcon },
+    { id: "docs", label: "帮助文档", icon: DocumentTextIcon },
+    { id: "github", label: "GitHub仓库", icon: LinkIcon },
+    { id: "discord", label: "Discord服务器", icon: ChatBubbleLeftRightIcon },
+    { id: "acknowledgements", label: "致谢", icon: StarIcon },
+    { id: "keys", label: "游戏key参考", icon: KeyIcon },
   ];
 
   const actionItems = [
     {
       id: "new_mod",
-      label: "Create New Mod",
+      label: "创建新模组",
       icon: ArrowUturnLeftIcon,
       onClick: handleCreateNewmod,
       disabled: false,
     },
     {
       id: "import",
-      label: "Import Mod",
+      label: "导入模组",
       icon: ArrowDownTrayIcon,
       onClick: handleImportJSON,
       disabled: false,
     },
     {
       id: "save",
-      label: "Save Mod",
+      label: "保存模组",
       icon: BookmarkIcon,
       onClick: handleExportJSON,
       disabled: false,
     },
     {
       id: "export",
-      label: exportLoading ? "Exporting..." : "Export Mod",
+      label: exportLoading ? "导出中..." : "导出模组",
       icon: ArrowUpTrayIcon,
       onClick: handleExport,
       disabled: exportLoading,
@@ -220,7 +220,7 @@ const handleCreateNewmod = async () => {
               className="flex justify-between py-3"
             >
               <div className="text-xs text-white-darker tracking-wider uppercase">
-                Project
+                模组
               </div>
               <div className="text-xs text-white-dark tracking-widest">
                 {projectName}
@@ -256,7 +256,7 @@ const handleCreateNewmod = async () => {
                     className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors cursor-pointer text-white-dark hover:text-white-light hover:bg-black-light"
                   >
                     <ClipboardDocumentListIcon className="h-5 w-5 flex-shrink-0" />
-                    <span className="text-sm tracking-wide">Card Modification</span>
+                    <span className="text-sm tracking-wide">新增卡牌</span>
                     <motion.div
                       animate={{ rotate: card ? 180 : 0 }}
                       transition={{ duration: 0.2 }}
@@ -310,7 +310,7 @@ const handleCreateNewmod = async () => {
                     className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors cursor-pointer text-white-dark hover:text-white-light hover:bg-black-light"
                   >
                     <BuildingStorefrontIcon className="h-5 w-5 flex-shrink-0" />
-                    <span className="text-sm tracking-wide">Shop & Consumables</span>
+                    <span className="text-sm tracking-wide">商店与消耗牌</span>
                     <motion.div
                       animate={{ rotate: shop ? 180 : 0 }}
                       transition={{ duration: 0.2 }}
@@ -364,7 +364,7 @@ const handleCreateNewmod = async () => {
                     className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors cursor-pointer text-white-dark hover:text-white-light hover:bg-black-light"
                   >
                     <NumberedListIcon className="h-5 w-5 flex-shrink-0" />
-                    <span className="text-sm tracking-wide">Miscs</span>
+                    <span className="text-sm tracking-wide">杂项</span>
                     <motion.div
                       animate={{ rotate: misc ? 180 : 0 }}
                       transition={{ duration: 0.2 }}
@@ -422,7 +422,7 @@ const handleCreateNewmod = async () => {
                 transition={{ delay: 0.2 }}
                 className="text-xs text-white-darker mb-3 tracking-wider uppercase"
               >
-                Resources
+                资源
               </motion.div>
               <div className="space-y-1">
                 {visibleResourceItems.map((item, index) => {
@@ -467,7 +467,7 @@ const handleCreateNewmod = async () => {
                     className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors cursor-pointer text-white-dark hover:text-white-light hover:bg-black-light"
                   >
                     <EllipsisHorizontalIcon className="h-4 w-4 flex-shrink-0" />
-                    <span className="text-sm tracking-wide">More</span>
+                    <span className="text-sm tracking-wide">更多</span>
                     <motion.div
                       animate={{ rotate: isDropdownOpen ? 180 : 0 }}
                       transition={{ duration: 0.2 }}
@@ -534,7 +534,7 @@ const handleCreateNewmod = async () => {
             >
               <ArrowUturnLeftIcon className="h-4 w-4" />
               <span className="text-sm font-medium tracking-wide">
-                Create New Mod
+                创建新模组
               </span>
             </button>
 
@@ -544,7 +544,7 @@ const handleCreateNewmod = async () => {
             >
               <ArrowDownTrayIcon className="h-4 w-4" />
               <span className="text-sm font-medium tracking-wide">
-                Import Mod{" "}
+                导入模组{" "}
               </span>
               <span className="text-xs">(JOKERFORGE)</span>
             </button>
@@ -555,7 +555,7 @@ const handleCreateNewmod = async () => {
             >
               <BookmarkIcon className="h-4 w-4" />
               <span className="text-sm font-medium tracking-wide">
-                Save Mod
+                保存模组
               </span>
               <span className="text-xs">(JOKERFORGE)</span>
             </button>
@@ -684,7 +684,7 @@ const handleCreateNewmod = async () => {
                     >
                       <div className="bg-black-dark border border-black-lighter rounded-lg px-3 py-2 shadow-lg">
                         <span className="text-sm text-white-light tracking-wide whitespace-nowrap">
-                          Card Modification
+                          新增卡牌
                         </span>
                       </div>
                     </motion.div>

@@ -238,11 +238,11 @@ const OverviewPage: React.FC<OverviewPageProps> = ({
   const [editingVersion, setEditingVersion] = useState(false);
   const [editingDescription, setEditingDescription] = useState(false);
 
-  const displayName = metadata?.name || "My Custom Mod";
+  const displayName = metadata?.name || "我的自定义模组";
   const displayAuthor =
     metadata?.author && metadata.author.length > 0
       ? formatAuthorsString(metadata.author)
-      : "Anonymous";
+      : "匿名";
   const displayVersion = metadata?.version || "1.0.0";
   const displayDescription = metadata?.description || "";
 
@@ -337,7 +337,7 @@ const OverviewPage: React.FC<OverviewPageProps> = ({
     <div className="min-h-screen font-lexend max-w-7xl mx-auto">
       <div className="p-8">
         <h1 className="text-3xl text-white-light tracking-widest text-center">
-          Mod Overview
+          模组简介
         </h1>
         <h1 className="text-xl text-white-dark font-light tracking-widest mb-6 text-center">
           {modName}
@@ -521,7 +521,7 @@ const OverviewPage: React.FC<OverviewPageProps> = ({
           <div className="flex items-center gap-3 mb-6">
             <WrenchScrewdriverIcon className="h-5 w-5 text-mint" />
             <h3 className="text-xl text-white-light font-medium">
-              Quick Actions
+              快捷操作
             </h3>
           </div>
 
@@ -535,10 +535,10 @@ const OverviewPage: React.FC<OverviewPageProps> = ({
               </div>
               <div className="text-left">
                 <div className="text-white-light font-semibold text-lg mb-1">
-                  Create Joker
+                  创建自定义小丑牌
                 </div>
                 <div className="text-white-darker text-sm">
-                  Design new jokers
+                  创建新小丑牌
                 </div>
               </div>
             </button>
@@ -552,10 +552,10 @@ const OverviewPage: React.FC<OverviewPageProps> = ({
               </div>
               <div className="text-left">
                 <div className="text-white-light font-semibold text-lg mb-1">
-                  Edit Metadata
+                  编辑元数据
                 </div>
                 <div className="text-white-darker text-sm">
-                  Configure mod settings
+                  配置模组设置
                 </div>
               </div>
             </button>
@@ -569,10 +569,10 @@ const OverviewPage: React.FC<OverviewPageProps> = ({
               </div>
               <div className="text-left">
                 <div className="text-mint font-semibold text-lg mb-1">
-                  Export Mod
+                  导出模组
                 </div>
                 <div className="text-mint-light text-sm">
-                  Generate mod files
+                  生成模组文件
                 </div>
               </div>
             </button>
@@ -583,7 +583,7 @@ const OverviewPage: React.FC<OverviewPageProps> = ({
           <div className="flex justify-center mb-8">
             <div className="flex items-center">
               <h2 className="text-2xl text-white-light tracking-widest font-light">
-                Track Development
+                跟踪开发进度
               </h2>
             </div>
           </div>
@@ -592,7 +592,7 @@ const OverviewPage: React.FC<OverviewPageProps> = ({
               <div className="flex items-center gap-3">
                 <CodeBracketSquareIcon className="h-6 w-6 text-mint" />
                 <h2 className="text-xl text-white-light tracking-wide">
-                  Recent GitHub Commits
+                  最近的GitHub提交
                 </h2>
               </div>
               <a
@@ -601,7 +601,7 @@ const OverviewPage: React.FC<OverviewPageProps> = ({
                 rel="noopener noreferrer"
                 className="text-sm text-mint hover:text-mint-light transition-colors px-3 py-2 bg-mint/10 rounded-lg border border-mint/30 hover:bg-mint/20"
               >
-                View on GitHub
+                查看GitHub
               </a>
             </div>
 
@@ -624,7 +624,7 @@ const OverviewPage: React.FC<OverviewPageProps> = ({
                 <div className="text-center py-8">
                   <ExclamationTriangleIcon className="h-12 w-12 text-white-darker mx-auto mb-3 opacity-50" />
                   <div className="text-white-darker text-sm">
-                    Unable to load commits
+                    无法加载GitHub提交
                   </div>
                 </div>
               ) : (
@@ -683,7 +683,7 @@ const OverviewPage: React.FC<OverviewPageProps> = ({
         <div className=" mt-28 pt-8">
           <div className="flex justify-center mb-8">
             <h2 className="text-2xl text-white-light tracking-widest font-light mb-6">
-              What is Joker Forge?
+              Joker Forge 是什么？
             </h2>
           </div>
         </div>
@@ -692,22 +692,19 @@ const OverviewPage: React.FC<OverviewPageProps> = ({
           <div className="lg:col-span-2 space-y-6">
             <div>
               <h3 className="text-xl text-white-light font-medium mb-4">
-                Visual Joker Design Tool
+                可视化小丑牌设计工具
               </h3>
               <p className="text-white-light leading-relaxed mb-4">
-                Joker Forge is a visual tool for creating custom Balatro jokers
-                using the SMODS framework. Design unique joker behaviors without
-                writing Lua code directly.
+                Joker Forge 是一个可视化工具，用于使用 SMODS 框架创建自定义的 Balatro 小丑牌。
+                设计独特的小丑牌的行为，无需直接编写 Lua 代码。
               </p>
               <p className="text-white-darker leading-relaxed mb-4">
-                This is a solo-developer project, in its current state expect
-                rough edges and bugs. The goal isn't the most polished generated
-                code, but rather a functional and flexible tool for modders.
+                这是一个独立开发者项目，在当前阶段可能会遇到一些粗糙之处和错误。
+                我们的目标不是生成最完美的代码，而是为模组制作者提供一个功能齐全且灵活的工具。
               </p>
               <p className="text-white-darker leading-relaxed mb-4">
-                If you have found any issues, rather with the generated code or
-                the user interface, or just have any suggestions, please feel
-                free to open an issue on the GitHub Repository.
+                如果您发现任何问题，无论是生成的代码还是用户界面，或者有任何建议，
+                请随时在 GitHub 仓库中提交问题。
               </p>
               <p className="text-white-darker leading-relaxed">
                 <a
@@ -716,7 +713,7 @@ const OverviewPage: React.FC<OverviewPageProps> = ({
                   rel="noopener noreferrer"
                   className="text-mint hover:underline text-lg"
                 >
-                  Open an issue
+                  提交问题(前往GitHub)
                 </a>
               </p>
             </div>
@@ -725,32 +722,32 @@ const OverviewPage: React.FC<OverviewPageProps> = ({
           <div className=" border-black-lighter rounded-xl p-6">
             <h4 className="text-white-light font-medium mb-6 flex items-center gap-2">
               <SparklesIcon className="h-5 w-5 text-mint" />
-              How It Works
+              工作原理
             </h4>
             <div className="space-y-4">
               {[
                 {
                   num: "1",
-                  label: "Choose triggers",
-                  desc: "when effects activate",
+                  label: "选择触发条件",
+                  desc: "当效果激活的时候",
                   color: "bg-trigger",
                 },
                 {
                   num: "2",
-                  label: "Set conditions",
-                  desc: "requirements to check",
+                  label: "设置条件",
+                  desc: "需要检查的要求",
                   color: "bg-condition",
                 },
                 {
                   num: "3",
-                  label: "Define effects",
-                  desc: "what happens",
+                  label: "定义效果",
+                  desc: "触发后的结果",
                   color: "bg-effect",
                 },
                 {
                   num: "4",
-                  label: "Export mod",
-                  desc: "working SMODS files",
+                  label: "导出模组",
+                  desc: "生成可用的模组文件 (SMODS)",
                   color: "bg-mint",
                 },
               ].map((step) => (

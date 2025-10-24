@@ -40,7 +40,7 @@ export const CONSUMABLE_EFFECT_CATEGORIES: CategoryDefinition[] = [
     icon: ChartBarIcon,
   },
   {
-    label: "Card Modification",
+    label: "新增卡牌",
     icon: PencilSquareIcon,
   },
   {

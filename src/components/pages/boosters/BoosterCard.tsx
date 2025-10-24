@@ -502,7 +502,7 @@ const BoosterCard: React.FC<BoosterCardProps> = ({
           </div>
 
           <div className="flex items-center px-8 justify-between overflow-hidden">
-            <Tooltip content="Edit Info" show={hoveredButton === "edit"}>
+            <Tooltip content="编辑信息" show={hoveredButton === "edit"}>
               <div
                 className="flex flex-1 transition-colors cursor-pointer group"
                 onClick={onEditInfo}

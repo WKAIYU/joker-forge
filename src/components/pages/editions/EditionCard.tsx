@@ -459,7 +459,7 @@ const EditionCard: React.FC<EditionCardProps> = ({
           </div>
 
           <div className="flex items-center justify-between px-8 overflow-hidden">
-            <Tooltip content="Edit Info" show={hoveredButton === "edit"}>
+            <Tooltip content="编辑信息" show={hoveredButton === "edit"}>
               <div
                 className="flex flex-1 transition-colors cursor-pointer group"
                 onClick={onEditInfo}

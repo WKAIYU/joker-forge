@@ -24,16 +24,16 @@ interface ModMetadataValidation {
 // eslint-disable-next-line react-refresh/only-export-components
 export const DEFAULT_MOD_METADATA: ModMetadata = {
   id: "mycustommod",
-  name: "My Custom Mod",
-  author: ["Anonymous"],
-  description: "Custom jokers created with Joker Forge",
+  name: "我的自定义模组",
+  author: ["匿名"],
+  description: "使用 Joker Forge 创建的自定义小丑牌",
   prefix: "mycustom",
   main_file: "main.lua",
   version: "1.0.0",
   priority: 0,
   badge_colour: "666665",
   badge_text_colour: "FFFFFF",
-  display_name: "My Custom Mod",
+  display_name: "我的自定义模组",
   dependencies: ["Steamodded (>=1.0.0~BETA-0827c)"],
   conflicts: [],
   provides: [],
@@ -48,12 +48,12 @@ const validateModMetadata = (metadata: ModMetadata): ModMetadataValidation => {
   const warnings: Record<string, string> = {};
 
   if (!metadata.id) {
-    errors.id = "Mod ID is required";
+    errors.id = "必须填写模组ID";
   } else if (!/^[a-zA-Z][a-zA-Z0-9_]*$/.test(metadata.id)) {
     errors.id =
-      "Mod ID must start with a letter and contain only letters, numbers, and underscores";
+      "模组ID必须以字母开头，只能包含字母、数字和下划线";
   } else if (["Steamodded", "Lovely", "Balatro"].includes(metadata.id)) {
-    errors.id = "Mod ID cannot be 'Steamodded', 'Lovely', or 'Balatro'";
+    errors.id = "模组ID不能是“Steamodded”，“Lovely”或“Balatro”";
   }
 
   if (!metadata.name || !metadata.name.trim()) {
@@ -359,7 +359,7 @@ const ModMetadataPage: React.FC<ModMetadataPageProps> = ({
     <div className="min-h-screen">
       <div className="p-8 font-lexend max-w-7xl mx-auto">
         <h1 className="text-3xl text-white-light tracking-widest text-center">
-          Mod Metadata
+          模组元数据
         </h1>
         <h1 className="text-xl text-white-dark font-light tracking-widest mb-8 text-center">
           {metadata.name || ""}
@@ -370,19 +370,19 @@ const ModMetadataPage: React.FC<ModMetadataPageProps> = ({
         <div>
           <h2 className="text-lg text-white-light font-medium mb-6 flex items-center gap-2">
             <DocumentTextIcon className="h-5 w-5 text-mint" />
-            Basic Information
+            基本信息
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <InputField
                 value={metadata.name || ""}
                 onChange={(e) => updateMetadata({ name: e.target.value })}
-                placeholder="My Custom Mod"
+                placeholder="我的自定义模组"
                 darkmode={true}
                 icon={
                   <DocumentTextIcon className="h-5 w-5 text-mint stroke-2" />
                 }
-                label="Mod Name"
+                label="模组名称"
               />
               {validation.errors.name && (
                 <p className="text-red-400 text-xs mt-1">
@@ -395,10 +395,10 @@ const ModMetadataPage: React.FC<ModMetadataPageProps> = ({
               <InputField
                 value={metadata.id || ""}
                 onChange={(e) => updateMetadata({ id: e.target.value })}
-                placeholder="mycustommod"
+                placeholder="我的自定义模组"
                 darkmode={true}
                 icon={<HashtagIcon className="h-5 w-5 text-mint stroke-2" />}
-                label="Mod ID"
+                label="模组ID"
               />
               {validation.errors.id && (
                 <p className="text-red-400 text-xs mt-1">
@@ -406,8 +406,7 @@ const ModMetadataPage: React.FC<ModMetadataPageProps> = ({
                 </p>
               )}
               <p className="text-white-darker text-xs mt-1">
-                Must be unique, start with letter, alphanumeric + underscore
-                only
+                必须唯一，只能以字母、字母、数字+下划线开头
               </p>
             </div>
 
@@ -417,7 +416,7 @@ const ModMetadataPage: React.FC<ModMetadataPageProps> = ({
                 onChange={(e) => handleAuthorsChange(e.target.value)}
                 placeholder="Anonymous"
                 darkmode={true}
-                label="Authors"
+                label="作者"
               />
               {validation.errors.author && (
                 <p className="text-red-400 text-xs mt-1">
@@ -425,7 +424,7 @@ const ModMetadataPage: React.FC<ModMetadataPageProps> = ({
                 </p>
               )}
               <p className="text-white-darker text-xs mt-1">
-                Separate multiple authors with commas
+                多个作者之间用逗号分隔
               </p>
             </div>
 
@@ -444,13 +443,13 @@ const ModMetadataPage: React.FC<ModMetadataPageProps> = ({
                 </p>
               )}
               <p className="text-white-darker text-xs mt-1">
-                Added to all object keys, must be unique
+                添加到所有对象key，必须是唯一的
               </p>
             </div>
 
             <div className="md:col-span-2">
               <label className="block text-white-light text-sm font-medium mb-2">
-                Description
+                简介
               </label>
               <textarea
                 value={metadata.description || ""}
@@ -489,14 +488,14 @@ const ModMetadataPage: React.FC<ModMetadataPageProps> = ({
         <div>
           <Checkbox
             id="a"
-            label="Disable Vanilla Jokers"
+            label="禁用原版小丑牌"
             checked={metadata.disable_vanilla ?? false} // Assuming metadataRef holds the latest state
             onChange={(e) => {
               updateMetadata({ disable_vanilla: e });
             }}
           />
           <p className="text-xs text-white-darker mt-2">
-            Jimbo may still appear
+            金宝（即初始小丑）可能还会出现
           </p>
         </div>
 
