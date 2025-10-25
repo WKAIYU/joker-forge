@@ -34,10 +34,10 @@ export const generateCreateJokerReturn = (effect: Effect): EffectReturn => {
     cardParams.push(`key = '${normalizedJokerKey}'`);
   } else if (rarity !== "random" && (!pool || !pool.trim())) {
     const rarityMap: Record<string, string> = {
-      common: "Common",
-      uncommon: "Uncommon",
-      rare: "Rare",
-      legendary: "Legendary",
+      common: "普通",
+      uncommon: "罕见",
+      rare: "稀有",
+      legendary: "传奇",
     };
     const isVanillaRarity = Object.keys(rarityMap).includes(
       rarity.toLowerCase()

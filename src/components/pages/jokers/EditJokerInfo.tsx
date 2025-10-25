@@ -123,36 +123,36 @@ const EditJokerInfo: React.FC<EditJokerInfoProps> = ({
   const rarityOptions = getRarityDropdownOptions(customRarities);
 
   const unlockOperatorOptions = [
-    { value: "equals", label: "equals" },
-    { value: "greater_than", label: "greater than" },
-    { value: "less_than", label: "less than" },
-    { value: "greater_equals", label: "greater than or equal" },
-    { value: "less_equals", label: "less than or equal" },
+    { value: "equals", label: "等于" },
+    { value: "greater_than", label: "大于" },
+    { value: "less_than", label: "小于" },
+    { value: "greater_equals", label: "大于或等于" },
+    { value: "less_equals", label: "小于或等于" },
   ];
 
   const forcedEditionOptions = [
-    { value: "", label: "None" },
-    { value: "foil", label: "Always Spawn Foil" },
-    { value: "holographic", label: "Always Spawn Holographic" },
-    { value: "polychrome", label: "Always Spawn Polychrome" },
-    { value: "negative", label: "Always Spawn Negative" },
+    { value: "", label: "无" },
+    { value: "foil", label: "总是生成闪箔" },
+    { value: "holographic", label: "总是生成镭射" },
+    { value: "polychrome", label: "总是生成多彩" },
+    { value: "negative", label: "总是生成负片" },
   ];
 
   const handleForcedEditionChange = (value: string) => {
     setFormData({
       ...formData,
-      force_foil: value === "foil",
-      force_holographic: value === "holographic",
-      force_polychrome: value === "polychrome",
-      force_negative: value === "negative",
+      force_foil: value === "闪箔",
+      force_holographic: value === "镭射",
+      force_polychrome: value === "多彩",
+      force_negative: value === "负片",
     });
   };
 
   const getForcedEditionValue = (): string => {
-    if (formData.force_foil) return "foil";
-    if (formData.force_holographic) return "holographic";
-    if (formData.force_polychrome) return "polychrome";
-    if (formData.force_negative) return "negative";
+    if (formData.force_foil) return "闪箔";
+    if (formData.force_holographic) return "镭射";
+    if (formData.force_polychrome) return "多彩";
+    if (formData.force_negative) return "负片";
     return "";
   };
 
@@ -765,8 +765,8 @@ const EditJokerInfo: React.FC<EditJokerInfoProps> = ({
 
   const tabs = [
     { id: "visual", label: "视觉与属性", icon: PhotoIcon },
-    { id: "description", label: "Description", icon: DocumentTextIcon },
-    { id: "settings", label: "Advanced Settings", icon: Cog6ToothIcon },
+    { id: "description", label: "小丑描述", icon: DocumentTextIcon },
+    { id: "settings", label: "高级设置", icon: Cog6ToothIcon },
   ];
 
   const handleKeyDown = (
@@ -934,8 +934,8 @@ const EditJokerInfo: React.FC<EditJokerInfoProps> = ({
                               icon={<PhotoIcon className="h-4 w-4" />}
                             >
                               {formData.imagePreview
-                                ? "Change Main Image"
-                                : "Upload Main Image"}
+                                ? "更换图像"
+                                : "上传主图像"}
                             </Button>
                             <Button
                               onClick={() =>
@@ -947,8 +947,8 @@ const EditJokerInfo: React.FC<EditJokerInfoProps> = ({
                               icon={<SparklesIcon className="h-4 w-4" />}
                             >
                               {formData.overlayImagePreview
-                                ? "Change Overlay"
-                                : "Add Overlay"}
+                                ? "改变叠加层"
+                                : "新增叠加层"}
                             </Button>
                             {formData.overlayImagePreview && (
                               <Button
@@ -969,7 +969,7 @@ const EditJokerInfo: React.FC<EditJokerInfoProps> = ({
                           </div>
                           <div className="text-center mt-2">
                             <p className="text-xs text-white-darker">
-                              Accepted: 71×95px or 142×190px each
+                              推荐尺寸：71×95px 或 142×190px
                             </p>
                             {(() => {
                               const credit = getImageCredit(formData);
@@ -990,7 +990,7 @@ const EditJokerInfo: React.FC<EditJokerInfoProps> = ({
                                 )
                               }
                               placeholder="100"
-                              label="Scale Width (%)"
+                              label="宽度缩放比例 (%)"
                               type="number"
                               size="sm"
                             />
@@ -1003,7 +1003,7 @@ const EditJokerInfo: React.FC<EditJokerInfoProps> = ({
                                 )
                               }
                               placeholder="100"
-                              label="Scale Height (%)"
+                              label="高度缩放比例 (%)"
                               type="number"
                               size="sm"
                             />
@@ -1053,7 +1053,7 @@ const EditJokerInfo: React.FC<EditJokerInfoProps> = ({
                               onChange={handleRarityChange}
                               options={rarityOptions}
                               separator={true}
-                              label="Rarity"
+                              label="稀有度"
                             />
                             <InputField
                               value={formData.cost?.toString() || "4"}
@@ -1067,24 +1067,24 @@ const EditJokerInfo: React.FC<EditJokerInfoProps> = ({
                               separator={true}
                               type="number"
                               min={1}
-                              label="Cost ($)"
+                              label="价格($)"
                             />
                           </div>
 
                           <div>
                             <h4 className="text-white-light font-medium text-base mb-3 justify-center pt-2 flex tracking-wider items-center gap-2">
                               <BoltIcon className="h-5 w-5 text-mint" />
-                              Joker Properties
+                              小丑属性
                             </h4>
                             <div className="space-y-4 rounded-lg border border-black-lighter p-4 bg-black-darker/30">
                               <div>
                                 <p className="text-xs font-medium tracking-widest text-white-darker mb-2">
-                                  Compatibility
+                                  兼容性
                                 </p>
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2">
                                   <Checkbox
                                     id="eternal_compat_edit"
-                                    label="Eternal Compatible"
+                                    label="兼容永恒"
                                     checked={formData.eternal_compat !== false}
                                     onChange={(checked) =>
                                       handleCheckboxChange(
@@ -1095,7 +1095,7 @@ const EditJokerInfo: React.FC<EditJokerInfoProps> = ({
                                   />
                                   <Checkbox
                                     id="perishable_compat_edit"
-                                    label="Perishable Compatible"
+                                    label="兼容易腐"
                                     checked={
                                       formData.perishable_compat !== false
                                     }
@@ -1108,7 +1108,7 @@ const EditJokerInfo: React.FC<EditJokerInfoProps> = ({
                                   />
                                   <Checkbox
                                     id="blueprint_compat_edit"
-                                    label="Visually Blueprint Compatible"
+                                    label="兼容蓝图"
                                     checked={
                                       formData.blueprint_compat !== false
                                     }
@@ -1123,12 +1123,12 @@ const EditJokerInfo: React.FC<EditJokerInfoProps> = ({
                               </div>
                               <div>
                                 <p className="text-xs font-medium tracking-widest text-white-darker mb-2">
-                                  Default State
+                                  默认状态
                                 </p>
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2">
                                   <Checkbox
                                     id="unlocked_edit"
-                                    label="Unlocked by Default"
+                                    label="默认未锁定"
                                     checked={formData.unlocked !== false}
                                     onChange={(checked) =>
                                       handleCheckboxChange("unlocked", checked)
@@ -1136,7 +1136,7 @@ const EditJokerInfo: React.FC<EditJokerInfoProps> = ({
                                   />
                                   <Checkbox
                                     id="discovered_edit"
-                                    label="Already Discovered"
+                                    label="已发现"
                                     checked={formData.discovered !== false}
                                     onChange={(checked) =>
                                       handleCheckboxChange(
@@ -1149,12 +1149,12 @@ const EditJokerInfo: React.FC<EditJokerInfoProps> = ({
                               </div>
                               <div>
                                 <p className="text-xs font-medium tracking-widest text-white-darker mb-2">
-                                  Forced Spawning
+                                  商店生成
                                 </p>
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2">
                                   <Checkbox
                                     id="force_eternal_edit"
-                                    label="Always Spawn Eternal"
+                                    label="总是生成永恒"
                                     checked={formData.force_eternal === true}
                                     onChange={(checked) =>
                                       handleCheckboxChange(
@@ -1165,7 +1165,7 @@ const EditJokerInfo: React.FC<EditJokerInfoProps> = ({
                                   />
                                   <Checkbox
                                     id="force_perishable_edit"
-                                    label="Always Spawn Perishable"
+                                    label="总是生成易腐"
                                     checked={formData.force_perishable === true}
                                     onChange={(checked) =>
                                       handleCheckboxChange(
@@ -1176,7 +1176,7 @@ const EditJokerInfo: React.FC<EditJokerInfoProps> = ({
                                   />
                                   <Checkbox
                                     id="force_rental_edit"
-                                    label="Always Spawn Rental"
+                                    label="总是生成租用"
                                     checked={formData.force_rental === true}
                                     onChange={(checked) =>
                                       handleCheckboxChange(
@@ -1193,18 +1193,18 @@ const EditJokerInfo: React.FC<EditJokerInfoProps> = ({
                                   onChange={handleForcedEditionChange}
                                   options={forcedEditionOptions}
                                   separator={true}
-                                  label="Force Edition"
-                                  placeholder="Select forced edition"
+                                  label="版本"
+                                  placeholder="选择强制版本"
                                 />
                               </div>
                               <div>
                                 <p className="text-xs font-medium tracking-widest text-white-darker mb-2">
-                                  Other
+                                  其他
                                 </p>
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2">
                                   <Checkbox
                                     id="ignoreSlotLimit"
-                                    label="Ignore Slot Limit When Obtained"
+                                    label="购买时忽略槽位限制"
                                     checked={formData.ignoreSlotLimit === true}
                                     onChange={(checked) =>
                                       handleCheckboxChange(
@@ -1255,7 +1255,7 @@ const EditJokerInfo: React.FC<EditJokerInfoProps> = ({
                   <div className="space-y-6">
                     <h4 className="text-white-light font-medium text-base mb-4 flex items-center gap-2">
                       <LockOpenIcon className="h-5 w-5 text-mint" />
-                      Unlock Requirements
+                      解锁要求
                     </h4>
                     {!formData.unlocked && (
                       <>
@@ -1347,17 +1347,17 @@ const EditJokerInfo: React.FC<EditJokerInfoProps> = ({
                     )}
                     {formData.unlocked && (
                       <p className="text-xs text-white-darker -mt-2">
-                        Joker is Unlocked by Default
+                        小丑默认为解锁状态
                       </p>
                     )}
                     <h4 className="text-white-light font-medium text-base mb-4 flex items-center gap-2">
                       <BuildingStorefrontIcon className="h-5 w-5 text-mint" />
-                      Card Appearance
+                      卡片外观
                     </h4>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2">
                       <Checkbox
                         id="shop"
-                        label="Can appear in Shop"
+                        label="可以出现在商店中"
                         checked={formData.appears_in_shop !== false}
                         onChange={(checked) =>
                           handleCardAppearanceCheckboxChange("shop", checked)
@@ -1365,7 +1365,7 @@ const EditJokerInfo: React.FC<EditJokerInfoProps> = ({
                       />
                       <Checkbox
                         id="judgement"
-                        label="Can appear from Judgement"
+                        label="可以由 审判塔罗牌 生成"
                         checked={formData.cardAppearance.jud === true}
                         onChange={(checked) =>
                           handleCardAppearanceCheckboxChange("jud", checked)
@@ -1373,7 +1373,7 @@ const EditJokerInfo: React.FC<EditJokerInfoProps> = ({
                       />
                       <Checkbox
                         id="buffoon_pack"
-                        label="Can appear in a Buffoon Pack"
+                        label="可以出现在小丑包中"
                         checked={formData.cardAppearance.buf === true}
                         onChange={(checked) =>
                           handleCardAppearanceCheckboxChange("buf", checked)
@@ -1381,7 +1381,7 @@ const EditJokerInfo: React.FC<EditJokerInfoProps> = ({
                       />
                       <Checkbox
                         id="soul"
-                        label="Can appear from The Soul"
+                        label="可以由 灵魂幻灵牌 生成"
                         checked={formData.cardAppearance.sou === true}
                         className={formData.rarity !== 4 ? "hidden" : ""}
                         onChange={(checked) =>
@@ -1390,7 +1390,7 @@ const EditJokerInfo: React.FC<EditJokerInfoProps> = ({
                       />
                       <Checkbox
                         id="wraith"
-                        label="Can appear from The Wraith"
+                        label="可以由 幽灵幻灵牌 生成"
                         checked={formData.cardAppearance.wra === true}
                         className={formData.rarity !== 3 ? "hidden" : ""}
                         onChange={(checked) =>
@@ -1399,7 +1399,7 @@ const EditJokerInfo: React.FC<EditJokerInfoProps> = ({
                       />
                       <Checkbox
                         id="riff_raff"
-                        label="Can appear from Riff Raff"
+                        label="可以由 乌合之众 生成"
                         checked={formData.cardAppearance.rif === true}
                         className={formData.rarity !== 1 ? "hidden" : ""}
                         onChange={(checked) =>
@@ -1408,7 +1408,7 @@ const EditJokerInfo: React.FC<EditJokerInfoProps> = ({
                       />
                       <Checkbox
                         id="rare_tag"
-                        label="Can appear from a Rare Tag"
+                        label="可以由 稀有标签 生成"
                         checked={formData.cardAppearance.rta === true}
                         className={formData.rarity !== 3 ? "hidden" : ""}
                         onChange={(checked) =>
@@ -1417,7 +1417,7 @@ const EditJokerInfo: React.FC<EditJokerInfoProps> = ({
                       />
                       <Checkbox
                         id="uncommon_tag"
-                        label="Can appear from an Uncommon Tag"
+                        label="可以由 罕见标签 生成"
                         checked={formData.cardAppearance.uta === true}
                         className={formData.rarity !== 2 ? "hidden" : ""}
                         onChange={(checked) =>
@@ -1434,12 +1434,12 @@ const EditJokerInfo: React.FC<EditJokerInfoProps> = ({
                       className="col-span-full"
                       height="44px"
                       separator={true}
-                      label="Flags Required"
+                      label="标志要求"
                       placeholder={"custom_flag1, not custom_flag2, ..."}
                     />
                     <h4 className="text-white-light font-medium text-base mb-4 flex items-center gap-2">
                       <PuzzlePieceIcon className="h-5 w-5 text-mint" />
-                      Custom Pools
+                      自定义池
                     </h4>
                     <div className="space-y-4">
                       <InputField
@@ -1474,18 +1474,16 @@ const EditJokerInfo: React.FC<EditJokerInfoProps> = ({
                         }}
                         placeholder="pool1, pool2, special_jokers"
                         separator={true}
-                        label="Pool Names"
+                        label="池名称"
                         size="md"
                       />
                       <p className="text-xs text-white-darker -mt-2">
-                        Enter pool names separated by commas. This joker will be
-                        available for selection in effects that target these
-                        pools.
+                        输入以逗号分隔的池名称。这个小丑可以在针对这些池的效果中进行选择。
                       </p>
                     </div>
                     <h4 className="text-white-light font-medium text-base mb-4 flex items-center gap-2">
                       <PuzzlePieceIcon className="h-5 w-5 text-mint" />
-                      Info Queues
+                      队列信息
                     </h4>
                     <div className="space-y-4">
                       <InputField
@@ -1524,13 +1522,11 @@ const EditJokerInfo: React.FC<EditJokerInfoProps> = ({
                         size="md"
                       />
                       <p className="text-xs text-white-darker -mt-2">
-                        Enter object keys separated by commas. This joker will
-                        display seperate windows showing the effects of said
+                        输入以逗号分隔的对象键。这个小丑将显示显示所述效果的单独窗口
                         <br/><br/>
-                        Prefixes: Tags - `tag_`; Jokers - `j_`; Consumables - `c_`;
-                        Vouchers - `v_`;
+                        前缀：标签 - 'tag_';小丑 - “j_”;消耗品 - “c_”;优惠券 - “v_”;
                         <br/>
-                        Enhancements - `m_`; Editions - `e_`; Packs - `p_`; Seals - None
+                        增强功能 - “m_”;版本 - 'e_';包 - “p_”;密封件 - 无
                       </p>
                     </div>
                   </div>
@@ -1541,7 +1537,7 @@ const EditJokerInfo: React.FC<EditJokerInfoProps> = ({
 
           <div className="flex gap-4 p-4">
             <Button variant="secondary" onClick={onClose} className="flex-1">
-              Cancel
+              取消
             </Button>
             <Button
               variant="primary"
@@ -1549,10 +1545,10 @@ const EditJokerInfo: React.FC<EditJokerInfoProps> = ({
               onTouchEnd={handleSave}
               className="flex-1"
             >
-              Save Changes
+              保存更改
             </Button>
             <Button onClick={handleDelete} variant="danger" className="px-8">
-              Delete
+              删除小丑
             </Button>
           </div>
         </div>

@@ -211,10 +211,10 @@ const formatRarityForCode = (rarity: string, modPrefix: string): string => {
 
   if (["1", "2", "3", "4"].includes(rarity)) {
     const rarityMap: Record<string, string> = {
-      "1": "Common",
-      "2": "Uncommon",
-      "3": "Rare",
-      "4": "Legendary",
+      "1": "普通",
+      "2": "罕见",
+      "3": "稀有",
+      "4": "传奇",
     };
     return rarityMap[rarity];
   }

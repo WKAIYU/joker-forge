@@ -835,10 +835,10 @@ export const RARITY_LABELS = () =>
   DataRegistry.getRarities().map((r) => r.label);
 
 export const VANILLA_RARITIES = [
-  { value: 1, label: "Common", key: "common" },
-  { value: 2, label: "Uncommon", key: "uncommon" },
-  { value: 3, label: "Rare", key: "rare" },
-  { value: 4, label: "Legendary", key: "legendary" },
+  { value: 1, label: "普通", key: "common" },
+  { value: 2, label: "罕见", key: "uncommon" },
+  { value: 3, label: "稀有", key: "rare" },
+  { value: 4, label: "传奇", key: "legendary" },
 ] as const;
 
 type VanillaRarity = {

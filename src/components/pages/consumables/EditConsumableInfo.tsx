@@ -693,8 +693,8 @@ const EditConsumableInfo: React.FC<EditConsumableInfoProps> = ({
                               icon={<PhotoIcon className="h-4 w-4" />}
                             >
                               {formData.imagePreview
-                                ? "Change Main Image"
-                                : "Upload Main Image"}
+                                ? "更换图像"
+                                : "上传主图像"}
                             </Button>
                             <Button
                               onClick={() =>
@@ -706,8 +706,8 @@ const EditConsumableInfo: React.FC<EditConsumableInfoProps> = ({
                               icon={<SparklesIcon className="h-4 w-4" />}
                             >
                               {formData.overlayImagePreview
-                                ? "Change Overlay"
-                                : "Add Overlay"}
+                                ? "改变叠加层"
+                                : "新增叠加层"}
                             </Button>
                             {formData.overlayImagePreview && (
                               <Button
@@ -728,7 +728,7 @@ const EditConsumableInfo: React.FC<EditConsumableInfoProps> = ({
                           </div>
                           <div className="text-center mt-2">
                             <p className="text-xs text-white-darker">
-                              Accepted: 71×95px or 142×190px each
+                              推荐尺寸：71×95px 或 142×190px
                             </p>
                             {(() => {
                               const credit = getImageCredit(formData);
@@ -870,10 +870,10 @@ const EditConsumableInfo: React.FC<EditConsumableInfoProps> = ({
 
           <div className="flex gap-4 p-4">
             <Button variant="secondary" onClick={onClose} className="flex-1">
-              Cancel
+              取消
             </Button>
             <Button variant="primary" onClick={handleSave} className="flex-1">
-              Save Changes
+              保存更改
             </Button>
             <Button
               onClick={handleDelete}
@@ -881,7 +881,7 @@ const EditConsumableInfo: React.FC<EditConsumableInfoProps> = ({
               variant="danger"
               className="px-8"
             >
-              Delete
+              删除小丑
             </Button>
           </div>
         </div>

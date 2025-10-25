@@ -856,10 +856,10 @@ const EditEnhancementInfo: React.FC<EditEnhancementInfoProps> = ({
 
           <div className="flex gap-4 p-4">
             <Button variant="secondary" onClick={onClose} className="flex-1">
-              Cancel
+              取消
             </Button>
             <Button variant="primary" onClick={handleSave} className="flex-1">
-              Save Changes
+              保存更改
             </Button>
             <Button
               onClick={handleDelete}
@@ -867,7 +867,7 @@ const EditEnhancementInfo: React.FC<EditEnhancementInfoProps> = ({
               variant="danger"
               className="px-8"
             >
-              Delete
+              删除小丑
             </Button>
           </div>
         </div>

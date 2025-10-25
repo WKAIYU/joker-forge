@@ -671,8 +671,8 @@ const EditVoucherInfo: React.FC<EditVoucherInfoProps> = ({
                               icon={<PhotoIcon className="h-4 w-4" />}
                             >
                               {formData.imagePreview
-                                ? "Change Main Image"
-                                : "Upload Main Image"}
+                                ? "更换图像"
+                                : "上传主图像"}
                             </Button>
                             <Button
                               onClick={() =>
@@ -684,8 +684,8 @@ const EditVoucherInfo: React.FC<EditVoucherInfoProps> = ({
                               icon={<SparklesIcon className="h-4 w-4" />}
                             >
                               {formData.overlayImagePreview
-                                ? "Change Overlay"
-                                : "Add Overlay"}
+                                ? "改变叠加层"
+                                : "新增叠加层"}
                             </Button>
                             {formData.overlayImagePreview && (
                               <Button
@@ -706,7 +706,7 @@ const EditVoucherInfo: React.FC<EditVoucherInfoProps> = ({
                           </div>
                           <div className="text-center mt-2">
                             <p className="text-xs text-white-darker">
-                              Accepted: 71×95px or 142×190px each
+                              推荐尺寸：71×95px 或 142×190px
                             </p>
                             {(() => {
                               const credit = getImageCredit(formData);

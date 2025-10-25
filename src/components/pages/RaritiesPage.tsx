@@ -360,9 +360,9 @@ const RaritiesPage: React.FC<RaritiesPageProps> = ({
 
   const vanillaRarities = [
     { name: "普通", weight: "0.70", color: "#009dff" },
-    { name: "Uncommon", weight: "0.25", color: "#4BC292" },
-    { name: "Rare", weight: "0.05", color: "#fe5f55" },
-    { name: "Legendary", weight: "0.00", color: "#b26cbb" },
+    { name: "罕见", weight: "0.25", color: "#4BC292" },
+    { name: "稀有", weight: "0.05", color: "#fe5f55" },
+    { name: "传奇", weight: "0.00", color: "#b26cbb" },
   ];
 
   return (
