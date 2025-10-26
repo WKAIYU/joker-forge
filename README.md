@@ -1,6 +1,7 @@
 # Joker Forge
-
+## Attention:this is a chinese-localization translate.
 A web app that allows you to make Balatro Jokers using Steammodded with ease. It aims to lower the barrier to entry for mod creation, moving beyond simple stat adjustments to enable the creation of truly unique and complex Joker behaviors, all without requiring direct Lua scripting knowledge from the user. The core philosophy is abstraction and empowerment: abstracting the underlying SMODS code into intuitive visual components, thereby empowering users to translate their creative gameplay ideas into functional mods.
+
 
 [Try It Out](https://jokerforge.jaydchw.com/)
 
