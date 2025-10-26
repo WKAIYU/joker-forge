@@ -44,37 +44,37 @@ const BlockComponent: React.FC<BlockComponentProps> = ({
   dragHandleProps,
   variant = "default",
 }) => {
-  const getTypeConfig = () => {
-    switch (type) {
-      case "trigger":
-        return {
-          borderColor: "border-l-trigger",
-          backgroundColor: "bg-black",
-          icon: <BoltIcon className="h-6 w-6 text-trigger -mt-4 -ml-1" />,
-          typeLabel: "Trigger",
-          selectColor: "border-trigger",
-          hoverColor: "hover:border-trigger-dark",
-        };
-      case "condition":
-        return {
-          borderColor: "border-l-condition",
-          backgroundColor: "bg-black",
-          icon: <BeakerIcon className="h-6 w-6 text-condition -mt-4 -ml-1" />,
-          typeLabel: "Condition",
-          selectColor: "border-condition",
-          hoverColor: "hover:border-condition-dark",
-        };
-      case "effect":
-        return {
-          borderColor: "border-l-effect",
-          backgroundColor: "bg-black",
-          icon: <PuzzlePieceIcon className="h-6 w-6 text-effect -mt-4 -ml-1" />,
-          typeLabel: "Effect",
-          selectColor: "border-effect",
-          hoverColor: "hover:border-effect-dark",
-        };
-    }
-  };
+const getTypeConfig = () => {
+  switch (type) {
+    case "trigger":
+      return {
+        borderColor: "border-l-trigger",
+        backgroundColor: "bg-black",
+        icon: <BoltIcon className="h-6 w-6 text-trigger -mt-4 -ml-1" />,
+        typeLabel: "触发器",
+        selectColor: "border-trigger",
+        hoverColor: "hover:border-trigger-dark",
+      };
+    case "condition":
+      return {
+        borderColor: "border-l-condition",
+        backgroundColor: "bg-black",
+        icon: <BeakerIcon className="h-6 w-6 text-condition -mt-4 -ml-1" />,
+        typeLabel: "条件",
+        selectColor: "border-condition",
+        hoverColor: "hover:border-condition-dark",
+      };
+    case "effect":
+      return {
+        borderColor: "border-l-effect",
+        backgroundColor: "bg-black",
+        icon: <PuzzlePieceIcon className="h-6 w-6 text-effect -mt-4 -ml-1" />,
+        typeLabel: "效果",
+        selectColor: "border-effect",
+        hoverColor: "hover:border-effect-dark",
+      };
+  }
+};
 
   const getVariantStyles = () => {
     switch (variant) {

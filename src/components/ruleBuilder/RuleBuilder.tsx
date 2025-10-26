@@ -1609,7 +1609,11 @@ const RuleBuilder: React.FC<RuleBuilderProps> = ({
       >
         <div className="flex px-4 py-2 border-b-2 border-black-light z-50">
           <h2 className="text-xs text-white-light font-extralight tracking-widest mx-auto">
-            Rule Builder - {itemType} Mode
+            {itemType === "joker" ? "规则构建器 - 小丑牌模式" :
+            itemType === "consumable" ? "规则构建器 - 消耗品模式" :
+            itemType === "card" ? "规则构建器 - 卡牌模式" :
+             itemType === "voucher" ? "规则构建器 - 优惠券券模式" :
+             "规则构建器"}
           </h2>
         </div>
         <div className="flex-grow relative overflow-hidden">

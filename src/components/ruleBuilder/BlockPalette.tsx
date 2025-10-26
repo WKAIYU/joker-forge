@@ -503,7 +503,12 @@ const BlockPalette: React.FC<BlockPaletteProps> = ({
           <Bars3Icon className="h-4 w-4 text-white-darker" />
           <SwatchIcon className="h-5 w-5 text-white-light" />
           <h3 className="text-white-light text-sm font-medium tracking-wider">
-            Block Palette ({itemType})
+            积木面板 (
+            {itemType === "joker" ? "小丑" :
+            itemType === "consumable" ? "消耗品" :
+            itemType === "card" ? "卡牌" :
+            "优惠券"}
+            )
           </h3>
         </div>
         <button
@@ -525,7 +530,7 @@ const BlockPalette: React.FC<BlockPaletteProps> = ({
                 ? "bg-trigger text-black border-trigger"
                 : "bg-black-darker text-trigger border-trigger hover:bg-trigger hover:text-black"
             }`}
-            title="Filter Triggers"
+            title="筛选触发器"
           >
             <BoltIcon className="h-4 w-4" />
           </button>
@@ -539,22 +544,22 @@ const BlockPalette: React.FC<BlockPaletteProps> = ({
                 ? "bg-condition text-white border-condition"
                 : "bg-black-darker text-condition border-condition hover:bg-condition hover:text-white"
             }`}
-            title="Filter Conditions"
+            title="筛选条件"
           >
             <BeakerIcon className="h-4 w-4" />
-          </button>
-          <button
-            onClick={() => handleFilterToggle("effects")}
-            disabled={!selectedRule}
-            className={`p-2 rounded-md transition-colors cursor-pointer border ${
-              !selectedRule
-                ? "bg-black-darker text-white-darker border-black-lighter cursor-not-allowed opacity-50"
-                : activeFilter === "effects"
-                ? "bg-effect text-black border-effect"
-                : "bg-black-darker text-effect border-effect hover:bg-effect hover:text-black"
-            }`}
-            title="Filter Effects"
-          >
+              </button>
+              <button
+                onClick={() => handleFilterToggle("effects")}
+                disabled={!selectedRule}
+                className={`p-2 rounded-md transition-colors cursor-pointer border ${
+                  !selectedRule
+                    ? "bg-black-darker text-white-darker border-black-lighter cursor-not-allowed opacity-50"
+                    : activeFilter === "effects"
+                    ? "bg-effect text-black border-effect"
+                    : "bg-black-darker text-effect border-effect hover:bg-effect hover:text-black"
+                }`}
+                title="筛选效果"
+              >
             <PuzzlePieceIcon className="h-4 w-4" />
           </button>
         </div>
@@ -566,7 +571,7 @@ const BlockPalette: React.FC<BlockPaletteProps> = ({
               type="text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="Search blocks..."
+              placeholder="搜索积木..."
               className="w-full bg-black-darker border border-black-lighter rounded-lg pl-10 pr-4 py-2 text-white text-sm placeholder-white-darker focus:outline-none focus:border-mint transition-colors"
             />
           </div>
