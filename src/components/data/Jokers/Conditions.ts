@@ -1070,42 +1070,42 @@ export const CONDITION_TYPES: ConditionTypeDefinition[] = [
   },
   {
     id: "which_tag",
-    label: "Check Which Tag Got Added",
-    description: "Check Which Tag Got Added",
+    label: "检查添加的标签",
+    description: "检查添加了哪个标签",
     applicableTriggers: ["tag_added"],
     params: [
       {
         id: "operator",
         type: "select",
-        label: "Operator",
+        label: "运算符",
         options: [
-          { value: "equals", label: "Equals" },
-          { value: "not_equals", label: "Not Equals" },
+          { value: "equals", label: "等于" },
+          { value: "not_equals", label: "不等于" },
         ],
         default: "equals",
       },
       {
         id: "value",
         type: "select",
-        label: "Tag Key",
+        label: "标签标识",
         options: [...TAGS],
         default: "double",
       },
     ],
-    category: "Special",
+    category: "特殊",
   },
   {
     id: "consumable_count",
-    label: "Consumable Count",
-    description: "Check how many of a consumable a player has",
+    label: "消耗品数量",
+    description: "检查玩家拥有多少消耗品",
     applicableTriggers: [...GENERIC_TRIGGERS, "change_probability",],
     params: [
       {
         id: "consumable_type",
         type: "select",
-        label: "Consumable Type",
+        label: "消耗品类型",
         options: () => [
-          { value: "any", label: "Any Consumable" },
+          { value: "any", label: "任意消耗品" },
           ...CONSUMABLE_SETS(),
         ],
         default: "any",
@@ -1113,7 +1113,7 @@ export const CONDITION_TYPES: ConditionTypeDefinition[] = [
       {
         id: "specific_card",
         type: "select",
-        label: "Specific Card",
+        label: "特定卡牌",
         options: (parentValues: Record<string, unknown>) => {
           const selectedSet = parentValues?.consumable_type as string;
 
@@ -1136,7 +1136,7 @@ export const CONDITION_TYPES: ConditionTypeDefinition[] = [
               }));
 
             return [
-              { value: "any", label: "Any from Set" },
+              { value: "any", label: "集合中任意" },
               ...vanillaCards,
               ...customCards,
             ];
@@ -1156,7 +1156,7 @@ export const CONDITION_TYPES: ConditionTypeDefinition[] = [
               }));
 
             return [
-              { value: "any", label: "Any from Set" },
+              { value: "any", label: "集合中任意" },
               ...vanillaCards,
               ...customCards,
             ];
@@ -1176,7 +1176,7 @@ export const CONDITION_TYPES: ConditionTypeDefinition[] = [
               }));
 
             return [
-              { value: "any", label: "Any from Set" },
+              { value: "any", label: "集合中任意" },
               ...vanillaCards,
               ...customCards,
             ];
@@ -1193,7 +1193,7 @@ export const CONDITION_TYPES: ConditionTypeDefinition[] = [
           );
 
           return [
-            { value: "any", label: "Any from Set" },
+            { value: "any", label: "集合中任意" },
             ...customConsumablesInSet,
           ];
         },
@@ -1203,31 +1203,31 @@ export const CONDITION_TYPES: ConditionTypeDefinition[] = [
       {
         id: "operator",
         type: "select",
-        label: "Operator",
+        label: "比较运算符",
         options: [...COMPARISON_OPERATORS],
       },
       {
         id: "value",
         type: "number",
-        label: "Number of Consumables",
+        label: "消耗品数量",
         min: 0,
         default: 1,
       },
     ],
-    category: "Player Resources",
+    category: "玩家资源",
   },
   {
     id: "consumable_type",
-    label: "Consumable Type",
-    description: "Check the type of consumable being bought or used",
+    label: "消耗品类型",
+    description: "检查购买或使用的消耗品类型",
     applicableTriggers: ["card_bought", "consumable_used"],
     params: [
       {
         id: "consumable_type",
         type: "select",
-        label: "Consumable Type",
+        label: "消耗品类型",
         options: () => [
-          { value: "any", label: "Any Consumable" },
+          { value: "any", label: "任意消耗品" },
           ...CONSUMABLE_SETS(),
         ],
         default: "any",
@@ -1235,7 +1235,7 @@ export const CONDITION_TYPES: ConditionTypeDefinition[] = [
       {
         id: "specific_card",
         type: "select",
-        label: "Specific Card",
+        label: "特定卡牌",
         options: (parentValues: Record<string, unknown>) => {
           const selectedSet = parentValues?.consumable_type as string;
 
@@ -1258,7 +1258,7 @@ export const CONDITION_TYPES: ConditionTypeDefinition[] = [
               }));
 
             return [
-              { value: "any", label: "Any from Set" },
+              { value: "any", label: "集合中任意" },
               ...vanillaCards,
               ...customCards,
             ];
@@ -1278,7 +1278,7 @@ export const CONDITION_TYPES: ConditionTypeDefinition[] = [
               }));
 
             return [
-              { value: "any", label: "Any from Set" },
+              { value: "any", label: "集合中任意" },
               ...vanillaCards,
               ...customCards,
             ];
@@ -1298,7 +1298,7 @@ export const CONDITION_TYPES: ConditionTypeDefinition[] = [
               }));
 
             return [
-              { value: "any", label: "Any from Set" },
+              { value: "any", label: "集合中任意" },
               ...vanillaCards,
               ...customCards,
             ];
@@ -1315,42 +1315,42 @@ export const CONDITION_TYPES: ConditionTypeDefinition[] = [
           );
 
           return [
-            { value: "any", label: "Any from Set" },
+            { value: "any", label: "集合中任意" },
             ...customConsumablesInSet,
           ];
         },
         default: "any",
       },
     ],
-    category: "Player Resources",
+    category: "玩家资源",
   },
   {
     id: "hand_level",
-    label: "Hand Level",
-    description: "Check the level of a poker hand",
+    label: "牌型等级",
+    description: "检查扑克牌型的等级",
     applicableTriggers: [...GENERIC_TRIGGERS, "change_probability"],
     params: [
       {
         id: "operator",
         type: "select",
-        label: "Operator",
+        label: "比较运算符",
         options: [...COMPARISON_OPERATORS],
       },
       {
         id: "hand_selection",
         type: "select",
-        label: "Hand Selection",
+        label: "牌型选择",
         options: [
-          { value: "played", label: "Played Hand" },
-          { value: "specific", label: "Specific Hand" },
-          { value: "any", label: "Any Hand" },
+          { value: "played", label: "已出牌型" },
+          { value: "specific", label: "特定牌型" },
+          { value: "any", label: "任意牌型" },
         ],
         default: "any",
       },
       {
         id: "specific_hand",
         type: "select",
-        label: "Specific Hand",
+        label: "特定牌型",
         options: [...POKER_HANDS],
         showWhen: {
           parameter: "hand_selection",
@@ -1360,120 +1360,119 @@ export const CONDITION_TYPES: ConditionTypeDefinition[] = [
       {
         id: "value",
         type: "number",
-        label: "Hand Level",
+        label: "牌型等级",
         min: 0,
         default: 1,
       },
     ],
-    category: "Game State",
+    category: "游戏状态",
   },
   {
     id: "blind_type",
-    label: "Blind Type",
-    description: "Check the type of the current blind",
+    label: "盲注类型",
+    description: "检查当前盲注的类型",
     applicableTriggers: [...GENERIC_TRIGGERS, "change_probability"],
     params: [
       {
         id: "blind_type",
         type: "select",
-        label: "Blind Type",
+        label: "盲注类型",
         options: [
-          { value: "small", label: "Small Blind" },
-          { value: "big", label: "Big Blind" },
-          { value: "boss", label: "Boss Blind" },
+          { value: "small", label: "小盲注" },
+          { value: "big", label: "大盲注" },
+          { value: "boss", label: "首领盲注" },
         ],
       },
     ],
-    category: "Game State",
+    category: "游戏状态",
   },
   {
     id: "boss_blind_type",
-    label: "Boss Blind Type",
-    description: "Check the type of the current boss blind",
+    label: "首领盲注类型",
+    description: "检查当前首领盲注的类型",
     applicableTriggers: [...GENERIC_TRIGGERS, "blind_selected"],
     params: [
       {
         id: "operator",
         type: "select",
-        label: "Operator",
+        label: "运算符",
         options: [
-          { value: "equals", label: "Equals" },
-          { value: "not_equals", label: "Not Equals" },
+          { value: "equals", label: "等于" },
+          { value: "not_equals", label: "不等于" },
         ],
         default: "equals",
       },
       {
         id: "value",
         type: "select",
-        label: "Boss Blind",
+        label: "首领盲注",
         options: [...BOSS_BLINDS],
         default: "bl_hook",
       },
     ],
-    category: "Game State",
+    category: "游戏状态",
   },
   {
     id: "blind_name",
-    label: "Blind Name",
-    description: "Check the current blind",
+    label: "盲注名称",
+    description: "检查当前盲注",
     applicableTriggers: [...GENERIC_TRIGGERS, "blind_selected"],
     params: [
       {
         id: "operation",
         type: "select",
-        label: "Mode",
+        label: "模式",
         options: [
-          { value: "equals", label: "Equals" },
-          { value: "not_equals", label: "Not Equals" },
+          { value: "equals", label: "等于" },
+          { value: "not_equals", label: "不等于" },
         ],
         default: "equals",
       },
       {
         id: "value",
         type: "select",
-        label: "Blind",
+        label: "盲注",
         options: [
-          { value: "Small Blind", label: "Small Blind" },
-          { value: "Big Blind", label: "Big Blind" },
-          { value: "The Hook", label: "The Hook" },
-          { value: "The Ox", label: "The Ox" },
-          { value: "The House", label: "The House" },
-          { value: "The Wall", label: "The Wall" },
-          { value: "The Wheel", label: "The Wheel" },
-          { value: "The Arm", label: "The Arm" },
-          { value: "The Club", label: "The Club" },
-          { value: "The Fish", label: "The Fish" },
-          { value: "The Psychic", label: "The Psychic" },
-          { value: "The Goad", label: "The Goad" },
-          { value: "The Water", label: "The Water" },
-          { value: "The Window", label: "The Window" },
-          { value: "The Manacle", label: "The Manacle" },
-          { value: "The Eye", label: "The Eye" },
-          { value: "The Mouth", label: "The Mouth" },
-          { value: "The Plant", label: "The Plant" },
-          { value: "The Serpent", label: "The Serpent" },
-          { value: "The Pillar", label: "The Pillar" },
-          { value: "The Needle", label: "The Needle" },
-          { value: "The Head", label: "The Head" },
-          { value: "The Tooth", label: "The Tooth" },
-          { value: "The Flint", label: "The Flint" },
-          { value: "The Mark", label: "The Mark" },
-          { value: "Amber Acorn", label: "Amber Acorn" },
-          { value: "Verdant Leaf", label: "Verdant Leaf" },
-          { value: "Violet Vessel", label: "Violet Vessel" },
-          { value: "Crimson Heart", label: "Crimson Heart" },
-          { value: "Cerulean Bell", label: "Cerulean Bell" },
+          { value: "Small Blind", label: "小盲注" },
+          { value: "Big Blind", label: "大盲注" },
+          { value: "The Hook", label: "钩子" },
+          { value: "The Ox", label: "公牛" },
+          { value: "The House", label: "房屋" },
+          { value: "The Wall", label: "围墙" },
+          { value: "The Wheel", label: "车轮" },
+          { value: "The Arm", label: "手臂" },
+          { value: "The Club", label: "梅花" },
+          { value: "The Fish", label: "鱼" },
+          { value: "The Psychic", label: "灵媒" },
+          { value: "The Goad", label: "挑衅" },
+          { value: "The Water", label: "水" },
+          { value: "The Window", label: "窗户" },
+          { value: "The Manacle", label: "镣铐" },
+          { value: "The Eye", label: "眼睛" },
+          { value: "The Mouth", label: "嘴巴" },
+          { value: "The Plant", label: "植物" },
+          { value: "The Serpent", label: "巨蟒" },
+          { value: "The Pillar", label: "支柱" },
+          { value: "The Needle", label: "针" },
+          { value: "The Head", label: "头部" },
+          { value: "The Tooth", label: "牙齿" },
+          { value: "The Flint", label: "燧石" },
+          { value: "The Mark", label: "标记" },
+          { value: "Amber Acorn", label: "琥珀之实" },
+          { value: "Verdant Leaf", label: "翠绿之叶" },
+          { value: "Violet Vessel", label: "靛紫之杯" },
+          { value: "Crimson Heart", label: "绯红之心" },
+          { value: "Cerulean Bell", label: "蔚蓝之铃" },
         ],
-        default: "Small Blind",
+        default: "小盲注",
       },
     ],
-    category: "Game State",
+    category: "游戏状态",
   },
   {
     id: "check_blind_requirements",
-    label: "Blind Requirements",
-    description:
-      "Check what percentage of the blind requirement the current base hand score represents (e.g., 110% means you've exceeded the blind by 10%, values over 100% check if you've exceeded the blind)",
+    label: "盲注要求",
+    description: "检查当前基础手牌分数相对于盲注要求的百分比（例如：110% 表示超出盲注要求10%，超过100%的值检查是否已超过盲注）",
     applicableTriggers: [
       "after_hand_played",
       "before_hand_played",
@@ -1493,86 +1492,85 @@ export const CONDITION_TYPES: ConditionTypeDefinition[] = [
       {
         id: "operator",
         type: "select",
-        label: "Operator",
+        label: "比较运算符",
         options: [...COMPARISON_OPERATORS],
         default: "greater_equals",
       },
       {
         id: "percentage",
         type: "number",
-        label: "Percentage (%)",
+        label: "百分比 (%)",
         default: 25,
       },
     ],
-    category: "Game State",
+    category: "游戏状态",
   },
   {
     id: "joker_selected",
-    label: "Joker Selected",
-    description: "Check if a joker is selected/highlighted",
+    label: "小丑牌选中状态",
+    description: "检查小丑牌是否被选中/高亮显示",
     applicableTriggers:  [...GENERIC_TRIGGERS],
     params: [],
-    category: "Deck & Jokers",
+    category: "牌组与小丑牌",
   },
   {
     id: "voucher_redeemed",
-    label: "Voucher Redeemed",
-    description: "Check if a specific Voucher was redeemed during the run",
+    label: "代金券已兑换",
+    description: "检查在本次游戏中是否兑换了特定的代金券",
     applicableTriggers: [...GENERIC_TRIGGERS],
     params: [
       {
         id: "voucher",
         type: "select",
-        label: "Voucher",
+        label: "代金券",
         options: [...VOUCHERS()],
         default: "v_overstock_norm",
       },
     ],
-    category: "Game State",
+    category: "游戏状态",
   },
   {
     id: "lucky_card_triggered",
-    label: "Lucky Card Triggered",
-    description:
-      "Check if a lucky card's special effect was triggered when scored",
+    label: "幸运牌触发",
+    description: "检查计分时是否触发了幸运牌的特殊效果",
     applicableTriggers: ["card_scored"],
     params: [],
-    category: "Card",
+    category: "卡牌",
   },
   {
     id: "triggered_boss_blind",
-    label: "Boss Blind Triggered",
-    description: "Check if the current boss blind's effect has been triggered",
+    label: "首领盲注触发",
+    description: "检查当前首领盲注的效果是否已被触发",
     applicableTriggers: [...GENERIC_TRIGGERS],
     params: [],
-    category: "Game State",
+    category: "游戏状态",
   },
   {
     id: "ante_level",
-    label: "Ante Level",
-    description: "Check the current ante level",
+    label: "底注等级",
+    description: "检查当前底注等级",
     applicableTriggers: [...GENERIC_TRIGGERS, "change_probability"],
     params: [
       {
         id: "operator",
         type: "select",
-        label: "Operator",
+        label: "比较运算符",
         options: [...COMPARISON_OPERATORS],
       },
       {
         id: "value",
         type: "number",
-        label: "Ante Level",
+        label: "底注等级",
         min: 1,
         default: 1,
       },
     ],
-    category: "Game State",
+    category: "游戏状态",
   },
   {
     id: "first_played_hand",
-    label: "First Played Hand",
-    description: "Check if this is the first hand played in the current round",
+    label: "首轮出牌",
+    description: "检查这是否是当前回合中首次出的手牌",
     applicableTriggers: [
       "hand_played",
       "card_scored",
@@ -1581,27 +1579,26 @@ export const CONDITION_TYPES: ConditionTypeDefinition[] = [
       "before_hand_played",
     ],
     params: [],
-    category: "Game State",
+    category: "游戏状态",
   },
   {
     id: "first_discarded_hand",
-    label: "First Discarded Hand",
-    description:
-      "Check if this is the first hand discarded in the current round",
+    label: "首轮弃牌",
+    description: "检查这是否是当前回合中首次弃掉的手牌",
     applicableTriggers: ["card_discarded", "hand_discarded"],
     params: [],
-    category: "Game State",
+    category: "游戏状态",
   },
   {
     id: "system_condition",
-    label: "Player OS",
-    description: "Check on what Operating System the player is on",
+    label: "玩家操作系统",
+    description: "检查玩家使用的操作系统",
     applicableTriggers: GENERIC_TRIGGERS,
     params: [
       {
         id: "system",
         type: "select",
-        label: "OS",
+        label: "操作系统",
         options: [
           {value: "Windows",label: "Windows"},
           {value: "OS X",label: "OS X"},
@@ -1612,84 +1609,84 @@ export const CONDITION_TYPES: ConditionTypeDefinition[] = [
         default: "Windows",
       },
     ],
-    category: "Game State",
+    category: "游戏状态",
   },
   {
     id: "hand_size",
-    label: "Hand Size",
-    description: "Check the current hand size",
+    label: "手牌数量",
+    description: "检查当前手牌数量",
     applicableTriggers: [...GENERIC_TRIGGERS, "change_probability"],
     params: [
       {
         id: "operator",
         type: "select",
-        label: "Operator",
+        label: "比较运算符",
         options: [...COMPARISON_OPERATORS],
       },
       {
         id: "value",
         type: "number",
-        label: "Hand Size",
+        label: "手牌数量",
         default: 8,
       },
     ],
-    category: "Player Resources",
+    category: "玩家资源",
   },
   {
     id: "deck_size",
-    label: "Deck Size",
-    description: "Check the size of the deck",
+    label: "牌组大小",
+    description: "检查牌组的大小",
     applicableTriggers: [...GENERIC_TRIGGERS, "change_probability"],
     params: [
       {
         id: "size_type",
         type: "select",
-        label: "Size Type",
+        label: "大小类型",
         options: [
-          { value: "remaining", label: "Remaining in Deck" },
-          { value: "total", label: "Total Deck Size" },
+          { value: "remaining", label: "牌组剩余" },
+          { value: "total", label: "牌组总数" },
         ],
         default: "remaining",
       },
       {
         id: "operator",
         type: "select",
-        label: "Operator",
+        label: "比较运算符",
         options: [...COMPARISON_OPERATORS],
       },
       {
         id: "value",
         type: "number",
-        label: "Number of Cards",
+        label: "卡牌数量",
         default: 52,
       },
     ],
-    category: "Deck & Jokers",
+    category: "牌组与小丑牌",
   },
   {
     id: "deck_count",
-    label: "Deck Count",
-    description: "Count cards in your entire deck by property",
+    label: "牌组统计",
+    description: "按属性统计整个牌组中的卡牌数量",
     applicableTriggers: [...GENERIC_TRIGGERS, "change_probability"],
     params: [
       {
         id: "property_type",
         type: "select",
-        label: "Property Type",
+        label: "属性类型",
         options: [
-          { value: "rank", label: "Rank" },
-          { value: "suit", label: "Suit" },
-          { value: "enhancement", label: "Enhancement" },
-          { value: "seal", label: "Seal" },
-          { value: "edition", label: "Edition" },
+          { value: "rank", label: "点数" },
+          { value: "suit", label: "花色" },
+          { value: "enhancement", label: "增强" },
+          { value: "seal", label: "封印" },
+          { value: "edition", label: "版本" },
         ],
         default: "enhancement",
       },
       {
         id: "rank",
         type: "select",
-        label: "Rank",
-        options: [{ value: "any", label: "Any Rank" }, ...RANKS],
+        label: "点数",
+        options: [{ value: "any", label: "任意点数" }, ...RANKS],
         showWhen: {
           parameter: "property_type",
           values: ["rank"],
@@ -1698,9 +1695,9 @@ export const CONDITION_TYPES: ConditionTypeDefinition[] = [
       {
         id: "suit",
         type: "select",
-        label: "Suit",
+        label: "花色",
         options: [
-          { value: "any", label: "Any Suit" },
+          { value: "any", label: "任意花色" },
           ...SUIT_GROUPS,
           ...SUITS,
         ],
@@ -1712,10 +1709,10 @@ export const CONDITION_TYPES: ConditionTypeDefinition[] = [
       {
         id: "enhancement",
         type: "select",
-        label: "Enhancement",
+        label: "增强",
         options: () => [
-          { value: "any", label: "Any Enhancement" },
-          { value: "none", label: "No Enhancement" },
+          { value: "any", label: "任意增强" },
+          { value: "none", label: "无增强" },
           ...ENHANCEMENTS(),
         ],
         showWhen: {
@@ -1726,10 +1723,10 @@ export const CONDITION_TYPES: ConditionTypeDefinition[] = [
       {
         id: "seal",
         type: "select",
-        label: "Seal",
+        label: "封印",
         options: () => [
-          { value: "any", label: "Any Seal" },
-          { value: "none", label: "No Seal" },
+          { value: "any", label: "任意封印" },
+          { value: "none", label: "无封印" },
           ...SEALS(),
         ],
         showWhen: {
@@ -1740,10 +1737,10 @@ export const CONDITION_TYPES: ConditionTypeDefinition[] = [
       {
         id: "edition",
         type: "select",
-        label: "Edition",
+        label: "版本",
         options: [
-          { value: "any", label: "Any Edition" },
-          { value: "none", label: "No Edition" },
+          { value: "any", label: "任意版本" },
+          { value: "none", label: "无版本" },
           ...EDITIONS(),
         ],
         showWhen: {
@@ -1754,62 +1751,62 @@ export const CONDITION_TYPES: ConditionTypeDefinition[] = [
       {
         id: "operator",
         type: "select",
-        label: "Operator",
+        label: "比较运算符",
         options: [...COMPARISON_OPERATORS],
       },
       {
         id: "value",
         type: "number",
-        label: "Count",
+        label: "数量",
         default: 1,
       },
     ],
-    category: "Deck & Jokers",
+    category: "牌组与小丑牌",
   },
   {
     id: "probability_succeeded",
-    label: "Probability Succeeded",
-    description: "Check if the probability succeeded or failed",
+    label: "概率成功",
+    description: "检查概率是否成功或失败",
     applicableTriggers: ["probability_result"],
     params: [
       {
         id: "status",
         type: "select",
-        label: "Status",
+        label: "状态",
         options: [
-          { value: "succeeded", label: "Succeeded" },
-          { value: "failed", label: "Failed" },
+          { value: "succeeded", label: "成功" },
+          { value: "failed", label: "失败" },
         ],
         default: "succeeded",
       },
     ],
-    category: "Probability",
+    category: "概率",
   },
   {
     id: "probability_identifier",
-    label: "Detect Probability",
-    description: "Check what card caused the probability roll",
+    label: "检测概率来源",
+    description: "检查触发概率掷骰的卡牌",
     applicableTriggers: ["change_probability", "probability_result"],
     params: [
       {
         id: "mode",
         type: "select",
-        label: "Mode",
+        label: "模式",
         options: [
-          { value: "vanilla", label: "Vanilla" },
-          { value: "custom", label: "Custom" },
+          { value: "vanilla", label: "原版" },
+          { value: "custom", label: "自定义" },
         ],
         default: "vanilla",
       },
       {
         id: "property_type",
         type: "select",
-        label: "Property Type",
+        label: "属性类型",
         options: [
-          { value: "jokers", label: "Jokers" },
-          { value: "consumables", label: "Consumables" },
-          { value: "enhancements", label: "Enhancements" },
-          { value: "blinds", label: "Blinds" },
+          { value: "jokers", label: "小丑牌" },
+          { value: "consumables", label: "消耗品" },
+          { value: "enhancements", label: "增强牌" },
+          { value: "blinds", label: "盲注" },
         ],
         default: "jokers",
         showWhen: {
@@ -1820,7 +1817,7 @@ export const CONDITION_TYPES: ConditionTypeDefinition[] = [
       {
         id: "specific_card",
         type: "select",
-        label: "Specific Card",
+        label: "特定卡牌",
         options: (parentValues) => {
           switch (parentValues?.property_type) {
             case "jokers":
@@ -1844,98 +1841,98 @@ export const CONDITION_TYPES: ConditionTypeDefinition[] = [
       {
         id: "card_key",
         type: "text",
-        label: "Card Key (joker: j_modprefix_key, consumable: c_modprefix_key)",
+        label: "卡牌标识符 (小丑牌: j_modprefix_key, 消耗品: c_modprefix_key)",
         showWhen: {
           parameter: "mode",
           values: ["custom"],
         },
       },
     ],
-    category: "Probability",
+    category: "概率",
   },
   {
     id: "probability_part_compare",
-    label: "Probability Compare",
-    description: "Compare the Numerator or the Denominator with a custom value",
+    label: "概率部分比较",
+    description: "比较分子或分母与自定义数值",
     applicableTriggers: ["change_probability", "probability_result"],
     params: [
       {
         id: "part",
         type: "select",
-        label: "Numerator or Denominator",
+        label: "分子或分母",
         options: [
-          { value: "numerator", label: "Numerator" },
-          { value: "denominator", label: "Denominator" },
+          { value: "numerator", label: "分子" },
+          { value: "denominator", label: "分母" },
         ],
         default: "numerator",
       },
       {
         id: "operator",
         type: "select",
-        label: "Operator",
+        label: "比较运算符",
         options: [...COMPARISON_OPERATORS],
       },
       {
         id: "value",
         type: "number",
-        label: "Second Value",
+        label: "第二个数值",
         default: 1,
       },
     ],
-    category: "Probability",
+    category: "概率",
   },
   {
     id: "joker_specific",
-    label: "Specific Joker",
-    description: "Check the key of the evaluated joker",
+    label: "特定小丑牌",
+    description: "检查被评估小丑牌的标识符",
     applicableTriggers: ["joker_evaluated"],
     params: [
       {
         id: "joker_key",
         type: "text",
-        label: "Joker Key ( [modprefix]_joker )",
+        label: "小丑牌标识符 ( [modprefix]_joker )",
         default: "joker",
       },
     ],
-    category: "Joker",
+    category: "小丑牌",
   },
   {
     id: "joker_rarity",
-    label: "Joker Rarity",
-    description: "Check the rarity of the evaluated joker",
+    label: "小丑牌稀有度",
+    description: "检查被评估小丑牌的稀有度",
     applicableTriggers: ["joker_evaluated"],
     params: [
       {
         id: "rarity",
         type: "select",
-        label: "Rarity",
+        label: "稀有度",
         options: () => [...RARITIES()],
         default: "common",
       },
     ],
-    category: "Joker",
+    category: "小丑牌",
   },
   {
     id: "joker_index",
-    label: "Joker Position",
-    description: "Check the position of the evaluated joker",
+    label: "小丑牌位置",
+    description: "检查被评估小丑牌的位置",
     applicableTriggers: ["joker_evaluated"],
     params: [
       {
         id: "position",
         type: "select",
-        label: "Position",
+        label: "位置",
         options: [
-          { value: "first", label: "First Joker" },
-          { value: "last", label: "Last Joker" },
-          { value: "specific", label: "Specific Index" },
+          { value: "first", label: "首个位置" },
+          { value: "last", label: "末尾位置" },
+          { value: "specific", label: "特定索引" },
         ],
         default: "first",
       },
       {
         id: "specific_index",
         type: "number",
-        label: "Joker Index (1-5)",
+        label: "小丑牌索引 (1-5)",
         default: 1,
         showWhen: {
           parameter: "position",
@@ -1943,29 +1940,29 @@ export const CONDITION_TYPES: ConditionTypeDefinition[] = [
         },
       },
     ],
-    category: "Joker",
+    category: "小丑牌",
   },
   {
     id: "this_joker_index",
-    label: "This Joker Position",
-    description: "Check the position of this joker",
+    label: "此小丑牌位置",
+    description: "检查此小丑牌的位置",
     applicableTriggers: [...GENERIC_TRIGGERS],
     params: [
       {
         id: "position",
         type: "select",
-        label: "Position",
+        label: "位置",
         options: [
-          { value: "first", label: "First Joker" },
-          { value: "last", label: "Last Joker" },
-          { value: "specific", label: "Specific Index" },
+          { value: "first", label: "首个位置" },
+          { value: "last", label: "末尾位置" },
+          { value: "specific", label: "特定索引" },
         ],
         default: "first",
       },
       {
         id: "specific_index",
         type: "number",
-        label: "Joker Index (1-5)",
+        label: "小丑牌索引 (1-5)",
         default: 1,
         showWhen: {
           parameter: "position",
@@ -1973,55 +1970,55 @@ export const CONDITION_TYPES: ConditionTypeDefinition[] = [
         },
       },
     ],
-    category: "Deck & Jokers",
+    category: "牌组与小丑牌",
   },
   {
     id: "joker_sticker",
-    label: "Joker Sticker",
-    description: "Check the stickers of the evaluated joker",
+    label: "小丑牌贴纸",
+    description: "检查被评估小丑牌的贴纸",
     applicableTriggers: ["joker_evaluated"],
     params: [
       {
         id: "sticker",
         type: "select",
-        label: "Sticker",
+        label: "贴纸",
         options: [...STICKERS.map(({ value, label }) => ({ value, label }))],
         default: "eternal",
       },
     ],
-    category: "Joker",
+    category: "小丑牌",
   },
   {
     id: "this_joker_sticker",
-    label: "This Joker Sticker",
-    description: "Check the stickers of this joker",
+    label: "此小丑牌贴纸",
+    description: "检查此小丑牌的贴纸",
     applicableTriggers: [...GENERIC_TRIGGERS],
     params: [
       {
         id: "sticker",
         type: "select",
-        label: "Sticker",
+        label: "贴纸",
         options: [...STICKERS.map(({ value, label }) => ({ value, label }))],
         default: "eternal",
       },
     ],
-    category: "Deck & Jokers",
+    category: "牌组与小丑牌",
   },
   {
     id: "joker_flipped",
-    label: "Joker is Flipped",
-    description: "Check if the evaluated joker is flipped (facing back)",
+    label: "小丑牌已翻转",
+    description: "检查被评估小丑牌是否已翻转（背面朝上）",
     applicableTriggers: ["joker_evaluated"],
     params: [],
-    category: "Joker",
+    category: "小丑牌",
   },
   {
     id: "this_joker_flipped",
-    label: "This Joker is Flipped",
-    description: "Check if this joker is flipped (facing back)",
+    label: "此小丑牌已翻转",
+    description: "检查此小丑牌是否已翻转（背面朝上）",
     applicableTriggers: [...GENERIC_TRIGGERS],
     params: [],
-    category: "Deck & Jokers",
+    category: "牌组与小丑牌",
   },
 ];
 
