@@ -124,12 +124,12 @@ const RarityCard: React.FC<RarityCardProps> = ({
           </div>
 
           <div className="flex items-center gap-2 mb-2">
-            <span className="text-white-darker text-sm">Key:</span>
-            <span className="text-mint text-sm font-mono">{rarity.key}</span>
+  <span className="text-white-darker text-sm">标识符:</span>
+  <span className="text-mint text-sm font-mono">{rarity.key}</span>
           </div>
 
           <div className="flex items-center gap-2">
-            <span className="text-white-darker text-sm">Weight:</span>
+            <span className="text-white-darker text-sm">权重:</span>
             {editingWeight ? (
               <input
                 type="number"
@@ -170,7 +170,7 @@ const RarityCard: React.FC<RarityCardProps> = ({
           onClick={onEdit}
           icon={<PencilIcon className="h-4 w-4" />}
         >
-          Edit
+          编辑
         </Button>
         <Button
           variant="secondary"
@@ -178,7 +178,7 @@ const RarityCard: React.FC<RarityCardProps> = ({
           onClick={onDuplicate}
           icon={<DocumentDuplicateIcon className="h-4 w-4" />}
         >
-          Duplicate
+          复制
         </Button>
       </div>
     </div>
@@ -247,7 +247,7 @@ const RaritiesPage: React.FC<RaritiesPageProps> = ({
     const newRarity: RarityData = {
       id: crypto.randomUUID(),
       key: "new_rarity",
-      name: "New Rarity",
+      name: "新稀有度",
       badge_colour: "6A7A8B",
       default_weight: 0.1,
     };
@@ -293,19 +293,19 @@ const RaritiesPage: React.FC<RaritiesPageProps> = ({
     closeModal();
   };
 
-  const handleDeleteRarity = (rarity: RarityData) => {
-    showConfirmation({
-      type: "danger",
-      title: "Delete Custom Rarity",
-      description: `Are you sure you want to delete the "${rarity.name}" rarity? This action cannot be undone and may affect jokers using this rarity.`,
-      confirmText: "Delete Rarity",
-      cancelText: "Keep Rarity",
-      confirmVariant: "danger",
-      onConfirm: () => {
-        setRarities((prev) => prev.filter((r) => r.id !== rarity.id));
-      },
-    });
-  };
+    const handleDeleteRarity = (rarity: RarityData) => {
+      showConfirmation({
+        type: "danger",
+        title: "删除自定义稀有度",
+        description: `确定要删除"${rarity.name}"稀有度吗？此操作无法撤销，可能会影响使用此稀有度的小丑牌。`,
+        confirmText: "删除稀有度",
+        cancelText: "保留稀有度",
+        confirmVariant: "danger",
+        onConfirm: () => {
+          setRarities((prev) => prev.filter((r) => r.id !== rarity.id));
+        },
+      });
+    };
 
   const handleDuplicateRarity = (rarity: RarityData) => {
     const duplicated: RarityData = {
@@ -369,7 +369,7 @@ const RaritiesPage: React.FC<RaritiesPageProps> = ({
     <div className="min-h-screen">
       <div className="p-8 font-lexend max-w-7xl mx-auto">
         <h1 className="text-3xl text-white-light tracking-widest text-center">
-          Rarities
+          稀有度
         </h1>
         <h1 className="text-xl text-white-dark font-light tracking-widest mb-6 text-center">
           {modName}
@@ -383,7 +383,7 @@ const RaritiesPage: React.FC<RaritiesPageProps> = ({
             size="md"
             className="shadow-lg hover:shadow-2xl transition-shadow"
           >
-            Add New Rarity
+            添加新的稀有度
           </Button>
         </div>
 
@@ -391,7 +391,7 @@ const RaritiesPage: React.FC<RaritiesPageProps> = ({
           <div className="flex items-center gap-6 text-white-darker text-sm">
             <div className="flex items-center">
               <SwatchIcon className="h-4 w-4 mr-2 text-mint" />
-              {modName} • {filteredRarities.length} of {rarities.length} rarity
+              {modName} • {filteredRarities.length} / {rarities.length} 稀有度
             </div>
           </div>
         </div>
@@ -401,7 +401,7 @@ const RaritiesPage: React.FC<RaritiesPageProps> = ({
             <MagnifyingGlassIcon className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-white-darker group-focus-within:text-mint transition-colors" />
             <input
               type="text"
-              placeholder="Search rarities by name or key..."
+              placeholder="按名称或标识符搜索稀有度..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full bg-black-darker shadow-2xl border-2 border-black-lighter rounded-lg pl-12 pr-4 py-4 text-white-light tracking-wider placeholder-white-darker focus:outline-none focus:border-mint transition-all duration-200"
@@ -414,17 +414,17 @@ const RaritiesPage: React.FC<RaritiesPageProps> = ({
             <div className="rounded-2xl p-8 max-w-md">
               <MagnifyingGlassIcon className="h-16 w-16 text-mint opacity-60 mb-4 mx-auto" />
               <h3 className="text-white-light text-xl font-light mb-3">
-                No Rarities Found
+                未找到稀有度
               </h3>
               <p className="text-white-darker text-sm mb-6 leading-relaxed">
-                No rarities match your current search criteria.
+                没有符合当前搜索条件的稀有度。
               </p>
               <Button
                 variant="secondary"
                 onClick={() => setSearchTerm("")}
                 fullWidth
               >
-                Clear Search
+                清除搜索
               </Button>
             </div>
           </div>
@@ -433,11 +433,10 @@ const RaritiesPage: React.FC<RaritiesPageProps> = ({
             <div className="rounded-2xl p-8 max-w-md">
               <SwatchIcon className="h-16 w-16 text-mint opacity-60 mb-4 mx-auto" />
               <h3 className="text-white-light text-xl font-light mb-3">
-                No Custom Rarities Yet :(
+                暂无自定义稀有度 :(
               </h3>
               <p className="text-white-darker text-sm mb-6 leading-relaxed">
-                Create your first custom rarity to define new rarity levels for
-                your jokers.
+                创建你的第一个自定义稀有度，为小丑牌定义新的稀有度等级。
               </p>
               <Button
                 variant="primary"
@@ -445,7 +444,7 @@ const RaritiesPage: React.FC<RaritiesPageProps> = ({
                 icon={<PlusIcon className="h-5 w-5" />}
                 fullWidth
               >
-                Create Your First Rarity
+                创建第一个稀有度
               </Button>
             </div>
           </div>
@@ -465,228 +464,227 @@ const RaritiesPage: React.FC<RaritiesPageProps> = ({
         )}
 
         <AnimatePresence>
-          {showEditModal && (
-            <Modal
-              isOpen={showEditModal}
-              onClose={closeModal}
-              title={isEditing ? "Edit Rarity" : "Create New Rarity"}
-              maxWidth="max-w-4xl"
-            >
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.2 }}
-              >
-                <div className="flex flex-col lg:flex-row gap-6 p-6">
-                  <div className="flex-1 space-y-4">
-                    <div className="p-4">
-                      <div className="space-y-4">
-                        <InputField
-                          label="Rarity Name"
-                          value={formData.name || ""}
-                          onChange={(e) => {
-                            const name = e.target.value;
-                            setFormData((prev) => ({
-                              ...prev,
-                              name,
-                              key: generateKeyFromName(name),
-                            }));
-                          }}
-                          placeholder="e.g. Mythic"
-                        />
-                        <InputField
-                          label="Rarity Key"
-                          value={formData.key || ""}
-                          onChange={(e) =>
-                            setFormData((prev) => ({
-                              ...prev,
-                              key: e.target.value,
-                            }))
-                          }
-                          placeholder="e.g. mythic"
-                        />
-                        <p className="text-xs text-white-darker">
-                          Unique identifier used in code.
-                        </p>
-                      </div>
-                    </div>
+  {showEditModal && (
+    <Modal
+      isOpen={showEditModal}
+      onClose={closeModal}
+      title={isEditing ? "编辑稀有度" : "创建新稀有度"}
+      maxWidth="max-w-4xl"
+    >
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -20 }}
+        transition={{ duration: 0.2 }}
+      >
+        <div className="flex flex-col lg:flex-row gap-6 p-6">
+          <div className="flex-1 space-y-4">
+            <div className="p-4">
+              <div className="space-y-4">
+                <InputField
+                  label="稀有度名称"
+                  value={formData.name || ""}
+                  onChange={(e) => {
+                    const name = e.target.value;
+                    setFormData((prev) => ({
+                      ...prev,
+                      name,
+                      key: generateKeyFromName(name),
+                    }));
+                  }}
+                  placeholder="例如：神话"
+                />
+                <InputField
+                  label="稀有度标识符"
+                  value={formData.key || ""}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      key: e.target.value,
+                    }))
+                  }
+                  placeholder="例如：mythic"
+                />
+                <p className="text-xs text-white-darker">
+                  代码中使用的唯一标识符。
+                </p>
+              </div>
+            </div>
 
-                    <div className=" p-4">
-                      <h3 className="text-white-light font-medium mb-4">
-                        Shop Weight
-                      </h3>
-                      <div className="space-y-3">
-                        <div className="flex items-center gap-3">
-                          <input
-                            type="range"
-                            min="0"
-                            max="1"
-                            step="0.001"
-                            value={formData.default_weight || 0}
-                            onChange={(e) =>
-                              setFormData((prev) => ({
-                                ...prev,
-                                default_weight: parseFloat(e.target.value) || 0,
-                              }))
-                            }
-                            className="flex-1 h-2 bg-black-lighter rounded appearance-none cursor-pointer"
-                          />
-                          {isEditingWeight ? (
-                            <input
-                              type="number"
-                              min="0"
-                              max="1"
-                              step="0.001"
-                              value={weightInputValue}
-                              onChange={(e) =>
-                                setWeightInputValue(e.target.value)
-                              }
-                              onBlur={handleWeightInputBlur}
-                              onKeyDown={handleWeightInputKeyDown}
-                              autoFocus
-                              className="text-mint font-mono w-16 text-sm rounded px-1 py-0.5 text-center border-0 outline-none focus:ring-1 focus:ring-mint/30 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                            />
-                          ) : (
-                            <span
-                              className="text-mint font-mono w-16 text-sm cursor-pointer hover:bg-black-lighter rounded px-1 py-0.5 text-center"
-                              onClick={handleWeightClick}
-                            >
-                              {(formData.default_weight || 0).toFixed(3)}
-                            </span>
-                          )}
-                        </div>
-                        <p className="text-xs text-white-darker">
-                          Higher values appear more frequently. Click the value
-                          to edit directly.
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className=" p-4">
-                      <h3 className="text-white-light font-medium mb-3 flex items-center gap-2">
-                        <InformationCircleIcon className="h-4 w-4" />
-                        Vanilla Weights
-                      </h3>
-                      <div className="grid grid-cols-2 gap-2 text-xs">
-                        {vanillaRarities.map((rarity) => (
-                          <div
-                            key={rarity.name}
-                            className="flex justify-between"
-                          >
-                            <span style={{ color: rarity.color }}>
-                              {rarity.name}
-                            </span>
-                            <span className="text-white-darker font-mono">
-                              {rarity.weight}
-                            </span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="flex-1 space-y-4">
-                    <h3 className="text-white-light font-medium mb-4">
-                      Badge Colour
-                    </h3>
-                    <div
-                      className="mx-auto"
-                      style={{
-                        position: "relative",
-                        zIndex: 1000,
-                        pointerEvents: "auto",
-                      }}
+            <div className=" p-4">
+              <h3 className="text-white-light font-medium mb-4">
+                商店权重
+              </h3>
+              <div className="space-y-3">
+                <div className="flex items-center gap-3">
+                  <input
+                    type="range"
+                    min="0"
+                    max="1"
+                    step="0.001"
+                    value={formData.default_weight || 0}
+                    onChange={(e) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        default_weight: parseFloat(e.target.value) || 0,
+                      }))
+                    }
+                    className="flex-1 h-2 bg-black-lighter rounded appearance-none cursor-pointer"
+                  />
+                  {isEditingWeight ? (
+                    <input
+                      type="number"
+                      min="0"
+                      max="1"
+                      step="0.001"
+                      value={weightInputValue}
+                      onChange={(e) =>
+                        setWeightInputValue(e.target.value)
+                      }
+                      onBlur={handleWeightInputBlur}
+                      onKeyDown={handleWeightInputKeyDown}
+                      autoFocus
+                      className="text-mint font-mono w-16 text-sm rounded px-1 py-0.5 text-center border-0 outline-none focus:ring-1 focus:ring-mint/30 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                    />
+                  ) : (
+                    <span
+                      className="text-mint font-mono w-16 text-sm cursor-pointer hover:bg-black-lighter rounded px-1 py-0.5 text-center"
+                      onClick={handleWeightClick}
                     >
-                      <SketchPicker
-                        color={getPreviewBadgeColor()}
-                        onChange={handleColorChange}
-                        onChangeComplete={handleColorChange}
-                        disableAlpha={true}
-                        width="90%"
-                        styles={{
-                          default: {
-                            picker: {
-                              background: "#1A1A1A",
-                              border: "1px solid #333333",
-                              borderRadius: "0.5rem",
-                              boxShadow: "none",
-                              fontFamily: "inherit",
-                              pointerEvents: "auto",
-                              position: "relative",
-                              zIndex: 1001,
-                            },
-                            saturation: {
-                              pointerEvents: "auto",
-                              cursor: "crosshair",
-                              userSelect: "none",
-                              touchAction: "none",
-                            },
-                            hue: {
-                              pointerEvents: "auto",
-                              cursor: "pointer",
-                              userSelect: "none",
-                              touchAction: "none",
-                            },
-                            alpha: {
-                              pointerEvents: "auto",
-                              cursor: "pointer",
-                              userSelect: "none",
-                              touchAction: "none",
-                            },
-                            color: {
-                              cursor: "pointer",
-                            },
-                          },
-                        }}
-                      />
-                    </div>
+                      {(formData.default_weight || 0).toFixed(3)}
+                    </span>
+                  )}
+                </div>
+                <p className="text-xs text-white-darker">
+                  数值越高出现频率越高。点击数值可直接编辑。
+                </p>
+              </div>
+            </div>
 
-                    <div className="flex justify-center mb-8">
-                      <div className="relative mx-6">
-                        <div
-                          className="absolute inset-0 rounded-xl translate-y-1"
-                          style={{
-                            backgroundColor: darkenColor(
-                              getPreviewBadgeColor()
-                            ),
-                          }}
-                        />
-                        <div
-                          className="rounded-xl text-center text-lg py-2 relative px-12"
-                          style={{ backgroundColor: getPreviewBadgeColor() }}
-                        >
-                          <span
-                            className="relative font-bold"
-                            style={{ color: "#fff" }}
-                          >
-                            {formData.name || "Rarity"}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
+            <div className=" p-4">
+              <h3 className="text-white-light font-medium mb-3 flex items-center gap-2">
+                <InformationCircleIcon className="h-4 w-4" />
+                原版权重参考
+              </h3>
+              <div className="grid grid-cols-2 gap-2 text-xs">
+                {vanillaRarities.map((rarity) => (
+                  <div
+                    key={rarity.name}
+                    className="flex justify-between"
+                  >
+                    <span style={{ color: rarity.color }}>
+                      {rarity.name}
+                    </span>
+                    <span className="text-white-darker font-mono">
+                      {rarity.weight}
+                    </span>
                   </div>
-                </div>
+                ))}
+              </div>
+            </div>
+          </div>
 
-                <div className="flex justify-between gap-4 p-4 bg-black-dark border-t border-black-lighter">
-                  <Button
-                    variant="secondary"
-                    onClick={closeModal}
-                    className="mx-auto w-full"
+          <div className="flex-1 space-y-4">
+            <h3 className="text-white-light font-medium mb-4">
+              徽章颜色
+            </h3>
+            <div
+              className="mx-auto"
+              style={{
+                position: "relative",
+                zIndex: 1000,
+                pointerEvents: "auto",
+              }}
+            >
+              <SketchPicker
+                color={getPreviewBadgeColor()}
+                onChange={handleColorChange}
+                onChangeComplete={handleColorChange}
+                disableAlpha={true}
+                width="90%"
+                styles={{
+                  default: {
+                    picker: {
+                      background: "#1A1A1A",
+                      border: "1px solid #333333",
+                      borderRadius: "0.5rem",
+                      boxShadow: "none",
+                      fontFamily: "inherit",
+                      pointerEvents: "auto",
+                      position: "relative",
+                      zIndex: 1001,
+                    },
+                    saturation: {
+                      pointerEvents: "auto",
+                      cursor: "crosshair",
+                      userSelect: "none",
+                      touchAction: "none",
+                    },
+                    hue: {
+                      pointerEvents: "auto",
+                      cursor: "pointer",
+                      userSelect: "none",
+                      touchAction: "none",
+                    },
+                    alpha: {
+                      pointerEvents: "auto",
+                      cursor: "pointer",
+                      userSelect: "none",
+                      touchAction: "none",
+                    },
+                    color: {
+                      cursor: "pointer",
+                    },
+                  },
+                }}
+              />
+            </div>
+
+            <div className="flex justify-center mb-8">
+              <div className="relative mx-6">
+                <div
+                  className="absolute inset-0 rounded-xl translate-y-1"
+                  style={{
+                    backgroundColor: darkenColor(
+                      getPreviewBadgeColor()
+                    ),
+                  }}
+                />
+                <div
+                  className="rounded-xl text-center text-lg py-2 relative px-12"
+                  style={{ backgroundColor: getPreviewBadgeColor() }}
+                >
+                  <span
+                    className="relative font-bold"
+                    style={{ color: "#fff" }}
                   >
-                    Cancel
-                  </Button>
-                  <Button
-                    variant="primary"
-                    onClick={handleSaveRarity}
-                    className="mx-auto w-full"
-                  >
-                    {isEditing ? "Save Changes" : "Create Rarity"}
-                  </Button>
+                    {formData.name || "稀有度"}
+                  </span>
                 </div>
-              </motion.div>
-            </Modal>
-          )}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="flex justify-between gap-4 p-4 bg-black-dark border-t border-black-lighter">
+          <Button
+            variant="secondary"
+            onClick={closeModal}
+            className="mx-auto w-full"
+          >
+            取消
+          </Button>
+          <Button
+            variant="primary"
+            onClick={handleSaveRarity}
+            className="mx-auto w-full"
+          >
+            {isEditing ? "保存更改" : "创建稀有度"}
+          </Button>
+        </div>
+      </motion.div>
+    </Modal>
+  )}
         </AnimatePresence>
       </div>
     </div>

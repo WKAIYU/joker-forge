@@ -174,7 +174,7 @@ const FloatingTabDock: React.FC<{
     {
       id: "rarities" as const,
       icon: SwatchIcon,
-      label: "Rarities",
+      label: "稀有度",
     },
   ];
 

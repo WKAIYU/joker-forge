@@ -28,27 +28,27 @@ import { GENERIC_TRIGGERS, SCORING_TRIGGERS } from "./Triggers";
 
 export const CARD_EFFECT_CATEGORIES: CategoryDefinition[] = [
   {
-    label: "Scoring",
+    label: "计分",
     icon: ChartBarIcon,
   },
   {
-    label: "Economy",
+    label: "经济",
     icon: BanknotesIcon,
   },
   {
-    label: "Consumables",
+    label: "消耗品",
     icon: CakeIcon,
   },
   {
-    label: "Jokers",
+    label: "小丑牌",
     icon: UserGroupIcon,
   },
   {
-    label: "Variables",
+    label: "变量",
     icon: VariableIcon,
   },
   {
-    label: "Special",
+    label: "特殊",
     icon: SparklesIcon,
   },
 ];
@@ -56,204 +56,204 @@ export const CARD_EFFECT_CATEGORIES: CategoryDefinition[] = [
 export const CARD_EFFECT_TYPES: EffectTypeDefinition[] = [
   {
     id: "add_mult",
-    label: "Add Mult",
-    description: "Add mult to the current scoring calculation",
+    label: "添加倍数",
+    description: "在当前计分计算中添加倍数",
     applicableTriggers: SCORING_TRIGGERS,
     params: [
       {
         id: "value",
         type: "number",
-        label: "Amount",
+        label: "数量",
         default: 4,
         min: 1,
       },
     ],
-    category: "Scoring",
+    category: "计分",
   },
   {
     id: "add_chips",
-    label: "Add Chips",
-    description: "Add chips to the current scoring calculation",
+    label: "添加筹码",
+    description: "在当前计分计算中添加筹码",
     applicableTriggers: SCORING_TRIGGERS,
     params: [
       {
         id: "value",
         type: "number",
-        label: "Amount",
+        label: "数量",
         default: 30,
         min: 1,
       },
     ],
-    category: "Scoring",
+    category: "计分",
   },
   {
     id: "add_x_mult",
-    label: "Apply XMult",
-    description: "Multiply mult by the specified amount",
+    label: "应用倍数乘数",
+    description: "将倍数乘以指定数值",
     applicableTriggers: SCORING_TRIGGERS,
     params: [
       {
         id: "value",
         type: "number",
-        label: "Multiplier",
+        label: "乘数",
         default: 1.5,
         min: 1,
       },
     ],
-    category: "Scoring",
+    category: "计分",
   },
   {
     id: "add_x_chips",
-    label: "Apply XChips",
-    description: "Multiply chips by the specified amount",
+    label: "应用筹码乘数",
+    description: "将筹码乘以指定数值",
     applicableTriggers: SCORING_TRIGGERS,
     params: [
       {
         id: "value",
         type: "number",
-        label: "Multiplier",
+        label: "乘数",
         default: 2,
         min: 1,
       },
     ],
-    category: "Scoring",
+    category: "计分",
   },
   {
     id: "add_exp_mult",
-    label: "Apply ^Mult (Exponential)",
-    description: "Apply exponential mult (emult) - REQUIRES TALISMAN MOD",
+    label: "应用指数倍数 (^Mult)",
+    description: "应用指数倍数 (emult) - 需要 TALISMAN 模组",
     applicableTriggers: SCORING_TRIGGERS,
     params: [
       {
         id: "value",
         type: "number",
-        label: "Exponential Mult Value",
+        label: "指数倍数数值",
         default: 1.1,
       },
     ],
-    category: "Scoring",
+    category: "计分",
   },
   {
     id: "add_exp_chips",
-    label: "Apply ^Chips (Exponential)",
-    description: "Apply exponential chips (echips) - REQUIRES TALISMAN MOD",
+    label: "应用指数筹码 (^Chips)",
+    description: "应用指数筹码 (echips) - 需要 TALISMAN 模组",
     applicableTriggers: SCORING_TRIGGERS,
     params: [
       {
         id: "value",
         type: "number",
-        label: "Exponential Chips Value",
+        label: "指数筹码数值",
         default: 1.1,
       },
     ],
-    category: "Scoring",
+    category: "计分",
   },
   {
     id: "add_hyper_mult",
-    label: "Apply HyperMult",
-    description: "Apply (n)^ mult - REQUIRES TALISMAN MOD",
+    label: "应用超级倍数",
+    description: "应用 (n)^ 倍数 - 需要 TALISMAN 模组",
     applicableTriggers: SCORING_TRIGGERS,
     params: [
       {
         id: "arrows",
         type: "number",
-        label: "Number of Arrows",
+        label: "箭头数量",
         default: 1,
         min: 1
       },
       {
         id: "value",
         type: "number",
-        label: "Hyper Mult Value",
+        label: "超级倍数数值",
         default: 1.1,
       },
     ],
-    category: "Scoring",
+    category: "计分",
   },
   {
     id: "add_hyper_chips",
-    label: "Apply HyperChips",
-    description: "Apply (n)^ chips - REQUIRES TALISMAN MOD",
+    label: "应用超级筹码",
+    description: "应用 (n)^ 筹码 - 需要 TALISMAN 模组",
     applicableTriggers: SCORING_TRIGGERS,
     params: [
       {
         id: "arrows",
         type: "number",
-        label: "Number of Arrows",
+        label: "箭头数量",
         default: 1,
         min: 1
       },
       {
         id: "value",
         type: "number",
-        label: "Hyper Chips Value",
+        label: "超级筹码数值",
         default: 1.1,
       },
     ],
-    category: "Scoring",
+    category: "计分",
   },
   {
     id: "edit_dollars",
-    label: "Edit Dollars",
-    description: "Modify the player's money",
+    label: "编辑金钱",
+    description: "修改玩家的金钱",
     applicableTriggers: GENERIC_TRIGGERS,
     params: [
       {
         id: "operation",
         type: "select",
-        label: "Operation",
+        label: "操作",
         options: [
-          { value: "add", label: "Add" },
-          { value: "subtract", label: "Subtract" },
-          { value: "set", label: "Set To" },
+          { value: "add", label: "添加" },
+          { value: "subtract", label: "减少" },
+          { value: "set", label: "设置为" },
         ],
         default: "add",
       },
       {
         id: "value",
         type: "number",
-        label: "Dollar Amount",
+        label: "金额",
         default: 1,
         min: 1,
       },
     ],
-    category: "Economy",
+    category: "经济",
   },
   {
     id: "modify_internal_variable",
-    label: "Modify Internal Variable",
-    description: "Change an internal variable value for this joker",
+    label: "修改内部变量",
+    description: "更改此小丑牌的内部变量值",
     applicableTriggers: [...GENERIC_TRIGGERS],
     params: [
       {
         id: "variable_name",
         type: "text",
-        label: "Variable Name",
+        label: "变量名称",
         default: "var1",
       },
       {
         id: "operation",
         type: "select",
-        label: "Operation",
+        label: "操作",
         options: [
-          { value: "set", label: "Set to value" },
-          { value: "increment", label: "Increment by value" },
-          { value: "decrement", label: "Decrement by value" },
-          { value: "multiply", label: "Multiply by value" },
-          { value: "divide", label: "Divide by value" },
-          { value: "power", label: "Power by value" },
-          { value: "absolute", label: "Make the value Absolute"},
-          { value: "natural_log", label: "Natural logarithm the value"},
-          { value: "log10", label: "Standard logarithm the value"},
-          { value: "square_root", label: "Square root the value"},
-          { value: "ceil", label: "Round value up"},
-          { value: "floor", label: "Round value down"},
+          { value: "set", label: "设置为数值" },
+          { value: "increment", label: "增加数值" },
+          { value: "decrement", label: "减少数值" },
+          { value: "multiply", label: "乘以数值" },
+          { value: "divide", label: "除以数值" },
+          { value: "power", label: "数值次方" },
+          { value: "absolute", label: "取绝对值"},
+          { value: "natural_log", label: "自然对数"},
+          { value: "log10", label: "常用对数"},
+          { value: "square_root", label: "平方根"},
+          { value: "ceil", label: "向上取整"},
+          { value: "floor", label: "向下取整"},
         ],
       },
       {
         id: "value",
         type: "number",
-        label: "Value",
+        label: "数值",
         default: 1,
         showWhen: {
           parameter: "operation",
@@ -264,35 +264,34 @@ export const CARD_EFFECT_TYPES: EffectTypeDefinition[] = [
         }
       },
     ],
-    category: "Variables",
+    category: "变量",
   },
   {
       id: "change_suit_variable",
-      label: "Change Suit Variable",
-      description:
-        "Change the value of a suit variable to a specific suit or random suit",
+      label: "更改花色变量",
+      description: "将花色变量的值更改为特定花色或随机花色",
       applicableTriggers: [...GENERIC_TRIGGERS],
       params: [
         {
           id: "variable_name",
           type: "select",
-          label: "Suit Variable",
-          options: [], // Will be populated dynamically with suit variables
+          label: "花色变量",
+          options: [], // 将动态填充花色变量
         },
         {
           id: "change_type",
           type: "select",
-          label: "Change Type",
+          label: "更改类型",
           options: [
-            { value: "random", label: "Random Suit" },
-            { value: "specific", label: "Specific Suit" },
+            { value: "random", label: "随机花色" },
+            { value: "specific", label: "特定花色" },
           ],
           default: "random",
         },
         {
           id: "specific_suit",
           type: "select",
-          label: "Suit",
+          label: "花色",
           options: [...SUITS],
           showWhen: {
             parameter: "change_type",
@@ -300,34 +299,33 @@ export const CARD_EFFECT_TYPES: EffectTypeDefinition[] = [
           },
         },
       ],
-      category: "Variables",
+      category: "变量",
     },{
     id: "change_rank_variable",
-    label: "Change Rank Variable",
-    description:
-      "Change the value of a rank variable to a specific rank or random rank",
+    label: "更改点数变量",
+    description: "将点数变量的值更改为特定点数或随机点数",
     applicableTriggers: [...GENERIC_TRIGGERS],
     params: [
       {
         id: "variable_name",
         type: "select",
-        label: "Rank Variable",
-        options: [], // Will be populated dynamically with rank variables
+        label: "点数变量",
+        options: [], // 将动态填充点数变量
       },
       {
         id: "change_type",
         type: "select",
-        label: "Change Type",
+        label: "更改类型",
         options: [
-          { value: "random", label: "Random Rank" },
-          { value: "specific", label: "Specific Rank" },
+          { value: "random", label: "随机点数" },
+          { value: "specific", label: "特定点数" },
         ],
         default: "random",
       },
       {
         id: "specific_rank",
         type: "select",
-        label: "Rank",
+        label: "点数",
         options: [...RANKS],
         showWhen: {
           parameter: "change_type",
@@ -335,37 +333,36 @@ export const CARD_EFFECT_TYPES: EffectTypeDefinition[] = [
         },
       },
     ],
-    category: "Variables",
+    category: "变量",
   },
   {
     id: "change_pokerhand_variable",
-    label: "Change Poker Hand Variable",
-    description:
-      "Change the value of a poker hand variable to a specific poker hand or random poker hand",
+    label: "更改扑克牌型变量",
+    description: "将扑克牌型变量的值更改为特定牌型或随机牌型",
     applicableTriggers: [...GENERIC_TRIGGERS],
     params: [
       {
         id: "variable_name",
         type: "select",
-        label: "Poker Hand Variable",
+        label: "扑克牌型变量",
         options: [],
       },
       {
         id: "change_type",
         type: "select",
-        label: "Change Type",
+        label: "更改类型",
         options: [
-          { value: "random", label: "Random Poker Hand" },
-          { value: "specific", label: "Specific Poker Hand" },
-          { value: "most_played", label: "Most Played Hand" },
-          { value: "least_played", label: "Least Played Hand" },
+          { value: "random", label: "随机扑克牌型" },
+          { value: "specific", label: "特定扑克牌型" },
+          { value: "most_played", label: "最常使用牌型" },
+          { value: "least_played", label: "最少使用牌型" },
         ],
         default: "random",
       },
       {
         id: "specific_pokerhand",
         type: "select",
-        label: "Poker Hand",
+        label: "扑克牌型",
         options: [...POKER_HANDS],
         showWhen: {
           parameter: "change_type",
@@ -373,62 +370,62 @@ export const CARD_EFFECT_TYPES: EffectTypeDefinition[] = [
         },
       },
     ],
-    category: "Variables",
+    category: "变量",
   },{
     id: "destroy_card",
-    label: "Destroy Card",
-    description: "Destroy this card",
+    label: "摧毁卡牌",
+    description: "摧毁此卡牌",
     applicableTriggers: GENERIC_TRIGGERS,
     params: [
       {
         id: "setGlassTrigger",
         type: "select",
-        label: "Should Jokers like Glass Joker Trigger?",
+        label: "是否触发玻璃小丑牌等效果？",
         options: [
-          { value: "true", label: "Yes" },
-          { value: "false", label: "No" },
+          { value: "true", label: "是" },
+          { value: "false", label: "否" },
         ],
         default: "false",
       },
     ],
-    category: "Special",
+    category: "特殊",
   },
   {
     id: "retrigger_card",
-    label: "Retrigger Card",
-    description: "Trigger this card's effect additional times",
+    label: "重复触发卡牌",
+    description: "额外触发此卡牌的效果",
     applicableTriggers: SCORING_TRIGGERS,
     params: [
       {
         id: "value",
         type: "number",
-        label: "Number of Retriggers",
+        label: "重复触发次数",
         default: 1,
         min: 1,
       },
     ],
-    category: "Scoring",
+    category: "计分",
   },
   {
       id: "create_tag",
-      label: "Create Tag",
-      description: "Create a specific or random tag",
+      label: "创建标签",
+      description: "创建特定或随机标签",
       applicableTriggers: SCORING_TRIGGERS,
       params: [
         {
           id: "tag_type",
           type: "select",
-          label: "Tag Type",
+          label: "标签类型",
           options: [
-            { value: "random", label: "Random Tag" },
-            { value: "specific", label: "Specific Tag" },
+            { value: "random", label: "随机标签" },
+            { value: "specific", label: "特定标签" },
           ],
           default: "random",
         },
         {
           id: "specific_tag",
           type: "select",
-          label: "Specific Tag",
+          label: "特定标签",
           options: [...TAGS],
           showWhen: {
             parameter: "tag_type",
@@ -436,31 +433,30 @@ export const CARD_EFFECT_TYPES: EffectTypeDefinition[] = [
           },
         },
       ],
-      category: "Consumables",
+      category: "消耗品",
     },
   {
     id: "create_joker",
-    label: "Create Joker",
-    description:
-      "Create a random or specific joker card. For creating jokers from your own mod, it is [modprefix]_[joker_name]. You can find your mod prefix in the mod metadata page.",
+    label: "创建小丑牌",
+    description: "创建随机或特定的小丑牌。要创建自己模组中的小丑牌，格式为 [modprefix]_[joker_name]。你可以在模组元数据页面找到你的模组前缀。",
     applicableTriggers: GENERIC_TRIGGERS,
     params: [
       {
         id: "joker_type",
         type: "select",
-        label: "Joker Type",
+        label: "小丑牌类型",
         options: [
-          { value: "random", label: "Random Joker" },
-          { value: "specific", label: "Specific Joker" },
+          { value: "random", label: "随机小丑牌" },
+          { value: "specific", label: "特定小丑牌" },
         ],
         default: "random",
       },
       {
         id: "rarity",
         type: "select",
-        label: "Rarity",
+        label: "稀有度",
         options: () => [
-          { value: "random", label: "Any Rarity" },
+          { value: "random", label: "任意稀有度" },
           ...RARITIES(),
         ],
         default: "random",
@@ -472,7 +468,7 @@ export const CARD_EFFECT_TYPES: EffectTypeDefinition[] = [
       {
         id: "joker_key",
         type: "text",
-        label: "Joker Key ( [modprefix]_joker )",
+        label: "小丑牌标识符 ( [modprefix]_joker )",
         default: "joker",
         showWhen: {
           parameter: "joker_type",
@@ -482,7 +478,7 @@ export const CARD_EFFECT_TYPES: EffectTypeDefinition[] = [
       {
         id: "pool",
         type: "text",
-        label: "Pool Name (optional)",
+        label: "牌池名称 (可选)",
         default: "",
         showWhen: {
           parameter: "joker_type",
@@ -492,52 +488,52 @@ export const CARD_EFFECT_TYPES: EffectTypeDefinition[] = [
       {
         id: "edition",
         type: "select",
-        label: "Edition",
-        options: [{ value: "none", label: "No Edition" }, ...EDITIONS()],
+        label: "版本",
+        options: [{ value: "none", label: "无版本" }, ...EDITIONS()],
         default: "none",
       },
       {
         id: "sticker",
         type: "select",
-        label: "Sticker for Copy",
-        options: [{ value: "none", label: "No Sticker" }, ...STICKERS],
+        label: "复制贴纸",
+        options: [{ value: "none", label: "无贴纸" }, ...STICKERS],
         default: "none",
       },
       {
         id: "ignore_slots",
         type: "select",
-        label: "___ Joker Slots",
+        label: "___ 小丑牌槽位",
         options: [
-          { value: "respect", label: "Respect" },
-          { value: "ignore", label: "Ignore" },
+          { value: "respect", label: "遵守" },
+          { value: "ignore", label: "忽略" },
         ],
         default: "respect",
       },
     ],
-    category: "Jokers",
+    category: "小丑牌",
   },
   {
     id: "destroy_joker",
-    label: "Destroy Joker",
-    description: "Destroy an existing joker",
+    label: "摧毁小丑牌",
+    description: "摧毁现有小丑牌",
     applicableTriggers: GENERIC_TRIGGERS,
     params: [
       {
         id: "selection_method",
         type: "select",
-        label: "Selection Method",
+        label: "选择方式",
         options: [
-          { value: "random", label: "Random Joker" },
-          { value: "specific", label: "Specific Joker" },
-          { value: "position", label: "By Position" },
-          { value: "selected", label: "Selected Joker" },
+          { value: "random", label: "随机小丑牌" },
+          { value: "specific", label: "特定小丑牌" },
+          { value: "position", label: "按位置" },
+          { value: "selected", label: "选中小丑牌" },
         ],
         default: "random",
       },
       {
         id: "joker_key",
         type: "text",
-        label: "Joker Key (e.g., j_joker, j_greedy_joker)",
+        label: "小丑牌标识符 (例如: j_joker, j_greedy_joker)",
         default: "j_joker",
         showWhen: {
           parameter: "selection_method",
@@ -547,10 +543,10 @@ export const CARD_EFFECT_TYPES: EffectTypeDefinition[] = [
       {
         id: "position",
         type: "select",
-        label: "Position",
+        label: "位置",
         options: [
-          { value: "first", label: "First Joker" },
-          { value: "last", label: "Last Joker" },
+          { value: "first", label: "首个位置" },
+          { value: "last", label: "末尾位置" },
         ],
         default: "first",
         showWhen: {
@@ -559,29 +555,29 @@ export const CARD_EFFECT_TYPES: EffectTypeDefinition[] = [
         },
       },
     ],
-    category: "Jokers",
+    category: "小丑牌",
   },
   {
     id: "copy_joker",
-    label: "Copy Joker",
-    description: "Copy an existing joker",
+    label: "复制小丑牌",
+    description: "复制现有小丑牌",
     applicableTriggers: GENERIC_TRIGGERS,
     params: [
       {
         id: "selection_method",
         type: "select",
-        label: "Selection Method",
+        label: "选择方式",
         options: [
-          { value: "random", label: "Random Joker" },
-          { value: "specific", label: "Specific Joker" },
-          { value: "position", label: "By Position" },
+          { value: "random", label: "随机小丑牌" },
+          { value: "specific", label: "特定小丑牌" },
+          { value: "position", label: "按位置" },
         ],
         default: "random",
       },
       {
         id: "joker_key",
         type: "text",
-        label: "Joker Key (e.g., j_joker, j_greedy_joker)",
+        label: "小丑牌标识符 (例如: j_joker, j_greedy_joker)",
         default: "j_joker",
         showWhen: {
           parameter: "selection_method",
@@ -591,10 +587,10 @@ export const CARD_EFFECT_TYPES: EffectTypeDefinition[] = [
       {
         id: "position",
         type: "select",
-        label: "Position",
+        label: "位置",
         options: [
-          { value: "first", label: "First Joker" },
-          { value: "last", label: "Last Joker" },
+          { value: "first", label: "首个位置" },
+          { value: "last", label: "末尾位置" },
         ],
         default: "first",
         showWhen: {
@@ -605,42 +601,42 @@ export const CARD_EFFECT_TYPES: EffectTypeDefinition[] = [
       {
         id: "edition",
         type: "select",
-        label: "Edition for Copy",
+        label: "复制版本",
         options: [
-          { value: "none", label: "No Edition" },
-          { value: "e_foil", label: "Foil" },
-          { value: "e_holo", label: "Holographic" },
-          { value: "e_polychrome", label: "Polychrome" },
-          { value: "e_negative", label: "Negative" },
+          { value: "none", label: "无版本" },
+          { value: "e_foil", label: "箔片版" },
+          { value: "e_holo", label: "全像版" },
+          { value: "e_polychrome", label: "多彩版" },
+          { value: "e_negative", label: "负片版" },
         ],
         default: "none",
       },
     ],
-    category: "Jokers",
+    category: "小丑牌",
   },
   {
     id: "level_up_hand",
-    label: "Level Up Hand",
-    description: "Increase the level of a poker hand",
+    label: "升级牌型",
+    description: "提高扑克牌型的等级",
     applicableTriggers: GENERIC_TRIGGERS,
     params: [
       {
         id: "hand_selection",
         type: "select",
-        label: "Hand Selection",
+        label: "牌型选择",
         options: [
-          { value: "current", label: "Current Hand (Scored)" },
-          { value: "specific", label: "Specific Hand" },
-          { value: "most", label: "Most Played" },
-          { value: "least", label: "Least Played" },
-          { value: "random", label: "Random Hand" },
+          { value: "current", label: "当前牌型 (已计分)" },
+          { value: "specific", label: "特定牌型" },
+          { value: "most", label: "最常使用" },
+          { value: "least", label: "最少使用" },
+          { value: "random", label: "随机牌型" },
         ],
         default: "current",
       },
       {
         id: "specific_hand",
         type: "select",
-        label: "Specific Hand",
+        label: "特定牌型",
         options: [...POKER_HANDS],
         showWhen: {
           parameter: "hand_selection",
@@ -650,39 +646,38 @@ export const CARD_EFFECT_TYPES: EffectTypeDefinition[] = [
       {
         id: "value",
         type: "number",
-        label: "Levels",
+        label: "等级",
         default: 1,
         min: 1,
       },
     ],
-    category: "Special",
+    category: "特殊",
   },
   {
     id: "create_consumable",
-    label: "Create Consumable",
-    description:
-      "Create consumable cards and add them to your consumables area",
+    label: "创建消耗品",
+    description: "创建消耗品卡牌并添加到你的消耗品区域",
     applicableTriggers: GENERIC_TRIGGERS,
     params: [
       {
         id: "set",
         type: "select",
-        label: "Consumable Set",
+        label: "消耗品集合",
         options: () => [
-          { value: "random", label: "Random Consumable" },
+          { value: "random", label: "随机消耗品" },
           ...CONSUMABLE_SETS(),
         ],
         default: "random",
       },{
         id: "specific_card",
         type: "select",
-        label: "Specific Card",
+        label: "特定卡牌",
         options: (parentValues: Record<string, unknown>) => {
           const selectedSet = parentValues?.set as string;
           if (!selectedSet || selectedSet === "random") {
-            return [{ value: "random", label: "Random from Set" }];
+            return [{ value: "random", label: "集合中随机" }];
           }
-          // Handle vanilla sets
+          // 处理原版集合
           if (selectedSet === "Tarot") {
             const vanillaCards = TAROT_CARDS.map((card) => ({
               value: card.key,
@@ -695,7 +690,7 @@ export const CARD_EFFECT_TYPES: EffectTypeDefinition[] = [
                 label: consumable.label,
               }));
             return [
-              { value: "random", label: "Random from Set" },
+              { value: "random", label: "集合中随机" },
               ...vanillaCards,
               ...customCards,
             ];}
@@ -711,7 +706,7 @@ export const CARD_EFFECT_TYPES: EffectTypeDefinition[] = [
                 label: consumable.label,
               }));
             return [
-              { value: "random", label: "Random from Set" },
+              { value: "random", label: "集合中随机" },
               ...vanillaCards,
               ...customCards,
             ];}
@@ -727,13 +722,12 @@ export const CARD_EFFECT_TYPES: EffectTypeDefinition[] = [
                 label: consumable.label,
               }));
             return [
-              { value: "random", label: "Random from Set" },
+              { value: "random", label: "集合中随机" },
               ...vanillaCards,
               ...customCards,
             ];
           }
-          // Handle custom sets
-          // Remove mod prefix to get the actual set key
+          // 处理自定义集合
           const setKey = selectedSet.includes("_")
             ? selectedSet.split("_").slice(1).join("_")
             : selectedSet;
@@ -742,17 +736,17 @@ export const CARD_EFFECT_TYPES: EffectTypeDefinition[] = [
               consumable.set === setKey || consumable.set === selectedSet
           );
           return [
-            { value: "random", label: "Random from Set" },
+            { value: "random", label: "集合中随机" },
             ...customConsumablesInSet,
           ];},
         default: "random",
       },{
         id: "soulable",
         type: "select",
-        label: "Soulable",
+        label: "可灵魂绑定",
         options: [
-          { value: "y", label: "Yes" },
-          { value: "n", label: "No" },
+          { value: "y", label: "是" },
+          { value: "n", label: "否" },
         ],
         showWhen: {
           parameter: "specific_card",
@@ -762,44 +756,44 @@ export const CARD_EFFECT_TYPES: EffectTypeDefinition[] = [
       },{
         id: "is_negative",
         type: "select",
-        label: "Edition",
+        label: "版本",
         options: [
-          { value: "n", label: "No Edition" },
-          { value: "y", label: "Negative Edition" },
+          { value: "n", label: "无版本" },
+          { value: "y", label: "负片版本" },
         ],
         default: "n",
       },{
         id: "count",
         type: "number",
-        label: "Number of Cards",
+        label: "卡牌数量",
         default: 1,
         min: 1,
         max: 5,
       },{
         id: "ignore_slots",
         type: "select",
-        label: "Ignore Slots",
+        label: "忽略槽位",
         options: [
-          { value: "y", label: "True" },
-          { value: "n", label: "False" },
+          { value: "y", label: "是" },
+          { value: "n", label: "否" },
         ],
         default:"n",
       },
     ],
-    category: "Consumables",
+    category: "消耗品",
   },
   {
     id: "copy_consumable",
-    label: "Copy Consumable",
-    description: "Copy an existing consumable card from your collection",
+    label: "复制消耗品",
+    description: "从你的收藏中复制现有消耗品卡牌",
     applicableTriggers: GENERIC_TRIGGERS,
     params: [
       {
         id: "set",
         type: "select",
-        label: "Consumable Set",
+        label: "消耗品集合",
         options: () => [
-          { value: "random", label: "Random Consumable" },
+          { value: "random", label: "随机消耗品" },
           ...CONSUMABLE_SETS(),
         ],
         default: "random",
@@ -807,15 +801,15 @@ export const CARD_EFFECT_TYPES: EffectTypeDefinition[] = [
       {
         id: "specific_card",
         type: "select",
-        label: "Specific Card",
+        label: "特定卡牌",
         options: (parentValues: Record<string, unknown>) => {
           const selectedSet = parentValues?.set as string;
 
           if (!selectedSet || selectedSet === "random") {
-            return [{ value: "random", label: "Random from Set" }];
+            return [{ value: "random", label: "集合中随机" }];
           }
 
-          // Handle vanilla sets
+          // 处理原版集合
           if (selectedSet === "Tarot") {
             const vanillaCards = TAROT_CARDS.map((card) => ({
               value: card.key,
@@ -830,7 +824,7 @@ export const CARD_EFFECT_TYPES: EffectTypeDefinition[] = [
               }));
 
             return [
-              { value: "random", label: "Random from Set" },
+              { value: "random", label: "集合中随机" },
               ...vanillaCards,
               ...customCards,
             ];
@@ -850,7 +844,7 @@ export const CARD_EFFECT_TYPES: EffectTypeDefinition[] = [
               }));
 
             return [
-              { value: "random", label: "Random from Set" },
+              { value: "random", label: "集合中随机" },
               ...vanillaCards,
               ...customCards,
             ];
@@ -870,13 +864,13 @@ export const CARD_EFFECT_TYPES: EffectTypeDefinition[] = [
               }));
 
             return [
-              { value: "random", label: "Random from Set" },
+              { value: "random", label: "集合中随机" },
               ...vanillaCards,
               ...customCards,
             ];
           }
 
-          // Handle custom sets
+          // 处理自定义集合
           const setKey = selectedSet.includes("_")
             ? selectedSet.split("_").slice(1).join("_")
             : selectedSet;
@@ -887,7 +881,7 @@ export const CARD_EFFECT_TYPES: EffectTypeDefinition[] = [
           );
 
           return [
-            { value: "random", label: "Random from Set" },
+            { value: "random", label: "集合中随机" },
             ...customConsumablesInSet,
           ];
         },
@@ -896,28 +890,28 @@ export const CARD_EFFECT_TYPES: EffectTypeDefinition[] = [
       {
         id: "is_negative",
         type: "select",
-        label: "Edition",
+        label: "版本",
         options: [
-          { value: "none", label: "No Edition" },
-          { value: "negative", label: "Negative Edition" },
+          { value: "none", label: "无版本" },
+          { value: "negative", label: "负片版本" },
         ],
         default: "none",
       },
     ],
-    category: "Consumables",
+    category: "消耗品",
   },
   {
     id: "destroy_consumable",
-    label: "Destroy Consumable",
-    description: "Destroy a consumable card from your collection",
+    label: "摧毁消耗品",
+    description: "从你的收藏中摧毁消耗品卡牌",
     applicableTriggers: GENERIC_TRIGGERS,
     params: [
       {
         id: "set",
         type: "select",
-        label: "Consumable Set",
+        label: "消耗品集合",
         options: () => [
-          { value: "random", label: "Random Consumable" },
+          { value: "random", label: "随机消耗品" },
           ...CONSUMABLE_SETS(),
         ],
         default: "random",
@@ -925,15 +919,15 @@ export const CARD_EFFECT_TYPES: EffectTypeDefinition[] = [
       {
         id: "specific_card",
         type: "select",
-        label: "Specific Card",
+        label: "特定卡牌",
         options: (parentValues: Record<string, unknown>) => {
           const selectedSet = parentValues?.set as string;
 
           if (!selectedSet || selectedSet === "random") {
-            return [{ value: "random", label: "Random from Set" }];
+            return [{ value: "random", label: "集合中随机" }];
           }
 
-          // Handle vanilla sets
+          // 处理原版集合
           if (selectedSet === "Tarot") {
             const vanillaCards = TAROT_CARDS.map((card) => ({
               value: card.key,
@@ -948,7 +942,7 @@ export const CARD_EFFECT_TYPES: EffectTypeDefinition[] = [
               }));
 
             return [
-              { value: "random", label: "Random from Set" },
+              { value: "random", label: "集合中随机" },
               ...vanillaCards,
               ...customCards,
             ];
@@ -968,7 +962,7 @@ export const CARD_EFFECT_TYPES: EffectTypeDefinition[] = [
               }));
 
             return [
-              { value: "random", label: "Random from Set" },
+              { value: "random", label: "集合中随机" },
               ...vanillaCards,
               ...customCards,
             ];
@@ -988,13 +982,13 @@ export const CARD_EFFECT_TYPES: EffectTypeDefinition[] = [
               }));
 
             return [
-              { value: "random", label: "Random from Set" },
+              { value: "random", label: "集合中随机" },
               ...vanillaCards,
               ...customCards,
             ];
           }
 
-          // Handle custom sets
+          // 处理自定义集合
           const setKey = selectedSet.includes("_")
             ? selectedSet.split("_").slice(1).join("_")
             : selectedSet;
@@ -1005,48 +999,47 @@ export const CARD_EFFECT_TYPES: EffectTypeDefinition[] = [
           );
 
           return [
-            { value: "random", label: "Random from Set" },
+            { value: "random", label: "集合中随机" },
             ...customConsumablesInSet,
           ];
         },
         default: "random",
       },
     ],
-    category: "Consumables",
+    category: "消耗品",
   },
   {
     id: "create_last_played_planet",
-    label: "Create Last Played Planet",
-    description:
-      "Create a Planet card corresponding to the last hand played (Blue Seal effect)",
+    label: "创建最后使用星球牌",
+    description: "创建与最后使用手牌对应的星球牌 (蓝蜡封印效果)",
     applicableTriggers: GENERIC_TRIGGERS,
     params: [
       {
         id: "is_negative",
         type: "select",
-        label: "Edition",
+        label: "版本",
         options: [
-          { value: "none", label: "No Edition" },
-          { value: "negative", label: "Negative Edition" },
+          { value: "none", label: "无版本" },
+          { value: "negative", label: "负片版本" },
         ],
         default: "none",
       },
     ],
-    category: "Consumables",
+    category: "消耗品",
   },
   {
     id: "edit_playing_card",
-    label: "Edit Playing Card",
-    description: "Modify the properties of this playing card",
+    label: "编辑扑克牌",
+    description: "修改此扑克牌的属性",
     applicableTriggers: GENERIC_TRIGGERS,
     params: [
       {
         id: "new_rank",
         type: "select",
-        label: "New Rank",
+        label: "新点数",
         options: [
-          { value: "none", label: "Don't Change" },
-          { value: "random", label: "Random" },
+          { value: "none", label: "不更改" },
+          { value: "random", label: "随机" },
           ...RANKS.map((rank) => ({ value: rank.label, label: rank.label })),
         ],
         default: "none",
@@ -1054,10 +1047,10 @@ export const CARD_EFFECT_TYPES: EffectTypeDefinition[] = [
       {
         id: "new_suit",
         type: "select",
-        label: "New Suit",
+        label: "新花色",
         options: [
-          { value: "none", label: "Don't Change" },
-          { value: "random", label: "Random" },
+          { value: "none", label: "不更改" },
+          { value: "random", label: "随机" },
           ...SUITS,
         ],
         default: "none",
@@ -1065,11 +1058,11 @@ export const CARD_EFFECT_TYPES: EffectTypeDefinition[] = [
       {
         id: "new_enhancement",
         type: "select",
-        label: "New Enhancement",
+        label: "新增强",
         options: () => [
-          { value: "none", label: "Don't Change" },
-          { value: "remove", label: "Remove Enhancement" },
-          { value: "random", label: "Random" },
+          { value: "none", label: "不更改" },
+          { value: "remove", label: "移除增强" },
+          { value: "random", label: "随机" },
           ...ENHANCEMENTS(),
         ],
         default: "none",
@@ -1077,11 +1070,11 @@ export const CARD_EFFECT_TYPES: EffectTypeDefinition[] = [
       {
         id: "new_seal",
         type: "select",
-        label: "New Seal",
+        label: "新封印",
         options: () => [
-          { value: "none", label: "Don't Change" },
-          { value: "remove", label: "Remove Seal" },
-          { value: "random", label: "Random" },
+          { value: "none", label: "不更改" },
+          { value: "remove", label: "移除封印" },
+          { value: "random", label: "随机" },
           ...SEALS(),
         ],
         default: "none",
@@ -1089,66 +1082,66 @@ export const CARD_EFFECT_TYPES: EffectTypeDefinition[] = [
       {
         id: "new_edition",
         type: "select",
-        label: "New Edition",
+        label: "新版本",
         options: [
-          { value: "none", label: "Don't Change" },
-          { value: "remove", label: "Remove Edition" },
-          { value: "random", label: "Random" },
+          { value: "none", label: "不更改" },
+          { value: "remove", label: "移除版本" },
+          { value: "random", label: "随机" },
           ...EDITIONS(),
         ],
         default: "none",
       },
     ],
-    category: "Special",
+    category: "特殊",
   },
   {
     id: "show_message",
-    label: "Show Message",
-    description: "Display a custom message with specified color",
+    label: "显示消息",
+    description: "显示指定颜色的自定义消息",
     applicableTriggers: GENERIC_TRIGGERS,
     params: [
       {
         id: "colour",
         type: "select",
-        label: "Message Color",
+        label: "消息颜色",
         options: [
-          { value: "G.C.WHITE", label: "White" },
-          { value: "G.C.RED", label: "Red" },
-          { value: "G.C.GREEN", label: "Green" },
-          { value: "G.C.BLUE", label: "Blue" },
-          { value: "G.C.YELLOW", label: "Yellow" },
-          { value: "G.C.PURPLE", label: "Purple" },
-          { value: "G.C.ORANGE", label: "Orange" },
-          { value: "G.C.BLACK", label: "Black" },
-          { value: "G.C.CHIPS", label: "Chips (Blue)" },
-          { value: "G.C.MULT", label: "Mult (Red)" },
-          { value: "G.C.MONEY", label: "Money (Yellow)" },
+          { value: "G.C.WHITE", label: "白色" },
+          { value: "G.C.RED", label: "红色" },
+          { value: "G.C.GREEN", label: "绿色" },
+          { value: "G.C.BLUE", label: "蓝色" },
+          { value: "G.C.YELLOW", label: "黄色" },
+          { value: "G.C.PURPLE", label: "紫色" },
+          { value: "G.C.ORANGE", label: "橙色" },
+          { value: "G.C.BLACK", label: "黑色" },
+          { value: "G.C.CHIPS", label: "筹码 (蓝色)" },
+          { value: "G.C.MULT", label: "倍数 (红色)" },
+          { value: "G.C.MONEY", label: "金钱 (黄色)" },
         ],
         default: "G.C.WHITE",
       },
     ],
-    category: "Special",
+    category: "特殊",
   },
   {
     id: "balance",
-    label: "Balance Chips and Mult",
-    description: "Balance chips and mult values (Plasma Deck effect)",
+    label: "平衡筹码和倍数",
+    description: "平衡筹码和倍数数值 (等离子牌组效果)",
     applicableTriggers: SCORING_TRIGGERS,
     params: [],
-    category: "Special",
+    category: "特殊",
   },
   {
     id: "swap_chips_mult",
-    label: "Swap Chips & Mult",
-    description: "Swap the Chips and Mult values",
+    label: "交换筹码和倍数",
+    description: "交换筹码和倍数的数值",
     applicableTriggers: SCORING_TRIGGERS,
     params: [],
-    category: "Special",
+    category: "特殊",
   },
   {
     id: "draw_cards",
-    label: "Draw Cards to Hand",
-    description: "Draw cards from your deck to your hand",
+    label: "抽牌到手牌",
+    description: "从你的牌组中抽牌到手牌",
     applicableTriggers: [
       "card_scored",
       "card_discarded",
@@ -1159,18 +1152,17 @@ export const CARD_EFFECT_TYPES: EffectTypeDefinition[] = [
       {
         id: "value",
         type: "number",
-        label: "Amount",
+        label: "数量",
         default: 1,
         min: 1,
       },
     ],
-    category: "Special",
+    category: "特殊",
   },
   {
     id: "emit_flag",
-    label: "Emit Flag",
-    description:
-      "Emit a custom flag. Flags are global variables that can be set to true or false and checked by any other jokers",
+    label: "发送标志位",
+    description: "发送自定义标志位。标志位是可以设置为真或假的全局变量，可以被任何其他小丑牌检查。",
     applicableTriggers: [
       "card_scored",
       "card_discarded",
@@ -1181,45 +1173,45 @@ export const CARD_EFFECT_TYPES: EffectTypeDefinition[] = [
       {
         id: "flag_name",
         type: "text",
-        label: "Unique Flag Name",
+        label: "唯一标志位名称",
         default: "custom_flag",
       },
       {
         id: "change",
         type: "select",
-        label: "Set Flag to",
+        label: "设置标志位为",
         options: [
-          { value: "true", label: "True" },
-          { value: "false", label: "False" },
-          { value: "invert", label: "Invert Current" },
+          { value: "true", label: "真" },
+          { value: "false", label: "假" },
+          { value: "invert", label: "反转当前" },
         ],
         default: "true",
       },
     ],
-    category: "Special",
+    category: "特殊",
   },
   {
     id: "play_sound",
-    label: "Play a sound",
-    description: "Play a specific sound defined in the Sound Tab",
+    label: "播放音效",
+    description: "播放音效标签中定义的特定音效",
     applicableTriggers: [...GENERIC_TRIGGERS],
     params: [
       {
         id: "sound_key",
         type: "text",
-        label: "Sound Key (modprefix_key)",
+        label: "音效标识符 (modprefix_key)",
         default: "",
       },
     ],
-    category: "Special",
+    category: "特殊",
   },
   {
     id: "crash_game",
-    label: "Crash the Game",
-    description: "Crash the Game with a Custom message",
+    label: "使游戏崩溃",
+    description: "使用自定义消息使游戏崩溃",
     applicableTriggers: [...GENERIC_TRIGGERS],
     params: [],
-    category: "Special",
+    category: "特殊",
   },
 ];
 

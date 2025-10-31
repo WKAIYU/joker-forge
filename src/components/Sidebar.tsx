@@ -766,7 +766,7 @@ const handleCreateNewmod = async () => {
                     >
                       <div className="bg-black-dark border border-black-lighter rounded-lg px-3 py-2 shadow-lg">
                         <span className="text-sm text-white-light tracking-wide whitespace-nowrap">
-                          Shop & Consumables
+                          商店与消耗品
                         </span>
                       </div>
                     </motion.div>
@@ -850,7 +850,7 @@ const handleCreateNewmod = async () => {
                     >
                       <div className="bg-black-dark border border-black-lighter rounded-lg px-3 py-2 shadow-lg">
                         <span className="text-sm text-white-light tracking-wide whitespace-nowrap">
-                          Miscs
+                          杂项
                         </span>
                       </div>
                     </motion.div>
@@ -987,7 +987,7 @@ const handleCreateNewmod = async () => {
                     >
                       <div className="bg-black-dark border border-black-lighter rounded-lg px-3 py-2 shadow-lg">
                         <span className="text-sm text-white-light tracking-wide whitespace-nowrap">
-                          More Resources
+                          更多
                         </span>
                       </div>
                     </motion.div>

@@ -541,7 +541,7 @@ const RuleCard: React.FC<RuleCardProps> = ({
         >
           <div className="flex items-center justify-between mb-10">
             <div className="text-white-darker text-xs tracking-wider">
-              CONDITION GROUP {groupIndex + 1} {isSelected && "(SELECTED)"}
+              条件组 {groupIndex + 1} {isSelected && "(已选中)"}
             </div>
             <div onClick={(e) => e.stopPropagation()}>
               <button
@@ -550,7 +550,7 @@ const RuleCard: React.FC<RuleCardProps> = ({
                   onDeleteConditionGroup(rule.id, group.id);
                 }}
                 className="w-full h-full flex items-center rounded justify-center"
-                title="Delete Condition Group"
+                title="删除条件组"
               >
                 <XMarkIcon className="h-4 w-4 text-white-dark hover:text-white-lighter cursor-pointer transition-colors" />
               </button>
@@ -625,9 +625,9 @@ const RuleCard: React.FC<RuleCardProps> = ({
               }}
               className="px-3 text-white-darker text-sm font-medium tracking-wider cursor-pointer rounded transition-colors hover:bg-black-light"
             >
-              {groupOperators[`group-${groupIndex}`] ||
+              {(groupOperators[`group-${groupIndex}`] ||
                 group.operator?.toUpperCase() ||
-                "AND"}
+                "AND") === "AND" ? "与" : "或"}
             </button>
           </div>
         )}
@@ -895,12 +895,12 @@ const RuleCard: React.FC<RuleCardProps> = ({
               >
                 {totalConditions > 0 && (
                   <span className="text-white-darker text-xs">
-                    {totalConditions} Condition{totalConditions !== 1 && "s"}
+                    {totalConditions} 个条件{totalConditions !== 1 && ""}
                   </span>
                 )}
                 {totalEffects > 0 && (
                   <span className="text-white-darker text-xs">
-                    {totalEffects} Effect{totalEffects !== 1 && "s"}
+                    {totalEffects} 个效果{totalEffects !== 1 && ""}
                   </span>
                 )}
                 <div className="flex items-center gap-2">

@@ -372,7 +372,7 @@ const EditJokerInfo: React.FC<EditJokerInfoProps> = ({
             });
           } else {
             alert(
-              `Overlay image dimensions must be either 71x95 or 142x190 pixels. Your image is ${img.width}x${img.height}.`
+              `叠加图像尺寸必须为 71x95 或 142x190 像素。您的图像尺寸为 ${img.width}x${img.height}。`
             );
           }
         };
@@ -963,7 +963,7 @@ const EditJokerInfo: React.FC<EditJokerInfoProps> = ({
                                 className="w-full"
                                 size="sm"
                               >
-                                Remove Overlay
+                                删除叠加层
                               </Button>
                             )}
                           </div>

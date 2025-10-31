@@ -515,15 +515,15 @@ const RuleBuilder: React.FC<RuleBuilderProps> = ({
       return baseLabel;
     }
 
-    const prefix = isCondition ? "If " : "";
-    const skipValues = [
-      "none",
-      "dont_change",
-      "no_edition",
-      "remove",
-      "any",
-      "specific",
-    ];
+    const prefix = isCondition ? "如果 " : "";
+      const skipValues = [
+        "none",
+        "dont_change", 
+        "no_edition",
+        "remove",
+        "any",
+        "specific",
+      ];
     const processedParams = new Set<string>();
 
     let title = "";
@@ -554,7 +554,7 @@ const RuleBuilder: React.FC<RuleBuilderProps> = ({
         valueDisplay = `$${params.value}`;
       }
 
-      title = `${prefix}${baseLabel
+title = `${prefix}${baseLabel
         .replace("Player ", "")
         .replace("Remaining ", "")} ${op} ${valueDisplay}`;
       processedParams.add("operator");
@@ -564,19 +564,19 @@ const RuleBuilder: React.FC<RuleBuilderProps> = ({
       processedParams.add("value");
     } else if (params.specific_rank || params.rank_group) {
       const rank = params.specific_rank || params.rank_group;
-      title = `${prefix}Card Rank = ${rank}`;
+      title = `${prefix}卡牌点数 = ${rank}`;
       processedParams.add("specific_rank");
       processedParams.add("rank_group");
     } else if (params.specific_suit || params.suit_group) {
       const suit = params.specific_suit || params.suit_group;
-      title = `${prefix}Card Suit = ${suit}`;
+      title = `${prefix}卡牌花色 = ${suit}`;
       processedParams.add("specific_suit");
       processedParams.add("suit_group");
     } else if (!isCondition && params.operation && params.value !== undefined) {
       const operationMap: { [key: string]: string } = {
         add: "+",
         subtract: "-",
-        set: "Set to",
+        set: "设置为",
       };
       const op = operationMap[params.operation as string] || params.operation;
       const target = baseLabel
@@ -592,21 +592,21 @@ const RuleBuilder: React.FC<RuleBuilderProps> = ({
         if (typeDefinition.id === "add_dollars") {
           valueDisplay = `$${params.value}`;
         }
-        title = `Add ${valueDisplay} ${baseLabel.replace("Add ", "")}`;
+        title = `添加 ${valueDisplay} ${baseLabel.replace("Add ", "")}`;
         processedParams.add("value");
       } else if (params.value !== undefined && baseLabel.startsWith("Apply")) {
-        title = `Apply ${params.value}x ${baseLabel
+        title = `应用 ${params.value}x ${baseLabel
           .replace("Apply x", "")
           .replace("Apply ", "")}`;
         processedParams.add("value");
       } else if (params.repetitions !== undefined) {
-        title = `Retrigger ${params.repetitions}x`;
+        title = `重复触发 ${params.repetitions}x`;
         processedParams.add("repetitions");
       } else if (
         typeDefinition.id === "level_up_hand" &&
         params.value !== undefined
       ) {
-        title = `Level Up Hand ${params.value}x`;
+        title = `升级牌型 ${params.value}x`;
         processedParams.add("value");
       } else {
         title = baseLabel;
@@ -614,7 +614,6 @@ const RuleBuilder: React.FC<RuleBuilderProps> = ({
     } else {
       title = baseLabel;
     }
-
     const additionalParams: string[] = [];
 
     Object.entries(params).forEach(([key, value]) => {
@@ -1632,19 +1631,19 @@ const RuleBuilder: React.FC<RuleBuilderProps> = ({
           />
           <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-50 bg-black-dark backdrop-blur-md border border-black-lighter rounded-lg px-3 py-1 flex items-center gap-3">
             <div className="text-white-darker text-xs">
-              Pan: {Math.round(panState.x)}, {Math.round(panState.y)}
+              平移: {Math.round(panState.x)}, {Math.round(panState.y)}
             </div>
             <button
               onClick={handleRecenter}
               className="p-1 text-white-darker hover:text-white transition-colors cursor-pointer"
-              title="Recenter View"
+              title="居中视图"
             >
               <ArrowsPointingInIcon className="h-4 w-4" />
             </button>
             <button
               onClick={handleResetPosition}
               className="p-1 text-white-darker hover:text-white transition-colors cursor-pointer"
-              title="Reset Window Position"
+              title="重置窗口位置"
             >
               <WindowIcon className="h-4 w-4" />
             </button>
@@ -1661,7 +1660,7 @@ const RuleBuilder: React.FC<RuleBuilderProps> = ({
                   ? "p-1 text-mint-light hover:text-mint-lighter transition-colors cursor-pointer"
                   : "p-1 text-white-darker hover:text-white transition-colors cursor-pointer"
               }
-              title="Toggle Grid Snapping (S)"
+              title="切换网格吸附 (S)"
             >
               <Squares2X2Icon className="h-4 w-4" />
             </button>
@@ -1673,7 +1672,7 @@ const RuleBuilder: React.FC<RuleBuilderProps> = ({
               icon={<CheckCircleIcon className="h-4 w-4" />}
               className="text-xs cursor-pointer"
             >
-              Save & Close
+              保存并关闭
             </Button>
           </div>
           {isInitialLoadComplete &&

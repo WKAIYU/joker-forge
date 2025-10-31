@@ -16,7 +16,7 @@ export interface CategoryDefinition {
 
 export const TRIGGER_CATEGORIES: CategoryDefinition[] = [
   {
-    label: "手牌得分",
+    label: "计分",  // 统一为"计分"
     icon: HandRaisedIcon,
   },
   {
@@ -28,19 +28,19 @@ export const TRIGGER_CATEGORIES: CategoryDefinition[] = [
     icon: ClockIcon,
   },
   {
-    label: "经济系统",
+    label: "经济",  // 统一为"经济"
     icon: BanknotesIcon,
   },
   {    
-    label: "卡包与消耗品",
+    label: "消耗品",  // 统一为"消耗品"
     icon: RectangleStackIcon,
   },
   {    
-    label: "商店事件",
+    label: "商店效果",  // 统一为"商店效果"
     icon: ShoppingCartIcon,
   },
   {    
-    label: "特殊事件",
+    label: "特殊",  // 统一为"特殊"
     icon: SparklesIcon,
   },
 ];

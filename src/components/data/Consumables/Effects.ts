@@ -32,11 +32,11 @@ import {
 
 export const CONSUMABLE_EFFECT_CATEGORIES: CategoryDefinition[] = [
   {
-    label: "Selected Cards",
+    label: "选中卡牌",  // 统一为中文
     icon: CursorArrowRaysIcon,
   },
   {
-    label: "Scoring",
+    label: "计分",  // 统一为中文
     icon: ChartBarIcon,
   },
   {
@@ -44,204 +44,203 @@ export const CONSUMABLE_EFFECT_CATEGORIES: CategoryDefinition[] = [
     icon: PencilSquareIcon,
   },
   {
-    label: "Economy",
+    label: "经济",  // 统一为中文
     icon: BanknotesIcon,
   },
   {
-    label: "Shop Effects",
+    label: "商店效果",  // 统一为中文
     icon: ShoppingBagIcon,
   },
   {
-    label: "Hand Effects",
+    label: "手牌效果",  // 统一为中文
     icon: HandRaisedIcon,
   },
-    {
-    label: "Game Rules",
+  {
+    label: "游戏规则",  // 统一为中文
     icon: Cog6ToothIcon,
   },
   {
-    label: "Consumables",
+    label: "消耗品",  // 统一为中文
     icon: CakeIcon,
   },
   {
-    label: "Jokers",
+    label: "小丑牌",  // 统一为中文
     icon: UserGroupIcon,
   },
   {
-    label: "Special",
+    label: "特殊",  // 统一为中文
     icon: SparklesIcon,
   },
 ];
 
 export const CONSUMABLE_EFFECT_TYPES: EffectTypeDefinition[] = [
-  // ===== SCORERING EFFECTS =====
+  // ===== 计分效果 =====
   {
     id: "add_chips",
-    label: "Add Chips",
-    description: "Add a flat amount of chips to the hand score",
+    label: "添加筹码",
+    description: "向手牌分数添加固定数量的筹码",
     applicableTriggers: ["held_hand"],
     params: [
       {
         id: "value",
         type: "number",
-        label: "Amount",
+        label: "数量",
         default: 10,
         min: 0,
       },
     ],
-    category: "Scoring",
+    category: "计分",
   },
   {
     id: "apply_x_chips",
-    label: "Apply xChips",
-    description: "Multiply the chips by this value",
+    label: "应用筹码乘数",
+    description: "将筹码乘以该数值",
     applicableTriggers: ["held_hand"],
     params: [
       {
         id: "value",
         type: "number",
-        label: "Multiplier",
+        label: "乘数",
         default: 1.5,
       },
     ],
-    category: "Scoring",
+    category: "计分",
   },
   {
     id: "apply_exp_chips",
-    label: "Apply ^Chips (Exponential)",
-    description: "Apply exponential chips (echips) - REQUIRES TALISMAN MOD",
+    label: "应用指数筹码 (^Chips)",
+    description: "应用指数筹码 (echips) - 需要 TALISMAN 模组",
     applicableTriggers: ["held_hand"],
     params: [
       {
         id: "value",
         type: "number",
-        label: "Exponential Chips Value",
+        label: "指数筹码数值",
         default: 1.1,
       },
     ],
-    category: "Scoring",
+    category: "计分",
   },
   {
     id: "apply_hyper_chips",
-    label: "Apply HyperChips",
-    description: "Apply (n)^ chips - REQUIRES TALISMAN MOD",
+    label: "应用超级筹码",
+    description: "应用 (n)^ 筹码 - 需要 TALISMAN 模组",
     applicableTriggers: ["held_hand"],
     params: [
       {
         id: "arrows",
         type: "number",
-        label: "Number of Arrows",
+        label: "箭头数量",
         default: 1,
         min: 1
       },
       {
         id: "value",
         type: "number",
-        label: "Hyper Chips Value",
+        label: "超级筹码数值",
         default: 1.1,
       },
     ],
-    category: "Scoring",
+    category: "计分",
   },
   {
     id: "add_mult",
-    label: "Add Mult",
-    description: "Add a flat amount of mult to the hand score",
+    label: "添加倍数",
+    description: "向手牌分数添加固定数量的倍数",
     applicableTriggers: ["held_hand"],
     params: [
       {
         id: "value",
         type: "number",
-        label: "Amount",
+        label: "数量",
         default: 5,
         min: 0,
       },
     ],
-    category: "Scoring",
+    category: "计分",
   },
   {
     id: "apply_x_mult",
-    label: "Apply xMult",
-    description: "Multiply the score by this value",
+    label: "应用倍数乘数",
+    description: "将分数乘以该数值",
     applicableTriggers: ["held_hand"],
     params: [
       {
         id: "value",
         type: "number",
-        label: "Multiplier",
+        label: "乘数",
         default: 1.5,
       },
     ],
-    category: "Scoring",
+    category: "计分",
   },
   {
     id: "apply_exp_mult",
-    label: "Apply ^Mult (Exponential)",
-    description: "Apply exponential mult (emult) - REQUIRES TALISMAN MOD",
+    label: "应用指数倍数 (^Mult)",
+    description: "应用指数倍数 (emult) - 需要 TALISMAN 模组",
     applicableTriggers: ["held_hand"],
     params: [
       {
         id: "value",
         type: "number",
-        label: "Exponential Mult Value",
+        label: "指数倍数数值",
         default: 1.1,
       },
     ],
-    category: "Scoring",
+    category: "计分",
   },
   {
     id: "apply_hyper_mult",
-    label: "Apply HyperMult",
-    description: "Apply (n)^ mult - REQUIRES TALISMAN MOD",
+    label: "应用超级倍数",
+    description: "应用 (n)^ 倍数 - 需要 TALISMAN 模组",
     applicableTriggers: ["held_hand"],
     params: [
       {
         id: "arrows",
         type: "number",
-        label: "Number of Arrows",
+        label: "箭头数量",
         default: 1,
         min: 1
       },
       {
         id: "value",
         type: "number",
-        label: "Hyper Mult Value",
+        label: "超级倍数数值",
         default: 1.1,
       },
     ],
-    category: "Scoring",
+    category: "计分",
   },
-  // ===== SELECTED CARDS EFFECTS =====
+  // ===== 选中卡牌效果 =====
   {
     id: "edit_cards",
-    label: "Edit Selected Cards",
-    description:
-      "Apply multiple modifications to selected cards (enhancement, seal, edition, suit, rank)",
+    label: "编辑选中卡牌",
+    description: "对选中卡牌应用多种修改 (增强、封印、版本、花色、点数)",
     applicableTriggers: ["consumable_used"],
     params: [
       {
         id: "enhancement",
         type: "select",
-        label: "Enhancement Type",
+        label: "增强类型",
         options: () => [
-          { value: "none", label: "No Change" },
-          { value: "remove", label: "Remove Enhancement" },
+          { value: "none", label: "不更改" },
+          { value: "remove", label: "移除增强" },
           ...ENHANCEMENTS().map((enhancement) => ({
             value: enhancement.key,
             label: enhancement.label,
           })),
-          { value: "random", label: "Random Enhancement" },
+          { value: "random", label: "随机增强" },
         ],
         default: "none",
       },
       {
         id: "seal",
         type: "select",
-        label: "Seal Type",
+        label: "封印类型",
         options: () => [
-          { value: "none", label: "No Change" },
-          { value: "remove", label: "Remove Seal" },
-          { value: "random", label: "Random Seal" },
+          { value: "none", label: "不更改" },
+          { value: "remove", label: "移除封印" },
+          { value: "random", label: "随机封印" },
           ...SEALS().map((seal) => ({
             value: seal.key,
             label: seal.label,
@@ -252,89 +251,88 @@ export const CONSUMABLE_EFFECT_TYPES: EffectTypeDefinition[] = [
       {
         id: "edition",
         type: "select",
-        label: "Edition Type",
+        label: "版本类型",
         options: [
-          { value: "none", label: "No Change" },
-          { value: "remove", label: "Remove Edition" },
+          { value: "none", label: "不更改" },
+          { value: "remove", label: "移除版本" },
           ...EDITIONS().map((edition) => ({
             value: edition.key,
             label: edition.label,
           })),
-          { value: "random", label: "Random Edition" },
+          { value: "random", label: "随机版本" },
         ],
         default: "none",
       },
       {
         id: "suit",
         type: "select",
-        label: "Suit",
+        label: "花色",
         options: [
-          { value: "none", label: "No Change" },
+          { value: "none", label: "不更改" },
           ...SUITS,
-          { value: "random", label: "Random Suit" },
+          { value: "random", label: "随机花色" },
         ],
         default: "none",
       },
       {
         id: "rank",
         type: "select",
-        label: "Rank",
+        label: "点数",
         options: [
-          { value: "none", label: "No Change" },
+          { value: "none", label: "不更改" },
           ...RANKS.map((rank) => ({ value: rank.label, label: rank.label })),
-          { value: "random", label: "Random Rank" },
+          { value: "random", label: "随机点数" },
         ],
         default: "none",
       },
     ],
-    category: "Selected Cards",
+    category: "选中卡牌",
   },
   {
     id: "destroy_selected_cards",
-    label: "Destroy Selected Cards",
-    description: "Destroy all currently selected cards",
+    label: "摧毁选中卡牌",
+    description: "摧毁所有当前选中的卡牌",
     applicableTriggers: ["consumable_used"],
     params: [],
-    category: "Selected Cards",
+    category: "选中卡牌",
   },
   {
     id: "increment_rank",
-    label: "Increment/Decrement Rank",
-    description:
-      "Increase or decrease the rank of selected cards by a specified amount",
+    label: "增加/减少点数",
+    description: "按指定数量增加或减少选中卡牌的点数",
     applicableTriggers: ["consumable_used"],
     params: [
       {
         id: "operation",
         type: "select",
-        label: "Operation",
+        label: "操作",
         options: [
-          { value: "increment", label: "Increment (+)" },
-          { value: "decrement", label: "Decrement (-)" },
+          { value: "increment", label: "增加 (+)" },
+          { value: "decrement", label: "减少 (-)" },
         ],
         default: "increment",
       },
       {
         id: "value",
         type: "number",
-        label: "Amount",
+        label: "数量",
         default: 1,
         min: 1,
         max: 13,
       },
     ],
-    category: "Selected Cards",
+    category: "选中卡牌",
   },
   {
     id: "copy_selected_cards",
-    label: "Copy Selected Cards",
-    description: "Create copies of selected cards with customizable properties",
+    label: "复制选中卡牌",
+    description: "创建选中卡牌的副本，可自定义属性",
     applicableTriggers: ["consumable_used"],
     params: [
       {
         id: "copies",
         type: "number",
-        label: "Number of Copies per Card",
+        label: "每张卡牌的副本数量",
         default: 1,
         min: 1,
         max: 5,
@@ -342,24 +340,24 @@ export const CONSUMABLE_EFFECT_TYPES: EffectTypeDefinition[] = [
       {
         id: "enhancement",
         type: "select",
-        label: "Enhancement Type",
+        label: "增强类型",
         options: () => [
-          { value: "none", label: "Keep Original Enhancement" },
+          { value: "none", label: "保持原增强" },
           ...ENHANCEMENTS().map((enhancement) => ({
             value: enhancement.key,
             label: enhancement.label,
           })),
-          { value: "random", label: "Random Enhancement" },
+          { value: "random", label: "随机增强" },
         ],
         default: "none",
       },
       {
         id: "seal",
         type: "select",
-        label: "Seal Type",
+        label: "封印类型",
         options: () => [
-          { value: "none", label: "Keep Original Seal" },
-          { value: "random", label: "Random Seal" },
+          { value: "none", label: "保持原封印" },
+          { value: "random", label: "随机封印" },
           ...SEALS().map((seal) => ({
             value: seal.key,
             label: seal.label,
@@ -370,56 +368,54 @@ export const CONSUMABLE_EFFECT_TYPES: EffectTypeDefinition[] = [
       {
         id: "edition",
         type: "select",
-        label: "Edition Type",
+        label: "版本类型",
         options: [
-          { value: "none", label: "Keep Original Edition" },
-          { value: "remove", label: "Remove Edition" },
+          { value: "none", label: "保持原版本" },
+          { value: "remove", label: "移除版本" },
           ...EDITIONS().map((edition) => ({
             value: edition.key,
             label: edition.label,
           })),
-          { value: "random", label: "Random Edition" },
+          { value: "random", label: "随机版本" },
         ],
         default: "none",
       },
     ],
-    category: "Selected Cards",
+    category: "选中卡牌",
   },
   {
     id: "convert_left_to_right",
-    label: "Convert Left to Right",
-    description:
-      "Convert all selected cards to match the rightmost selected card (like Death tarot)",
+    label: "左侧转为右侧",
+    description: "将所有选中卡牌转换为与最右侧选中卡牌匹配 (如死神塔罗牌)",
     applicableTriggers: ["consumable_used"],
     params: [],
-    category: "Selected Cards",
+    category: "选中卡牌",
   },
   {
     id: "perma_bonus",
-    label: "Give Permanent Bonus",
-    description:
-      "Give selected cards a permanent bonus that persists throughout the run",
+    label: "给予永久加成",
+    description: "给予选中卡牌在整个游戏中持续的永久加成",
     applicableTriggers: ["consumable_used"],
     params: [
       {
         id: "bonus_type",
         type: "select",
-        label: "Bonus Type",
+        label: "加成类型",
         options: [
-          { value: "perma_bonus", label: "Permanent Chips" },
-          { value: "perma_mult", label: "Permanent Mult" },
-          { value: "h_mult", label: "Held Mult" },
-          { value: "h_chips", label: "Held Chips" },
-          { value: "perma_x_chips", label: "Permanent X Chips" },
-          { value: "perma_x_mult", label: "Permanent X Mult" },
-          { value: "perma_h_chips", label: "Permanent Held Chips" },
-          { value: "perma_h_mult", label: "Permanent Held Mult" },
-          { value: "perma_h_x_chips", label: "Permanent Held X Chips" },
-          { value: "perma_h_x_mult", label: "Permanent Held X Mult" },
-          { value: "perma_p_dollars", label: "Permanent Dollars (on scoring)" },
+          { value: "perma_bonus", label: "永久筹码" },
+          { value: "perma_mult", label: "永久倍数" },
+          { value: "h_mult", label: "持有倍数" },
+          { value: "h_chips", label: "持有筹码" },
+          { value: "perma_x_chips", label: "永久筹码乘数" },
+          { value: "perma_x_mult", label: "永久倍数乘数" },
+          { value: "perma_h_chips", label: "永久持有筹码" },
+          { value: "perma_h_mult", label: "永久持有倍数" },
+          { value: "perma_h_x_chips", label: "永久持有筹码乘数" },
+          { value: "perma_h_x_mult", label: "永久持有倍数乘数" },
+          { value: "perma_p_dollars", label: "永久金钱 (计分时)" },
           {
             value: "perma_h_dollars",
-            label: "Permanent Held Dollars (end of round)",
+            label: "永久持有金钱 (回合结束时)",
           },
         ],
         default: "perma_bonus",
@@ -427,294 +423,294 @@ export const CONSUMABLE_EFFECT_TYPES: EffectTypeDefinition[] = [
       {
         id: "value",
         type: "number",
-        label: "Bonus Amount",
+        label: "加成数量",
         default: 10,
         min: 1,
       },
     ],
-    category: "Selected Cards",
+    category: "选中卡牌",
   },
 
-  // ===== HAND EFFECTS =====
+  // ===== 手牌效果 =====
   {
     id: "edit_hand_size",
-    label: "Edit Hand Size",
-    description: "Add, subtract, or set the player's hand size",
+    label: "编辑手牌大小",
+    description: "添加、减少或设置玩家的手牌大小",
     applicableTriggers: ["consumable_used", "held_hand"],
     params: [
       {
         id: "operation",
         type: "select",
-        label: "Operation",
+        label: "操作",
         options: [
-          { value: "add", label: "Add" },
-          { value: "subtract", label: "Subtract" },
-          { value: "set", label: "Set" },
+          { value: "add", label: "添加" },
+          { value: "subtract", label: "减少" },
+          { value: "set", label: "设置" },
         ],
         default: "add",
       },
       {
         id: "value",
         type: "number",
-        label: "Amount",
+        label: "数量",
         default: 1,
         min: 1,
         max: 50,
       },
     ],
-    category: "Hand Effects",
+    category: "手牌效果",
   },
   {
     id: "draw_cards",
-    label: "Draw Cards to Hand",
-    description: "Draw cards from your deck to your hand",
+    label: "抽牌到手牌",
+    description: "从你的牌组中抽牌到手牌",
     applicableTriggers: ["consumable_used", "held_hand"],
     params: [
       {
         id: "value",
         type: "number",
-        label: "Amount",
+        label: "数量",
         default: 1,
       },
     ],
-    category: "Hand Effects",
+    category: "手牌效果",
   },
   {
     id: "edit_play_size",
-    label: "Edit Play Size",
-    description: "Add, subtract, or set the player's play size",
+    label: "编辑出牌大小",
+    description: "添加、减少或设置玩家的出牌大小",
     applicableTriggers: ["consumable_used", "held_hand"],
     params: [
       {
         id: "operation",
         type: "select",
-        label: "Operation",
+        label: "操作",
         options: [
-          { value: "add", label: "Add" },
-          { value: "subtract", label: "Subtract" },
-          { value: "set", label: "Set" },
+          { value: "add", label: "添加" },
+          { value: "subtract", label: "减少" },
+          { value: "set", label: "设置" },
         ],
         default: "add",
       },
       {
         id: "value",
         type: "number",
-        label: "Amount",
+        label: "数量",
         default: 1,
         min: 1,
         max: 50,
       },
     ],
-    category: "Hand Effects",
+    category: "手牌效果",
   },
   {
     id: "edit_discard_size",
-    label: "Edit Discard Size",
-    description: "Add, subtract, or set the player's discard size",
+    label: "编辑弃牌大小",
+    description: "添加、减少或设置玩家的弃牌大小",
     applicableTriggers: ["consumable_used", "held_hand"],
     params: [
       {
         id: "operation",
         type: "select",
-        label: "Operation",
+        label: "操作",
         options: [
-          { value: "add", label: "Add" },
-          { value: "subtract", label: "Subtract" },
-          { value: "set", label: "Set" },
+          { value: "add", label: "添加" },
+          { value: "subtract", label: "减少" },
+          { value: "set", label: "设置" },
         ],
         default: "add",
       },
       {
         id: "value",
         type: "number",
-        label: "Amount",
+        label: "数量",
         default: 1,
         min: 1,
         max: 50,
       },
     ],
-    category: "Hand Effects",
+    category: "手牌效果",
   },
   {
     id: "edit_voucher_slots",
-    label: "Edit Voucher Slots",
-    description: "Modify the number of vouchers available in shop",
+    label: "编辑代金券槽位",
+    description: "修改商店中可用的代金券数量",
     applicableTriggers: ["consumable_used", "held_hand"],
     params: [
       {
         id: "operation",
         type: "select",
-        label: "Operation",
+        label: "操作",
         options: [
-          { value: "add", label: "Add" },
-          { value: "subtract", label: "Subtract" },
-          { value: "set", label: "Set to" },
+          { value: "add", label: "添加" },
+          { value: "subtract", label: "减少" },
+          { value: "set", label: "设置为" },
         ],
         default: "add",
       },
       {
         id: "value",
         type: "number",
-        label: "Amount",
+        label: "数量",
         default: 1,
         min: 0,
       },
     ],
-    category: "Shop Effects",
+    category: "商店效果",
   },
   {
     id: "edit_booster_slots",
-    label: "Edit Booster Slots",
-    description: "Modify the number of booster packs available in shop",
+    label: "编辑增强包槽位",
+    description: "修改商店中可用的增强包数量",
     applicableTriggers: ["consumable_used", "held_hand"],
     params: [
       {
         id: "operation",
         type: "select",
-        label: "Operation",
+        label: "操作",
         options: [
-          { value: "add", label: "Add" },
-          { value: "subtract", label: "Subtract" },
-          { value: "set", label: "Set to" },
+          { value: "add", label: "添加" },
+          { value: "subtract", label: "减少" },
+          { value: "set", label: "设置为" },
         ],
         default: "add",
       },
       {
         id: "value",
         type: "number",
-        label: "Amount",
+        label: "数量",
         default: 1,
         min: 0,
       },
     ],
-    category: "Shop Effects",
+    category: "商店效果",
   },
     {
       id: "set_ante",
-      label: "Set Ante Level",
-      description: "Modify the current ante level",
+      label: "设置底注等级",
+      description: "修改当前底注等级",
       applicableTriggers: ["consumable_used", "held_hand"],
       params: [
         {
           id: "operation",
           type: "select",
-          label: "Operation",
+          label: "操作",
           options: [
-            { value: "set", label: "Set to" },
-            { value: "add", label: "Add" },
-            { value: "subtract", label: "Subtract" },
+            { value: "set", label: "设置为" },
+            { value: "add", label: "添加" },
+            { value: "subtract", label: "减少" },
           ],
           default: "set",
         },
         {
           id: "value",
           type: "number",
-          label: "Amount",
+          label: "数量",
           default: 1,
           min: 1,
         },
       ],
-      category: "Game Rules",
+      category: "游戏规则",
     },
   {
     id: "edit_hands",
-    label: "Edit Hands",
-    description: "Add, subtract, or set the player's hands for this round",
+    label: "编辑手牌次数",
+    description: "添加、减少或设置玩家本回合的手牌次数",
     applicableTriggers: ["consumable_used", "held_hand"],
     params: [
       {
         id: "operation",
         type: "select",
-        label: "Operation",
+        label: "操作",
         options: [
-          { value: "add", label: "Add" },
-          { value: "subtract", label: "Subtract" },
-          { value: "set", label: "Set" },
+          { value: "add", label: "添加" },
+          { value: "subtract", label: "减少" },
+          { value: "set", label: "设置" },
         ],
         default: "add",
       },
       {
         id: "duration",
         type: "select",
-        label: "Duration",
+        label: "持续时间",
         options: [
-          { value: "permanent", label: "Permanent" },
-          { value: "round", label: "This Round" },
+          { value: "permanent", label: "永久" },
+          { value: "round", label: "本回合" },
         ],
         default: "permanent",
       },
       {
         id: "value",
         type: "number",
-        label: "Amount",
+        label: "数量",
         default: 1,
         min: 1,
         max: 50,
       },
     ],
-    category: "Hand Effects",
+    category: "手牌效果",
   },
   {
     id: "edit_discards",
-    label: "Edit Discards",
-    description: "Add, subtract, or set the player's discards for this round",
+    label: "编辑弃牌次数",
+    description: "添加、减少或设置玩家本回合的弃牌次数",
     applicableTriggers: ["consumable_used", "held_hand"],
     params: [
       {
         id: "operation",
         type: "select",
-        label: "Operation",
+        label: "操作",
         options: [
-          { value: "add", label: "Add" },
-          { value: "subtract", label: "Subtract" },
-          { value: "set", label: "Set" },
+          { value: "add", label: "添加" },
+          { value: "subtract", label: "减少" },
+          { value: "set", label: "设置" },
         ],
         default: "add",
       },
       {
         id: "duration",
         type: "select",
-        label: "Duration",
+        label: "持续时间",
         options: [
-          { value: "permanent", label: "Permanent" },
-          { value: "round", label: "This Round" },
+          { value: "permanent", label: "永久" },
+          { value: "round", label: "本回合" },
         ],
         default: "permanent",
       },
       {
         id: "value",
         type: "number",
-        label: "Amount",
+        label: "数量",
         default: 1,
         min: 1,
         max: 50,
       },
     ],
-    category: "Hand Effects",
+    category: "手牌效果",
   },
 
-  // ===== OTHER EFFECTS =====
+  // ===== 其他效果 =====
   {
     id: "convert_all_cards_to_suit",
-    label: "Convert All Cards to Suit",
-    description: "Convert all cards in hand to a specific suit",
+    label: "转换所有卡牌花色",
+    description: "将手牌中所有卡牌转换为特定花色",
     applicableTriggers: ["consumable_used", "held_hand"],
     params: [
       {
         id: "suit",
         type: "select",
-        label: "Target Suit",
+        label: "目标花色",
         options: [
           ...SUITS, 
-          { value: "random", label: "Random Suit" },
-          { value: "pool", label: "Random from Pool" }
+          { value: "random", label: "随机花色" },
+          { value: "pool", label: "从池中随机" }
         ],
         default: "Hearts",
       },
       {
         id: "suit_pool",
         type: "checkbox",
-        label: "Possible Suits",
+        label: "可能的花色",
         checkboxOptions: [...SUITS],
         showWhen: {
           parameter: "suit",
@@ -722,29 +718,29 @@ export const CONSUMABLE_EFFECT_TYPES: EffectTypeDefinition[] = [
         }
       },
     ],
-    category: "Card Modification",
+    category: "卡牌修改",
   },
   {
     id: "convert_all_cards_to_rank",
-    label: "Convert All Cards to Rank",
-    description: "Convert all cards in hand to a specific rank",
+    label: "转换所有卡牌点数",
+    description: "将手牌中所有卡牌转换为特定点数",
     applicableTriggers: ["consumable_used", "held_hand"],
     params: [
       {
         id: "rank",
         type: "select",
-        label: "Target Rank",
+        label: "目标点数",
         options: [
           ...RANKS.map((rank) => ({ value: rank.label, label: rank.label })),
-          { value: "random", label: "Random Rank" },
-          { value: "pool", label: "Random from Pool" },
+          { value: "random", label: "随机点数" },
+          { value: "pool", label: "从池中随机" },
         ],
         default: "Ace",
       },
       {
         id: "suit_pool",
         type: "checkbox",
-        label: "Possible Suits",
+        label: "可能的花色",
         checkboxOptions: [...SUITS],
         showWhen: {
           parameter: "suit",
@@ -752,142 +748,142 @@ export const CONSUMABLE_EFFECT_TYPES: EffectTypeDefinition[] = [
         }
       },     
     ],
-    category: "Card Modification",
+    category: "卡牌修改",
   },
   {
     id: "destroy_random_cards",
-    label: "Destroy Random Cards",
-    description: "Destroy a number of random cards from hand",
+    label: "摧毁随机卡牌",
+    description: "从手牌中摧毁指定数量的随机卡牌",
     applicableTriggers: ["consumable_used", "held_hand"],
     params: [
       {
         id: "count",
         type: "number",
-        label: "Number of Cards",
+        label: "卡牌数量",
         default: 1,
         min: 1,
         max: 8,
       },
     ],
-    category: "Card Modification",
+    category: "卡牌修改",
   },
 {
     id: "flip_joker",
-    label: "Flip Joker",
-    description: "Flip a joker",
+    label: "翻转小丑牌",
+    description: "翻转小丑牌",
     applicableTriggers: ["consumable_used", "held_hand"],
     params: [
       {
         id: "selection_method",
         type: "select",
-        label: "Selection Method",
+        label: "选择方式",
         options: [
-          { value: "all", label: "All Jokers" },
-          { value: "random", label: "Random Joker" },
-          { value: "selected", label: "By Selection" },
+          { value: "all", label: "所有小丑牌" },
+          { value: "random", label: "随机小丑牌" },
+          { value: "selected", label: "按选择" },
         ],
         default: "all",
       },
     ],
-    category: "Jokers",
+    category: "小丑牌",
   },
   {
       id: "disable_boss_blind",
-      label: "Disable Boss Blind",
-      description: "Disable the current boss blind, removing its effect",
+      label: "禁用首领盲注",
+      description: "禁用当前首领盲注，移除其效果",
       applicableTriggers: ["consumable_used", "held_hand"],
       params: [],
-      category: "Game Rules",
+      category: "游戏规则",
     },
       {
         id: "shuffle_jokers",
-        label: "Shuffle Jokers",
-        description: "Shuffle all jokers",
+        label: "洗牌小丑牌",
+        description: "洗牌所有小丑牌",
         applicableTriggers: ["consumable_used", "held_hand"],
         params: [],
-        category: "Jokers",
+        category: "小丑牌",
       },
       {
     id: "modify_blind_requirement",
-    label: "Modify Blind Requirement",
-    description: "Changes the score requirement of a blind",
+    label: "修改盲注要求",
+    description: "更改盲注的分数要求",
     applicableTriggers: ["consumable_used", "held_hand"],
     params: [
       {
         id: "operation",
         type: "select",
-        label: "Operation",
+        label: "操作",
         options: [
-          { value: "add", label: "Add" },
-          { value: "subtract", label: "Subtract" },
-          { value: "set", label: "Set to" },
-          { value: "multiply", label: "Multiply" },
-          { value: "divide", label: "Divide" },
+          { value: "add", label: "添加" },
+          { value: "subtract", label: "减少" },
+          { value: "set", label: "设置为" },
+          { value: "multiply", label: "乘以" },
+          { value: "divide", label: "除以" },
         ],
         default: "multiply",
       },
       {
         id: "value",
         type: "number",
-        label: "Amount",
+        label: "数量",
         default: 2,
       },
     ],
-    category: "Game Rules",
+    category: "游戏规则",
   },
   {
       id: "force_game_over",
-      label: "Force Game Over",
-      description: "Forces the run to end (ignores Mr. Bones)",
+      label: "强制游戏结束",
+      description: "强制运行结束 (忽略骨先生)",
       applicableTriggers: ["consumable_used", "held_hand"],
       params: [],
-      category: "Special",
+      category: "特殊",
     },
       {
       id: "Win_blind",
-      label: "Win Current Blind",
-      description: "Forces to Win the current Blind",
+      label: "赢得当前盲注",
+      description: "强制赢得当前盲注",
       applicableTriggers: ["consumable_used", "held_hand"],
       params: [],
-      category: "Special",
+      category: "特殊",
     },
   {
     id: "edit_joker_slots",
-    label: "Edit Joker Slots",
-    description: "Add or remove joker slots available in the game",
+    label: "编辑小丑牌槽位",
+    description: "添加或移除游戏中可用的小丑牌槽位",
     applicableTriggers: ["consumable_used", "held_hand"],
     params: [
       {
         id: "operation",
         type: "select",
-        label: "Operation",
+        label: "操作",
         options: [
-          { value: "add", label: "Add" },
-          { value: "subtract", label: "Subtract" },
-          { value: "set", label: "Set to" },
+          { value: "add", label: "添加" },
+          { value: "subtract", label: "减少" },
+          { value: "set", label: "设置为" },
         ],
         default: "add",
       },
       {
         id: "value",
         type: "number",
-        label: "Amount",
+        label: "数量",
         default: 1,
         min: 0,
       },
     ],
-    category: "Jokers",
+    category: "小丑牌",
   },
   {
     id: "add_cards_to_hand",
-    label: "Add Cards to Hand",
-    description: "Create and add new cards to hand with specified properties",
+    label: "添加卡牌到手牌",
+    description: "创建具有指定属性的新卡牌并添加到手牌",
     applicableTriggers: ["consumable_used", "held_hand"],
     params: [
       {
         id: "count",
         type: "number",
-        label: "Number of Cards",
+        label: "卡牌数量",
         default: 1,
         min: 1,
         max: 8,
@@ -895,12 +891,12 @@ export const CONSUMABLE_EFFECT_TYPES: EffectTypeDefinition[] = [
       {
         id: "rank",
         type: "select",
-        label: "Rank",
+        label: "点数",
         options: [
-          { value: "random", label: "Random Rank" },
-          { value: "Face Cards", label: "Face Cards" },
-          { value: "Numbered Cards", label: "Numbered Cards" },
-          { value: "pool", label: "Random from pool" },
+          { value: "random", label: "随机点数" },
+          { value: "Face Cards", label: "人头牌" },
+          { value: "Numbered Cards", label: "数字牌" },
+          { value: "pool", label: "从池中随机" },
           ...RANKS.map((rank) => ({ value: rank.label, label: rank.label })),
         ],
         default: "random",
@@ -908,7 +904,7 @@ export const CONSUMABLE_EFFECT_TYPES: EffectTypeDefinition[] = [
       {
         id: "rank_pool",
         type: "checkbox",
-        label: "Possible Ranks",
+        label: "可能的点数",
         checkboxOptions: [...RANKS],
         showWhen: {
           parameter: "rank",
@@ -918,17 +914,17 @@ export const CONSUMABLE_EFFECT_TYPES: EffectTypeDefinition[] = [
       {
         id: "suit",
         type: "select",
-        label: "Suit",
+        label: "花色",
         options: [
-          { value: "none", label: "Random Suit" },
-          { value: "pool", label: "Random from pool" },
+          { value: "none", label: "随机花色" },
+          { value: "pool", label: "从池中随机" },
           ...SUITS],
         default: "none",
       },
       {
         id: "suit_pool",
         type: "checkbox",
-        label: "Possible Suits",
+        label: "可能的花色",
         checkboxOptions: [...SUITS],
         showWhen: {
           parameter: "suit",
@@ -938,24 +934,24 @@ export const CONSUMABLE_EFFECT_TYPES: EffectTypeDefinition[] = [
       {
         id: "enhancement",
         type: "select",
-        label: "Enhancement Type",
+        label: "增强类型",
         options: () => [
-          { value: "none", label: "No Enhancement" },
+          { value: "none", label: "无增强" },
           ...ENHANCEMENTS().map((enhancement) => ({
             value: enhancement.key,
             label: enhancement.label,
           })),
-          { value: "random", label: "Random Enhancement" },
+          { value: "random", label: "随机增强" },
         ],
         default: "none",
       },
       {
         id: "seal",
         type: "select",
-        label: "Seal Type",
+        label: "封印类型",
         options: () => [
-          { value: "none", label: "No Seal" },
-          { value: "random", label: "Random Seal" },
+          { value: "none", label: "无封印" },
+          { value: "random", label: "随机封印" },
           ...SEALS().map((seal) => ({
             value: seal.key,
             label: seal.label,
@@ -966,45 +962,45 @@ export const CONSUMABLE_EFFECT_TYPES: EffectTypeDefinition[] = [
       {
         id: "edition",
         type: "select",
-        label: "Edition Type",
+        label: "版本类型",
         options: [
-          { value: "none", label: "No Edition" },
+          { value: "none", label: "无版本" },
           ...EDITIONS().map((edition) => ({
             value: edition.key,
             label: edition.label,
           })),
-          { value: "random", label: "Random Edition" },
+          { value: "random", label: "随机版本" },
         ],
         default: "none",
       },
     ],
-    category: "Card Modification",
+    category: "卡牌修改",
   },
   {
     id: "level_up_hand",
-    label: "Level Up Poker Hand",
-    description: "Level up a specific poker hand, random hand, or all hands",
+    label: "升级扑克牌型",
+    description: "升级特定扑克牌型、随机牌型或所有牌型",
     applicableTriggers: ["consumable_used", "held_hand"],
     params: [
       {
         id: "hand_type",
         type: "select",
-        label: "Poker Hand",
+        label: "扑克牌型",
         options: [
           ...POKER_HANDS.map((hand) => ({
             value: hand.value,
             label: hand.label,
           })),
-          { value: "random", label: "Random Hand" },
-          { value: "all", label: "All Hands" },
-          { value: "pool", label: "Random from Pool" },
+          { value: "random", label: "随机牌型" },
+          { value: "all", label: "所有牌型" },
+          { value: "pool", label: "从池中随机" },
         ],
         default: "Pair",
       },
       {
         id: "pokerhand_pool",
         type: "checkbox",
-        label: "Possible PokerHands",
+        label: "可能的扑克牌型",
         checkboxOptions: [...POKER_HANDS],
         showWhen: {
           parameter: "hand_type",
@@ -1014,102 +1010,100 @@ export const CONSUMABLE_EFFECT_TYPES: EffectTypeDefinition[] = [
       {
         id: "levels",
         type: "number",
-        label: "Number of Levels",
+        label: "等级数量",
         default: 1,
         min: 1,
         max: 10,
       },
     ],
-    category: "Hand Effects",
+    category: "手牌效果",
   },
   {
     id: "edit_dollars",
-    label: "Edit Dollars",
-    description: "Add, subtract, or set the player's money",
+    label: "编辑金钱",
+    description: "添加、减少或设置玩家的金钱",
     applicableTriggers: ["consumable_used", "held_hand"],
     params: [
       {
         id: "operation",
         type: "select",
-        label: "Operation",
+        label: "操作",
         options: [
-          { value: "add", label: "Add" },
-          { value: "subtract", label: "Subtract" },
-          { value: "set", label: "Set" },
+          { value: "add", label: "添加" },
+          { value: "subtract", label: "减少" },
+          { value: "set", label: "设置" },
         ],
         default: "add",
       },
       {
         id: "value",
         type: "number",
-        label: "Dollar Amount",
+        label: "金额",
         default: 5,
         min: 0,
       },
     ],
-    category: "Economy",
+    category: "经济",
   },
   {
     id: "double_dollars",
-    label: "Double Dollars",
-    description: "Double your current money up to a specified limit",
+    label: "双倍金钱",
+    description: "将当前金钱翻倍，最多达到指定限制",
     applicableTriggers: ["consumable_used", "held_hand"],
     params: [
       {
         id: "limit",
         type: "number",
-        label: "Maximum Amount to Gain",
+        label: "最大获得金额",
         default: 20,
         min: 1,
         max: 999,
       },
     ],
-    category: "Economy",
+    category: "经济",
   },
   {
     id: "add_dollars_from_jokers",
-    label: "Add Dollars from Joker Sell Value",
-    description:
-      "Gain money equal to the total sell value of all jokers, up to a limit",
+    label: "从小丑牌出售价值添加金钱",
+    description: "获得等于所有小丑牌总出售价值的金钱，最多达到限制",
     applicableTriggers: ["consumable_used"],
     params: [
       {
         id: "limit",
         type: "number",
-        label: "Maximum Amount to Gain",
+        label: "最大获得金额",
         default: 50,
         min: 1,
         max: 999,
       },
     ],
-    category: "Economy",
+    category: "经济",
   },
   {
     id: "create_consumable",
-    label: "Create Consumable",
-    description:
-      "Create consumable cards and add them to your consumables area",
+    label: "创建消耗品",
+    description: "创建消耗品卡牌并添加到你的消耗品区域",
     applicableTriggers: ["consumable_used", "held_hand"],
     params: [
       {
         id: "set",
         type: "select",
-        label: "Consumable Set",
+        label: "消耗品集合",
         options: () => [
-          { value: "random", label: "Random Consumable" },
+          { value: "random", label: "随机消耗品" },
           ...CONSUMABLE_SETS(),
         ],
         default: "random",
       },{
         id: "specific_card",
         type: "select",
-        label: "Specific Card",
+        label: "特定卡牌",
         options: (parentValues: Record<string, unknown>) => {
           const selectedSet = parentValues?.set as string;
           if (!selectedSet || selectedSet === "random") {
-            return [{ value: "random", label: "Random from Set" }];
+            return [{ value: "random", label: "集合中随机" }];
           }
-          // Handle vanilla sets
+          // 处理原版集合
           if (selectedSet === "Tarot") {
             const vanillaCards = TAROT_CARDS.map((card) => ({
               value: card.key,
@@ -1122,7 +1116,7 @@ export const CONSUMABLE_EFFECT_TYPES: EffectTypeDefinition[] = [
                 label: consumable.label,
               }));
             return [
-              { value: "random", label: "Random from Set" },
+              { value: "random", label: "集合中随机" },
               ...vanillaCards,
               ...customCards,
             ];}
@@ -1138,7 +1132,7 @@ export const CONSUMABLE_EFFECT_TYPES: EffectTypeDefinition[] = [
                 label: consumable.label,
               }));
             return [
-              { value: "random", label: "Random from Set" },
+              { value: "random", label: "集合中随机" },
               ...vanillaCards,
               ...customCards,
             ];}
@@ -1154,13 +1148,13 @@ export const CONSUMABLE_EFFECT_TYPES: EffectTypeDefinition[] = [
                 label: consumable.label,
               }));
             return [
-              { value: "random", label: "Random from Set" },
+              { value: "random", label: "集合中随机" },
               ...vanillaCards,
               ...customCards,
             ];
           }
-          // Handle custom sets
-          // Remove mod prefix to get the actual set key
+          // 处理自定义集合
+          // 移除模组前缀获取实际集合键
           const setKey = selectedSet.includes("_")
             ? selectedSet.split("_").slice(1).join("_")
             : selectedSet;
@@ -1169,17 +1163,17 @@ export const CONSUMABLE_EFFECT_TYPES: EffectTypeDefinition[] = [
               consumable.set === setKey || consumable.set === selectedSet
           );
           return [
-            { value: "random", label: "Random from Set" },
+            { value: "random", label: "集合中随机" },
             ...customConsumablesInSet,
           ];},
         default: "random",
       },{
         id: "soulable",
         type: "select",
-        label: "Soulable",
+        label: "可灵魂绑定",
         options: [
-          { value: "y", label: "Yes" },
-          { value: "n", label: "No" },
+          { value: "y", label: "是" },
+          { value: "n", label: "否" },
         ],
         showWhen: {
           parameter: "specific_card",
@@ -1189,44 +1183,44 @@ export const CONSUMABLE_EFFECT_TYPES: EffectTypeDefinition[] = [
       },{
         id: "is_negative",
         type: "select",
-        label: "Edition",
+        label: "版本",
         options: [
-          { value: "n", label: "No Edition" },
-          { value: "y", label: "Negative Edition" },
+          { value: "n", label: "无版本" },
+          { value: "y", label: "负片版本" },
         ],
         default: "n",
       },{
         id: "count",
         type: "number",
-        label: "Number of Cards",
+        label: "卡牌数量",
         default: 1,
         min: 1,
         max: 5,
       },{
         id: "ignore_slots",
         type: "select",
-        label: "Ignore Slots",
+        label: "忽略槽位",
         options: [
-          { value: "y", label: "True" },
-          { value: "n", label: "False" },
+          { value: "y", label: "是" },
+          { value: "n", label: "否" },
         ],
         default:"n",
       },
     ],
-    category: "Consumables",
+    category: "消耗品",
   },
   {
     id: "destroy_consumable",
-    label: "Destroy Consumable",
-    description: "Destroy a consumable card from your collection",
+    label: "摧毁消耗品",
+    description: "从你的收藏中摧毁消耗品卡牌",
     applicableTriggers: ["consumable_used", "held_hand"],
     params: [
       {
         id: "set",
         type: "select",
-        label: "Consumable Set",
+        label: "消耗品集合",
         options: () => [
-          { value: "random", label: "Random Consumable" },
+          { value: "random", label: "随机消耗品" },
           ...CONSUMABLE_SETS(),
         ],
         default: "random",
@@ -1234,15 +1228,15 @@ export const CONSUMABLE_EFFECT_TYPES: EffectTypeDefinition[] = [
       {
         id: "specific_card",
         type: "select",
-        label: "Specific Card",
+        label: "特定卡牌",
         options: (parentValues: Record<string, unknown>) => {
           const selectedSet = parentValues?.set as string;
 
           if (!selectedSet || selectedSet === "random") {
-            return [{ value: "random", label: "Random from Set" }];
+            return [{ value: "random", label: "集合中随机" }];
           }
 
-          // Handle vanilla sets
+          // 处理原版集合
           if (selectedSet === "Tarot") {
             const vanillaCards = TAROT_CARDS.map((card) => ({
               value: card.key,
@@ -1257,7 +1251,7 @@ export const CONSUMABLE_EFFECT_TYPES: EffectTypeDefinition[] = [
               }));
 
             return [
-              { value: "random", label: "Random from Set" },
+              { value: "random", label: "集合中随机" },
               ...vanillaCards,
               ...customCards,
             ];
@@ -1277,7 +1271,7 @@ export const CONSUMABLE_EFFECT_TYPES: EffectTypeDefinition[] = [
               }));
 
             return [
-              { value: "random", label: "Random from Set" },
+              { value: "random", label: "集合中随机" },
               ...vanillaCards,
               ...customCards,
             ];
@@ -1297,13 +1291,13 @@ export const CONSUMABLE_EFFECT_TYPES: EffectTypeDefinition[] = [
               }));
 
             return [
-              { value: "random", label: "Random from Set" },
+              { value: "random", label: "集合中随机" },
               ...vanillaCards,
               ...customCards,
             ];
           }
 
-          // Handle custom sets
+          // 处理自定义集合
           const setKey = selectedSet.includes("_")
             ? selectedSet.split("_").slice(1).join("_")
             : selectedSet;
@@ -1314,44 +1308,43 @@ export const CONSUMABLE_EFFECT_TYPES: EffectTypeDefinition[] = [
           );
 
           return [
-            { value: "random", label: "Random from Set" },
+            { value: "random", label: "集合中随机" },
             ...customConsumablesInSet,
           ];
         },
         default: "random",
       },
     ],
-    category: "Consumables",
+    category: "消耗品",
   },
   {
     id: "fool_effect",
-    label: "Create Last Used Consumable",
-    description:
-      "Create a copy of the last Tarot or Planet card that was used (like The Fool)",
+    label: "创建最后使用的消耗品",
+    description: "创建最后使用的塔罗牌或星球牌的副本 (如愚者)",
     applicableTriggers: ["consumable_used", "held_hand"],
     params: [],
-    category: "Consumables",
+    category: "消耗品",
   },
   {
     id: "create_tag",
-    label: "Create Tag",
-    description: "Create a specific or random tag",
+    label: "创建标签",
+    description: "创建特定或随机的标签",
     applicableTriggers: ["consumable_used", "held_hand"],
     params: [
       {
         id: "tag_type",
         type: "select",
-        label: "Tag Type",
+        label: "标签类型",
         options: [
-          { value: "random", label: "Random Tag" },
-          { value: "specific", label: "Specific Tag" },
+          { value: "random", label: "随机标签" },
+          { value: "specific", label: "特定标签" },
         ],
         default: "random",
       },
       {
         id: "specific_tag",
         type: "select",
-        label: "Specific Tag",
+        label: "特定标签",
         options: [...TAGS],
         showWhen: {
           parameter: "tag_type",
@@ -1359,92 +1352,92 @@ export const CONSUMABLE_EFFECT_TYPES: EffectTypeDefinition[] = [
         },
       },
     ],
-    category: "Consumables",
+    category: "消耗品",
   },
   {
     id: "edit_booster_packs",
-    label: "Edit Boosters Packs",
-    description: "Modify the values the of booster packs available in shop",
+    label: "编辑增强包",
+    description: "修改商店中可用增强包的值",
     applicableTriggers: ["consumable_used", "held_hand"],
     params: [
       {
         id: "selected_type",
         type: "select",
-        label: "Edit Type",
+        label: "编辑类型",
         options: [
-          { value: "size", label: "Cards slots" },
-          { value: "choice", label: "Choices" },
+          { value: "size", label: "卡牌槽位" },
+          { value: "choice", label: "选择次数" },
         ],
         default: "size",
       },
       {
         id: "operation",
         type: "select",
-        label: "Operation",
+        label: "操作",
         options: [
-          { value: "add", label: "Add" },
-          { value: "subtract", label: "Subtract" },
-          { value: "set", label: "Set to" },
+          { value: "add", label: "添加" },
+          { value: "subtract", label: "减少" },
+          { value: "set", label: "设置为" },
         ],
         default: "add",
       },
       {
         id: "value",
         type: "number",
-        label: "Amount",
+        label: "数量",
         default: 1,
         min: 0,
       },
     ],
-    category: "Shop Effects",
+    category: "商店效果",
   },
   {
     id: "edit_shop_slots",
-    label: "Edit Shop Cards Slots",
-    description: "Modify the Card slots of the shop ",
+    label: "编辑商店卡牌槽位",
+    description: "修改商店的卡牌槽位",
     applicableTriggers: ["consumable_used", "held_hand"],
     params: [
       {
         id: "operation",
         type: "select",
-        label: "Operation",
+        label: "操作",
         options: [
-          { value: "add", label: "Add" },
-          { value: "subtract", label: "Subtract" },
-          { value: "set", label: "Set to" },
+          { value: "add", label: "添加" },
+          { value: "subtract", label: "减少" },
+          { value: "set", label: "设置为" },
         ],
         default: "add",
       },
       {
         id: "value",
         type: "number",
-        label: "Amount",
+        label: "数量",
         default: 1,
         min: 0,
       },
     ],
-    category: "Shop Effects",
+    category: "商店效果",
   },
   {
     id: "redeem_voucher",
-    label: "Redeem Voucher",
-    description: "Redeem a specific or random voucher",
+    label: "兑换代金券",
+    description: "兑换特定或随机的代金券",
     applicableTriggers: ["consumable_used", "held_hand"],
     params: [
       {
         id: "voucher_type",
         type: "select",
-        label: "Voucher Type",
+        label: "代金券类型",
         options: [
-          { value: "random", label: "Random Voucher" },
-          { value: "specific", label: "Specific Voucher" },
+          { value: "random", label: "随机代金券" },
+          { value: "specific", label: "特定代金券" },
         ],
         default: "random",
       },
       {
         id: "specific_voucher",
         type: "select",
-        label: "Specific Voucher",
+        label: "特定代金券",
         options: [...VOUCHERS()],
         showWhen: {
           parameter: "voucher_type",
@@ -1453,19 +1446,18 @@ export const CONSUMABLE_EFFECT_TYPES: EffectTypeDefinition[] = [
         default: "v_overstock_norm",
       },
     ],
-    category: "Consumables",
+    category: "消耗品",
   },
   {
     id: "edit_cards_in_hand",
-    label: "Edit Cards in Hand",
-    description:
-      "Apply multiple modifications to random cards in hand (enhancement, seal, edition, suit, rank)",
+    label: "编辑手牌中卡牌",
+    description: "对手牌中随机卡牌应用多种修改 (增强、封印、版本、花色、点数)",
     applicableTriggers: ["consumable_used", "held_hand"],
     params: [
       {
         id: "amount",
         type: "number",
-        label: "Number of Cards",
+        label: "卡牌数量",
         default: 1,
         min: 1,
         max: 8,
@@ -1473,24 +1465,24 @@ export const CONSUMABLE_EFFECT_TYPES: EffectTypeDefinition[] = [
       {
         id: "enhancement",
         type: "select",
-        label: "Enhancement Type",
+        label: "增强类型",
         options: () => [
-          { value: "none", label: "No Change" },
+          { value: "none", label: "不更改" },
           ...ENHANCEMENTS().map((enhancement) => ({
             value: enhancement.key,
             label: enhancement.label,
           })),
-          { value: "random", label: "Random Enhancement" },
+          { value: "random", label: "随机增强" },
         ],
         default: "none",
       },
       {
         id: "seal",
         type: "select",
-        label: "Seal Type",
+        label: "封印类型",
         options: () => [
-          { value: "none", label: "No Change" },
-          { value: "random", label: "Random Seal" },
+          { value: "none", label: "不更改" },
+          { value: "random", label: "随机封印" },
           ...SEALS().map((seal) => ({
             value: seal.key,
             label: seal.label,
@@ -1501,33 +1493,33 @@ export const CONSUMABLE_EFFECT_TYPES: EffectTypeDefinition[] = [
       {
         id: "edition",
         type: "select",
-        label: "Edition Type",
+        label: "版本类型",
         options: [
-          { value: "none", label: "No Change" },
+          { value: "none", label: "不更改" },
           ...EDITIONS().map((edition) => ({
             value: edition.key,
             label: edition.label,
           })),
-          { value: "random", label: "Random Edition" },
+          { value: "random", label: "随机版本" },
         ],
         default: "none",
       },
       {
         id: "suit",
         type: "select",
-        label: "Suit",
+        label: "花色",
         options: [
-          { value: "none", label: "No Change" },
+          { value: "none", label: "不更改" },
           ...SUITS,
-          { value: "random", label: "Random Suit" },
-          { value: "pool", label: "Random from Pool" },
+          { value: "random", label: "随机花色" },
+          { value: "pool", label: "从池中随机" },
         ],
         default: "none",
       },
       {
         id: "suit_pool",
         type: "checkbox",
-        label: "Possible Suits",
+        label: "可能的花色",
         checkboxOptions: [...SUITS],
         showWhen: {
           parameter: "suit",
@@ -1537,19 +1529,19 @@ export const CONSUMABLE_EFFECT_TYPES: EffectTypeDefinition[] = [
       {
         id: "rank",
         type: "select",
-        label: "Rank",
+        label: "点数",
         options: [
-          { value: "none", label: "No Change" },
+          { value: "none", label: "不更改" },
           ...RANKS.map((rank) => ({ value: rank.label, label: rank.label })),
-          { value: "random", label: "Random Rank" },
-          { value: "pool", label: "Random from Pool" },
+          { value: "random", label: "随机点数" },
+          { value: "pool", label: "从池中随机" },
         ],
         default: "none",
       },
       {
         id: "rank_pool",
         type: "checkbox",
-        label: "Possible Ranks",
+        label: "可能的点数",
         checkboxOptions: [...RANKS],
         showWhen: {
           parameter: "rank",
@@ -1557,31 +1549,30 @@ export const CONSUMABLE_EFFECT_TYPES: EffectTypeDefinition[] = [
         }
       },      
     ],
-    category: "Card Modification",
+    category: "卡牌修改",
   },
   {
     id: "create_joker",
-    label: "Create Joker",
-    description:
-      "Create a random or specific joker card. For creating jokers from your own mod, it is [modprefix]_[joker_name]. You can find your mod prefix in the mod metadata page.",
+    label: "创建小丑牌",
+    description: "创建随机或特定的小丑牌。要创建自己模组中的小丑牌，格式为 [modprefix]_[joker_name]。你可以在模组元数据页面找到你的模组前缀。",
     applicableTriggers: ["consumable_used", "held_hand"],
     params: [
       {
         id: "joker_type",
         type: "select",
-        label: "Joker Type",
+        label: "小丑牌类型",
         options: [
-          { value: "random", label: "Random Joker" },
-          { value: "specific", label: "Specific Joker" },
+          { value: "random", label: "随机小丑牌" },
+          { value: "specific", label: "特定小丑牌" },
         ],
         default: "random",
       },
       {
         id: "rarity",
         type: "select",
-        label: "Rarity",
+        label: "稀有度",
         options: () => [
-          { value: "random", label: "Any Rarity" },
+          { value: "random", label: "任意稀有度" },
           ...RARITIES(),
         ],
         default: "random",
@@ -1593,7 +1584,7 @@ export const CONSUMABLE_EFFECT_TYPES: EffectTypeDefinition[] = [
       {
         id: "joker_key",
         type: "text",
-        label: "Joker Key ( [modprefix]_joker )",
+        label: "小丑牌标识符 ( [modprefix]_joker )",
         default: "joker",
         showWhen: {
           parameter: "joker_type",
@@ -1603,7 +1594,7 @@ export const CONSUMABLE_EFFECT_TYPES: EffectTypeDefinition[] = [
       {
         id: "pool",
         type: "text",
-        label: "Pool Name (optional)",
+        label: "牌池名称 (可选)",
         default: "",
         showWhen: {
           parameter: "joker_type",
@@ -1613,9 +1604,9 @@ export const CONSUMABLE_EFFECT_TYPES: EffectTypeDefinition[] = [
       {
         id: "edition",
         type: "select",
-        label: "Edition",
+        label: "版本",
         options: [
-          { value: "none", label: "No Edition" },
+          { value: "none", label: "无版本" },
           ...EDITIONS().map((edition) => ({
             value: edition.key,
             label: edition.label,
@@ -1626,42 +1617,42 @@ export const CONSUMABLE_EFFECT_TYPES: EffectTypeDefinition[] = [
       {
         id: "sticker",
         type: "select",
-        label: "Sticker for Copy",
-        options: [{ value: "none", label: "No Sticker" }, ...STICKERS],
+        label: "复制贴纸",
+        options: [{ value: "none", label: "无贴纸" }, ...STICKERS],
         default: "none",
       },
       {
         id: "ignore_slots",
         type: "select",
-        label: "___ Joker Slots",
+        label: "___ 小丑牌槽位",
         options: [
-          { value: "respect", label: "Respect" },
-          { value: "ignore", label: "Ignore" },
+          { value: "respect", label: "遵守" },
+          { value: "ignore", label: "忽略" },
         ],
         default: "respect",
       },
     ],
-    category: "Jokers",
+    category: "小丑牌",
   },
   {
     id: "copy_joker",
-    label: "Copy Joker",
-    description: "Create copies of jokers in your joker area",
+    label: "复制小丑牌",
+    description: "在你的小丑牌区域创建小丑牌的副本",
     applicableTriggers: ["consumable_used", "held_hand"],
     params: [
        {
         id: "selection_method",
         type: "select",
-        label: "Selection Method",
+        label: "选择方式",
         options: [
-          { value: "random", label: "Random Joker" },
-          { value: "selected", label: "Selected Joker" },
+          { value: "random", label: "随机小丑牌" },
+          { value: "selected", label: "选中小丑牌" },
         ],
       },
       {
         id: "amount",
         type: "number",
-        label: "Number of Jokers to Copy",
+        label: "要复制的小丑牌数量",
         showWhen: {
           parameter: "selection_method",
           values: ["random"],
@@ -1673,41 +1664,40 @@ export const CONSUMABLE_EFFECT_TYPES: EffectTypeDefinition[] = [
       {
         id: "edition",
         type: "select",
-        label: "Edition to Apply",
+        label: "要应用的版本",
         options: [
-          { value: "none", label: "Keep Original Edition" },
-          { value: "remove", label: "Remove Edition" },
+          { value: "none", label: "保持原版本" },
+          { value: "remove", label: "移除版本" },
           ...EDITIONS().map((edition) => ({
             value: edition.key,
             label: edition.label,
           })),
-          { value: "random", label: "Random Edition" },
+          { value: "random", label: "随机版本" },
         ],
         default: "none",
       },
     ],
-    category: "Jokers",
+    category: "小丑牌",
   },
   {
     id: "destroy_joker",
-    label: "Destroy Joker",
-    description:
-      "Destroy jokers from your joker area (eternal jokers are safe)",
+    label: "摧毁小丑牌",
+    description: "从你的小丑牌区域摧毁小丑牌 (永恒小丑牌安全)",
     applicableTriggers: ["consumable_used", "held_hand"],
     params: [
         {
         id: "selection_method",
         type: "select",
-        label: "Destroy Joker",
+        label: "摧毁小丑牌",
         options: [
-          { value: "random", label: "Random Joker" },
-          { value: "selected", label: "Selected Joker" },
+          { value: "random", label: "随机小丑牌" },
+          { value: "selected", label: "选中小丑牌" },
         ],
       },
       {
         id: "amount",
         type: "number",
-        label: "Number of Jokers to Destroy",
+        label: "要摧毁的小丑牌数量",
           showWhen: {
           parameter: "selection_method",
           values: ["random"],
@@ -1717,58 +1707,57 @@ export const CONSUMABLE_EFFECT_TYPES: EffectTypeDefinition[] = [
         max: 5,
       },
     ],
-    category: "Jokers",
+    category: "小丑牌",
   },
     {
     id: "edit_selected_joker",
-    label: "Edit Selected Joker",
-    description:
-      "Apply Modifiers to selected Joker",
+    label: "编辑选中小丑牌",
+    description: "对选中小丑牌应用修改器",
     applicableTriggers: ["consumable_used"],
     params: [
       {
         id: "sticker",
         type: "select",
-        label: "Sticker",
+        label: "贴纸",
         options: [
-          { value: "none", label: "No Sticker" },
+          { value: "none", label: "无贴纸" },
           ...STICKERS.map((sticker) => ({
             key: sticker.key,
             value: sticker.value,
             label: sticker.label,
           })),
-        { value: "remove", label: "Remove Sticker" },
+        { value: "remove", label: "移除贴纸" },
         ],
         default: "none",
       },
       {
         id: "edition",
         type: "select",
-        label: "Edition",
+        label: "版本",
         options: [
-          { value: "none", label: "No Edition" },
-          { value: "remove", label: "Remove Edition" },
+          { value: "none", label: "无版本" },
+          { value: "remove", label: "移除版本" },
           ...EDITIONS().map((edition) => ({
             value: edition.key,
             label: edition.label,
           })),
-          { value: "random", label: "Random Edition" },
+          { value: "random", label: "随机版本" },
         ],
         default: "none",
       },
     ],
-    category: "Jokers",
+    category: "小丑牌",
   },
   {
     id: "edition_random_joker",
-    label: "Apply Edition to Random Joker",
-    description: "Apply an edition to random jokers in your joker area",
+    label: "对随机小丑牌应用版本",
+    description: "对你的小丑牌区域中的随机小丑牌应用版本",
     applicableTriggers: ["consumable_used", "held_hand"],
     params: [
       {
         id: "amount",
         type: "number",
-        label: "Number of Jokers to Apply Edition",
+        label: "要应用版本的小丑牌数量",
         default: 1,
         min: 1,
         max: 5,
@@ -1776,104 +1765,103 @@ export const CONSUMABLE_EFFECT_TYPES: EffectTypeDefinition[] = [
       {
         id: "edition",
         type: "select",
-        label: "Edition to Apply",
+        label: "要应用的版本",
         options: [
           ...EDITIONS().map((edition) => ({
             value: edition.key,
             label: edition.label,
           })),
-          { value: "random", label: "Random Edition" },
-          { value: "remove", label: "Remove Edition" },
+          { value: "random", label: "随机版本" },
+          { value: "remove", label: "移除版本" },
         ],
         default: "e_foil",
       },
       {
         id: "target_type",
         type: "select",
-        label: "Target Jokers",
+        label: "目标小丑牌",
         options: [
-          { value: "editionless", label: "Only Editionless Jokers" },
-          { value: "any", label: "Any Jokers" },
+          { value: "editionless", label: "仅无版本小丑牌" },
+          { value: "any", label: "任意小丑牌" },
         ],
         default: "editionless",
       },
     ],
-    category: "Jokers",
+    category: "小丑牌",
   },
     {
         id: "edit_card_apperance",
-        label: "Edit Card Apperance",
-        description: "Modify if a Card can appear or not the current Run",
+        label: "编辑卡牌出现",
+        description: "修改卡牌在当前游戏中是否可以出现",
         applicableTriggers: ["consumable_used", "held_hand"],
         params: [
           {
               id: "key",
               type: "text",
-              label: "Card Key (itemkey_key) or (itemkey_modprefix_key)",
+              label: "卡牌标识符 (itemkey_key) 或 (itemkey_modprefix_key)",
               default: "",
             },
            {
               id: "card_apperance",
               type: "select",
-              label: "Card Apperance",
+              label: "卡牌出现",
               options: [
-              { value: "appear", label: "Can Appear" },
-              { value: "disapper", label: "Can't Appear" },
+              { value: "appear", label: "可以出现" },
+              { value: "disapper", label: "不能出现" },
               ],
               default: "appear",
             },
           ],
-        category: "Special",
+        category: "特殊",
       },
   {
     id: "emit_flag",
-    label: "Emit Flag",
-    description:
-      "Emit a custom flag. Flags are global variables that can be set to true or false and checked by any other jokers",
+    label: "发送标志位",
+    description: "发送自定义标志位。标志位是可以设置为真或假的全局变量，可以被任何其他小丑牌检查。",
     applicableTriggers: ["consumable_used", "held_hand"],
     params: [
       {
         id: "flag_name",
         type: "text",
-        label: "Unique Flag Name",
+        label: "唯一标志位名称",
         default: "custom_flag",
       },
       {
         id: "change",
         type: "select",
-        label: "Set Flag to",
+        label: "设置标志位为",
         options: [
-          { value: "true", label: "True" },
-          { value: "false", label: "False" },
-          { value: "invert", label: "Invert Current" },
+          { value: "true", label: "真" },
+          { value: "false", label: "假" },
+          { value: "invert", label: "反转当前" },
         ],
         default: "true",
       },
     ],
-    category: "Special",
+    category: "特殊",
   },
   {
     id: "play_sound",
-    label: "Play a sound",
-    description: "Play a specific sound defined in the Sound Tab",
+    label: "播放音效",
+    description: "播放音效标签中定义的特定音效",
     applicableTriggers: ["consumable_used", "held_hand"],
     params: [
       {
         id: "sound_key",
         type: "text",
-        label: "Sound Key (modprefix_key)",
+        label: "音效标识符 (modprefix_key)",
         default: "",
       },
     ],
-    category: "Special",
+    category: "特殊",
   },
   {
     id: "crash_game",
-    label: "Crash the Game",
-    description: "Crash the Game with a Custom message",
+    label: "使游戏崩溃",
+    description: "使用自定义消息使游戏崩溃",
     applicableTriggers: ["consumable_used", "held_hand"],
     params: [],
-    category: "Special",
+    category: "特殊",
   },
 ];
 

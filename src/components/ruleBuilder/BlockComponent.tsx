@@ -151,7 +151,7 @@ const getTypeConfig = () => {
         )}
         {parameterCount !== undefined && parameterCount > 0 && (
           <span className="text-white-darker text-xs font-medium">
-            {parameterCount} Parameter{parameterCount !== 1 ? "s" : ""}
+            {parameterCount} 个参数
           </span>
         )}
       </div>

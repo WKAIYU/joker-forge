@@ -148,6 +148,6 @@ export type SelectedItem = {
 
 // Export logical operators
 export const LOGICAL_OPERATORS: LogicalOperator[] = [
-  { value: "and", label: "AND" },
-  { value: "or", label: "OR" },
+  { value: "and", label: "与" },
+  { value: "or", label: "或" },
 ];
