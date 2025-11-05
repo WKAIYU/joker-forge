@@ -1,225 +1,228 @@
-# Joker Forge
+# 小丑熔炉
+# 这是一个中文汉化项目，目前进度40%，不会跟进最近进度。
+一个网络应用程序，可让您使用 Steammodded 轻松制作 Balatro Jokers。它旨在降低模组创建的门槛，超越简单的统计调整，实现真正独特和复杂的小丑行为，所有这些都不需要用户直接了解 Lua 脚本知识。核心理念是抽象和赋权：将底层 SMODS 代码抽象为直观的视觉组件，从而使用户能够将他们的创意游戏想法转化为功能性模组。
 
-A web app that allows you to make Balatro Jokers using Steammodded with ease. It aims to lower the barrier to entry for mod creation, moving beyond simple stat adjustments to enable the creation of truly unique and complex Joker behaviors, all without requiring direct Lua scripting knowledge from the user. The core philosophy is abstraction and empowerment: abstracting the underlying SMODS code into intuitive visual components, thereby empowering users to translate their creative gameplay ideas into functional mods.
+[试试看(这是原版英文网站)]（https://jokerforge.jaydchw.com/）
 
-[Try It Out](https://jokerforge.jaydchw.com/)
+**不建议本地部署该网站，因为我还没有汉化完成**
+**但是：如果你需要本地部署该网站，见下方“在本地运行”**
 
-It does this with a Trigger > Condition > Effect system. Most vanilla jokers follow this system. With this system, less complex jokers like Droll Joker become: When a Hand is Played (Trigger) > If Scoring Cards = Flush (Condition) > Then +10 Mult (Effect). Jokers abilities are set using the built-in Rule Builder.
+它通过触发>条件>效果系统来做到这一点。大多数香草小丑都遵循这个系统。有了这个系统，像 Droll Joker 这样不太复杂的小丑变成了：当打出一手牌时（触发）>如果得分牌 = 同花（条件）>则 +10 多牌（效果）。小丑的能力是使用内置的规则生成器设置的。
 
-**STILL EARLY IN DEV, EXPECT ISSUES, MISSING FEATURES, AND ANNOYANCES FOR NOW**
+**仍处于开发早期阶段，目前预计会出现问题、缺少功能和烦恼**
 
-## Implementation Status Checklist
+## 实现状态清单
 
-The plan here is to implement enough triggers, conditions, and effects, so as that each vanilla joker in Balatro can be replicated within Joker Forge.
+这里的计划是实现足够的触发器、条件和效果，以便巴拉特罗中的每个原版小丑都可以在小丑熔炉中复制。
 
-### Triggers
+### 触发器
 
-#### Fully Implemented
+#### 完全实现
 
-- [x] **Hand Played** - When a hand is played (default trigger)
-- [x] **Card Scored** - When an individual card is scored
-- [x] **Hand Discarded** - When a hand is discarded (before discard happens)
-- [x] **Card Discarded** - When a card is discarded
-- [x] **Blind Selected** - When a blind is selected
-- [x] **Blind Skipped** - When a blind is skipped
-- [x] **Boss Defeated** - When a boss blind is defeated
-- [x] **Booster Opened** - When a booster pack is opened
-- [x] **Booster Skipped** - When a booster pack is skipped
-- [x] **Consumable Used** - When a consumable is used
-- [x] **Hand Drawn** - When a hand is drawn
-- [x] **First Hand Drawn** - When the first hand is drawn
-- [x] **Shop Exited** - When exiting the shop
-- [x] **Passive** - Always active, for specific effects like Pareidolia, and game rules like hand size
-- [x] **Round End** - At the end of a round
-- [x] **Shop Reroll** - When the shop is rerolled (Flash Card)
-- [x] **Card Held in Hand** - Triggers for each card held in hand
-- [x] **Card Bought** - When a card is purchased
-- [x] **Card Sold** - When a card is sold
-- [x] **When this Card is Sold** - When this specific card is sold
-- [x] **Card Destroyed** - When a card is destroyed
-- [x] **When shop is Entered** - When the shop is entered
-- [x] **When this Joker is Bought** - When specifically this joker is bought (different from add to deck)
-- [x] **When a Playing Card is Added** - When a playing card is added to your deck (Hologram)
-- [x] **Ante Start** - At the start of an ante
+- [x] **玩过的手牌** - 玩出一手牌时（默认触发器）
+- [x] **牌得分** - 当单张牌得分时
+- [x] **手牌弃牌** - 当手牌被弃牌时（在弃牌发生之前）
+- [x] **牌被丢弃** - 当牌被丢弃时
+- [x] **百叶窗选择** - 选择百叶窗时
+- [x] **跳过盲区** - 跳过盲区时
+- [x] **Boss Defeated** - 当 Boss 被打盲时
+- [x] **补充包已打开** - 当补充包打开时
+- [x] **跳过补充包** - 跳过补充包时
+- [x] **使用易耗材** - 使用易损品时
+- [x] **手绘** - 绘制手牌时
+- [x] **第一手抽牌** - 当第一手牌抽到时
+- [x] **商店已退出** - 退出商店时
+- [x] **被动** - 始终处于活动状态，用于特定效果（如幻觉）和游戏规则（如手牌大小）
+- [x] **回合结束** - 回合结束时
+- [x] **商店重掷** - 当商店重新滚动时（闪存卡）
+- [x] **手中持有的牌** - 手中每张牌的触发器
+- [x] **购买的卡** - 购买卡时
+- [x] **售出的卡片** - 当一张卡片售出时
+- [x] **当这张卡被出售时** - 当这张特定卡被出售时
+- [x] **卡牌被销毁** - 当一张卡牌被销毁时
+- [x] **进入商店时** - 进入商店时
+- [x] **当这个小丑被购买时** - 具体来说，当这个小丑被购买时（与添加到套牌不同）
+- [x] **添加扑克牌时** - 将扑克牌添加到您的牌组时（全息图）
+- [x] **底注开始** - 在底注开始时
 
-#### Not Implemented Yet
+#### 尚未实现
 
-- [ ] **Joker Added/Removed** - When a Joker is added/removed from your list (Joker Stencil)
-- [ ] **When a Card is Modified** - When any card is modified (enhanced, etc) (difficult)
+- [ ] **小丑添加/删除** - 当小丑从您的列表中添加/删除时（小丑模板）
+- [ ] **当卡牌被修改时** - 当任何卡牌被修改（增强等）（困难）
 ---
 
-### Conditions
+### 条件
 
-#### Fully Implemented
+#### 完全实现
 
-- [x] **Hand Type** - Check poker hand type (Flush, Straight, etc.)
-- [x] **Card Count** - Check number of cards in hand
-- [x] **Suit Count** - Check cards of specific suits
-- [x] **Rank Count** - Check cards of specific ranks
-- [x] **Card Rank** - Check individual card rank (for card_scored trigger)
-- [x] **Card Suit** - Check individual card suit (for card_scored trigger)
-- [x] **Card Enhancement** - Check for card enhancements (Gold, Steel, etc.)
-- [x] **Card Seal** - Check for card seals (Gold, Red, Blue, Purple)
-- [x] **Player Money** - Check player's current money
-- [x] **Remaining Hands** - Check hands left in round
-- [x] **Remaining Discards** - Check discards left in round
-- [x] **Joker Count** - Check number of jokers owned
-- [x] **Blind Type** - Check current blind type (Small, Big, Boss)
-- [x] **Random Chance** - Probability-based conditions
-- [x] **Internal Variable** - Check joker's internal variable values
-- [x] **First Played Hand** - Check if this is the first hand played in the round
-- [x] **First Discarded Hand** - Check if this is the first hand discarded in the round
-- [x] **Ante Level** - Check current ante level
-- [x] **Hand Size** - Check current hand size
-- [x] **Deck Size** - Check remaining deck size
-- [x] **Deck Count By Rank, Suit, Enhancement, Seal, Edition** - Check the specifics of the cards in your full deck
-- [x] **Specific Joker** - Check if you have a specific joker in your list
-- [x] **Generic Compare** - Check GameVars and Vars against a value/eachother
-- [x] **Consumable Type** - Check for card sold and consumable used
-- [x] **Glass Card Destroyed** - Check to see if a glass card got destroyed (Glass Joker)
-- [x] **Triggered Boss Blind Ability** - Check if the boss blind's ability was triggered (Matador)
-- [x] **Most/Least Played Poker Hand** - Check if the hand played is your most/least played (Obelisk)
-- [x] **Consumable Held** - Check for specific consumable/s held
-- [x] **Score Threshold** - Check if score meets requirement (Mr. Bones)
-- [x] **Lucky Card Triggered** - Check if a lucky card succesfully triggered (Lucky Cat)
-- [x] **Edition Count** - Check how many cards with editions are in hand played
-- [x] **Enhancement Count** - Check how many cards with enhancements are in hand played
-- [x] **Seal Count** - Check how many cards with seals are in hand played
-- [x] **Check Specific Poker Hand Level** - Check a specific poker hands level
-- [x] **Culmative Chip/Rank Check** - Check for if cards rank/chips add up to a certain number
-- [x] **Consumable Count** - Check number of consumables owned
-
----
-
-### Effects
-
-#### Fully Implemented
-
-- [x] **Add Chips** - Add flat chips to score
-- [x] **Apply X Chips** - Multiply chips by value
-- [x] **Apply ^Chips** - Exponentially multiply chips by value
-- [x] **Add Mult** - Add flat mult to score
-- [x] **Apply X Mult** - Multiply mult by value
-- [x] **Apply ^Mult** - Exponentially multiply mult by value
-- [x] **Add Dollars** - Give money to player
-- [x] **Retrigger Cards** - Retrigger scored cards (card_scored trigger only)
-- [x] **Level Up Hand** - Increase poker hand level
-- [x] **Edit Discard** - Give/take/set discards
-- [x] **Edit Hand** - Give/take/set hands
-- [x] **Destroy Self** - Destroy the joker
-- [x] **Add Card to Deck** - Add new playing cards to deck/hand (this is half done, still an error with scoring triggers)
-- [x] **Copy Triggered Card** - Copy the card that triggered the effect
-- [x] **Copy Played Card** - Copy specific cards from played hand
-- [x] **Edit Triggered Card** - Modify card properties (rank, suit, enhancement, seal)
-- [x] **Delete Triggered Card** - Destroys/deletes cards when scored/discarded
-- [x] **Modify Internal Variable** - Change joker's internal variable values
-- [x] **Create Tarot Card** - Create a random or set tarot card
-- [x] **Create Planet Card** - Create a random or set planet card
-- [x] **Create Spectral Card** - Create a random or set spectral card
-- [x] **Destroy Consumable** - Destroy a random or specific spectral/tarot/planet card
-- [x] **Copy Consumable** - Copy a random or specific spectral/tarot/planet card
-- [x] **Edit Hand Size** - Give/take/set hand size (Turtle Bean)
-- [x] **Create Joker** - Create a different joker (Random, By ID)
-- [x] **Copy Joker** - Make a copy of another joker (Random, By ID, By Index)
-- [x] **Destroy Joker** - Destroy another joker (Random, By ID, By Index)
-- [x] **Create Skip Tags** - Create a set or random skip tag
-- [x] **Set Dollars** - Set dollars to a value
-- [x] **Show Message** - Just show a simple little message
-- [x] **Disable Boss Blind** - Disables the boss blinds unique effect (Luchador, Chicot)
-- [x] **Copy Ability of Adjacent Joker** - Blueprint/Brainstorm logic
-- [x] **Modify Sell Value** - Change sell value of this or other jokers (Egg, Gift Card)
-- [x] **Permanent Card Modifications** - Add permanent bonuses to cards (Hiker)
-- [x] **Modify Probability** - Oops All 6s! support
-- [x] **All [Cards] in the Shop are Free** - Changes the buy price of certain packs/cards (planet, joker, tarot, spectral) to be free
-- [x] **All Cards are Scored** - Splash logic
-- [x] **Combine Suits** - Treat two or more suits as the same suit (Smeared Joker)
-- [x] **Combine Ranks** - Treat two or more ranks as the same rank
-- [x] **Cards May Appear Multiple Times** - Showman logic
-- [x] **Allowing Debt** - Credit Card logic
-- [X] **Alter Blind Requirement** - I.E. 2X blind requirement, 0.5x blind requirement
-- [X] **Beat Current Blind** - Completes the current blind
-- [x] **Add/Subtract/Set Joker Slots** - Would be cool i guess lol
-- [x] **Add/Subtract/Set Consumable Slots** - also self-explanatory
-- [x] **Destroy Card in Hand** - Destroys a random or set (by index, rank, suit) card in hand
-
-#### Not Implemented Yet
-
-- [ ] **Apply Edition to Joker** - Apply an edition to a random/set Joker owned
-
+- [x] **手牌类型** - 检查扑克手牌类型（同花、顺子等）
+- [x] **牌数** - 检查手牌数量
+- [x] **花色计数** - 检查特定花色的牌
+- [x] **等级计数** - 检查特定等级的卡片
+- [x] **牌牌等级** - 检查单张牌牌等级（对于 card_scored 触发器）
+- [x] **纸牌花色** - 检查单个纸牌花色（用于 card_scored 触发器）
+- [x] **卡牌增强** - 检查卡牌增强（金、钢等）
+- [x] **卡封** - 检查卡封（金色、红色、蓝色、紫色）
+- [x] **玩家资金** - 检查玩家当前的资金
+- [x] **剩余手牌** - 检查回合中剩余的手牌
+- [x] **剩余弃牌** - 检查回合中剩余的弃牌
+- [x] **小丑计数** - 检查拥有的小丑数量
+- [x] **盲注类型** - 检查当前盲注类型（小、大、老板）
+- [x] **随机机会** - 基于概率的条件
+- [x] **内部变量** - 检查小丑的内部变量值
+- [x] **第一手牌** - 检查这是否是该轮中第一手牌
+- [x] **第一手弃牌** - 检查这是否是该回合中第一手弃牌
+- [x] **底注水平** - 检查当前的底注水平
+- [x] **手牌尺寸** - 检查当前手牌尺寸
+- [x] **甲板大小** - 检查剩余甲板大小
+- [x] **按等级、花色、增强、印章、版本排列的牌组数量** - 检查完整牌组中牌的具体情况
+- [x] **特定小丑** - 检查您的列表中是否有特定的小丑
+- [x] **通用比较** - 将游戏变量和变量与值/彼此进行检查
+- [x] **耗材类型** - 检查已售出的卡和使用的耗材
+- [x] **玻璃卡被摧毁** - 检查玻璃卡是否被摧毁（玻璃小丑）
+- [x] **触发 Boss 致盲能力** - 检查 Boss 致盲能力是否被触发（斗牛士）
+- [x] **玩得最多/最少的扑克牌** - 检查玩过的牌是否是您玩得最多/最少的牌（方尖碑）
+- [x] **持有消耗品** - 检查持有的特定消耗品
+- [x] **分数阈值** - 检查分数是否满足要求（骨头先生）
+- [x] **幸运卡触发** - 检查幸运卡是否成功触发（幸运猫）
+- [x] **版本计数** - 检查手上有多少张有版本的牌
+- [x] **增强计数** - 检查手上打出了多少张带有增强的牌
+- [x] **印章计数** - 检查手中有多少张带有印章的牌被打出
+- [x] **检查特定的扑克手牌水平** - 检查特定的扑克手牌水平
+- [x] **累积筹码/排名检查** - 检查牌排名/筹码加起来是否达到一定数量
+- [x] **耗材数量** - 检查拥有的耗材数量
 
 ---
 
-### Code Generation Features
+### 效果
 
-#### Implemented
+#### 完全实现
 
-- [x] **Condition Function Generation** - Creates helper functions for conditions
-- [x] **Effect Chaining** - Multiple effects in one rule using `extra` field
-- [x] **Context-Aware Generation** - Different code for different triggers
-- [x] **Parameter Validation** - Handles conditional parameter visibility
-- [x] **Lua Code Output** - Generates proper SMODS-compatible Lua
-- [x] **Atlas Generation** - Creates sprite atlases from uploaded images
-- [x] **Mod Packaging** - Complete mod folder structure with JSON metadata
-- [x] **Mod Metadata Editing** - Edit parameters like description, version, etc.
-- [x] **Sticker Compatibility** - Perishable, Rental, etc. 
-- [x] **Blueprint Compatibility Logic** - Actual blueprint behavior code
-- [x] **Unlock Condition Generation** - Custom unlock requirements
+- [x] **添加筹码** - 添加扁平筹码来得分
+- [x] **应用 X 个筹码** - 将筹码乘以值
+- [x] **应用 ^筹码** - 将筹码乘以值成倍
+- [x] **添加多色** - 添加平坦多色来得分
+- [x] **应用 X 多项** - 将多项乘以值
+- [x] **应用 ^Mult** - 指数乘以 mult 值
+- [x] **添加美元** - 给玩家钱
+- [x] **重新触发卡** - 重新触发计分卡（仅限 card_scored 触发）
+- [x] **升级手牌** - 提高扑克牌等级
+- [x] **编辑弃牌** - 给予/接受/设置弃牌
+- [x] **编辑手牌** - 给予/接过/设置手牌
+- [x] **摧毁自我** - 摧毁小丑
+- [x] **将牌添加到牌组** - 将新的扑克牌添加到牌组/手牌中（这已经完成了一半，得分触发器仍然是一个错误）
+- [x] **复制触发的卡** - 复制触发效果的卡
+- [x] **复制打出的牌** - 从打出的手牌中复制特定牌
+- [x] **编辑触发卡** - 修改卡牌属性（等级、花色、强化、印章）
+- [x] **删除触发的卡牌** - 得分/丢弃时摧毁/删除卡牌
+- [x] **修改内部变量** - 更改小丑的内部变量值
+- [x] **创建塔罗牌** - 创建随机或设置的塔罗牌
+- [x] **创建行星卡** - 创建随机或设置的行星卡
+- [x] **创建光谱卡** - 创建随机或设置光谱卡
+- [x] **销毁消耗品** - 销毁一张随机或特定的光谱/塔罗牌/行星牌
+- [x] **复制消耗品** - 复制随机或特定的光谱/塔罗牌/行星牌
+- [x] **编辑手牌大小** - 给予/接受/设置手牌大小（龟豆）
+- [x] **创建小丑** - 创建不同的小丑（随机，按 ID）
+- [x] **复制小丑** - 复制另一个小丑（随机、按 ID、按索引）
+- [x] **摧毁小丑** - 摧毁另一个小丑（随机、按 ID、按索引）
+- [x] **创建跳过标签** - 创建一组或随机跳过标签
+- [x] **设置美元** - 将美元设置为一个值
+- [x] **显示消息** - 只需显示一条简单的小消息
+- [x] **禁用 Boss 盲人** - 禁用 Boss 盲人独特效果（Luchador、Chicot）
+- [x] **相邻小丑的复制能力** - 蓝图/头脑风暴逻辑
+- [x] **修改卖出价值** - 更改此小丑或其他小丑（彩蛋、礼品卡）的售价
+- [x] **永久卡牌修改** - 为卡牌添加永久奖励（徒步旅行者）
+- [x] **修改概率** - 哎呀，所有 6 个！支持
+- [x] **商店中的所有 [卡牌] 都是免费的** - 将某些包/卡牌（行星、小丑、塔罗牌、幽灵）的购买价格更改为免费
+- [x] **所有牌都已得分** - 启动逻辑
+- [x] **组合花色** - 将两种或多种花色视为同一套花色（涂抹小丑）
+- [x] **合并等级** - 将两个或多个等级视为同一等级
+- [x] **卡片可能会出现多次** - 表演者逻辑
+- [x] **允许债务** - 信用卡逻辑
+- [X] **改变盲注要求** - 即 2 倍盲注要求，0.5 倍盲注要求
+- [X] **击败电流盲点** - 完成当前盲点
+- [x] **添加/减去/设置小丑插槽** - 我想会很酷，哈哈
+- [x] **添加/减去/设置消耗品插槽** - 也是不言自明的
+- [x] **摧毁手牌** - 摧毁手中的一张随机或一组（按索引、等级、花色）的牌
 
-#### Not Implemented Yet
+#### 尚未实现
 
-- [ ] **Localization Support** - Multiple language support
+- [ ] **将版本应用于小丑** - 将版本应用于小丑拥有的随机/套装
+
 
 ---
 
-### UI Features
+### 代码生成功能
 
-#### Implemented
+#### 已实现
 
-- [x] **Rule Builder Modal** - Visual rule creation interface
-- [x] **Condition Groups** - AND/OR logic between condition groups
-- [x] **Parameter Fields** - Dynamic form fields based on condition/effect type
-- [x] **Trigger Filtering** - Only show applicable conditions/effects for selected trigger
-- [x] **Rule Description** - Human-readable rule summaries
-- [x] **Joker Card Preview** - Visual joker card with hover tooltips
-- [x] **Image Upload** - Custom joker sprite upload with validation
-- [x] **Export System** - Generate and download complete mod packages
-- [x] **Import System** - Import existing jokers/rules from files
+- [x] **条件函数生成** - 为条件创建辅助函数
+- [x] **效果链接** - 使用“额外”字段在一个规则中实现多个效果
+- [x] **上下文感知生成** - 不同触发器的不同代码
+- [x] **参数验证** - 处理条件参数可见性
+- [x] **Lua 代码输出** - 生成适当的 SMODS 兼容 Lua
+- [x] **图集生成** - 从上传的图像创建精灵图集
+- [x] **Mod 打包** - 带有 JSON 元数据的完整 mod 文件夹结构
+- [x] **Mod 元数据编辑** - 编辑描述、版本等参数。
+- [x] **贴纸兼容性** - 易腐烂、租赁等。
+- [x] **蓝图兼容性逻辑** - 实际蓝图行为代码
+- [x] **解锁条件生成** - 自定义解锁要求
 
-#### Not Implemented Yet
+#### 尚未实现
 
-- [ ] **Dynamic Code Display** - Live preview of generated Lua code in rule builder
-- [ ] **Undo/Redo System** - History management for rule editing
-- [ ] **Help System** - Integrated tooltips and documentation
+- [ ] **本地化支持** - 多语言支持
 
 ---
 
-# Usage
+### UI 功能
 
-Go to [the website](https://jokerforge.jaydchw.com/) to start creating jokers
+#### 已实现
 
-### Running Locally
+- [x] **规则生成器模式** - 可视化规则创建界面
+- [x] **条件组** - 条件组之间的 AND/OR 逻辑
+- [x] **参数字段** - 基于条件/效果类型的动态表单字段
+- [x] **触发器过滤** - 仅显示所选触发器的适用条件/效果
+- [x] **规则说明** - 人类可读的规则摘要
+- [x] **小丑卡预览** - 带有悬停工具提示的视觉小丑卡
+- [x] **图片上传** - 带有验证的自定义小丑精灵上传
+- [x] **导出系统** - 生成并下载完整的模组包
+- [x] **导入系统** - 从文件导入现有的 joker/规则
 
-1. **Prerequisites**
+#### 尚未实现
 
-   - Node.js (v16 or higher)
-   - npm
+- [ ] **动态代码显示** - 在规则生成器中实时预览生成的 Lua 代码
+- [ ] **撤消/重做系统** - 规则编辑的历史记录管理
+- [ ] **帮助系统** - 集成的工具提示和文档
 
-2. **Setup**
+---
 
-   ```bash
-   # Clone the repository
-   git clone https://github.com/Jayd-H/joker-forge.git
-   cd joker-forge
+# 用法
 
-   # Install dependencies
-   npm install
+转到 [网站]（https://jokerforge.jaydchw.com/） 开始创建小丑
 
-   # Start the development server
-   npm run dev
-   ```
+### 在本地运行
 
-# Acknowledgements
+1. **先决条件**
 
-Icons from Heroicons, favicon from SVGRepo (this should be temporary).
+- Node.js（v16 或更高版本）
+- npm
 
-Thank you balatro modding discord server for answering benign questions.
+2. **设置**
+
+
+# 克隆仓库
+git clone https://github.com/Jayd-H/joker-forge.git
+cd joker-forge
+
+# 安装依赖项
+npm install
+
+# 启动开发服务器
+npm run dev
+```
+
+# 致谢
+
+来自 Heroicons 的图标，来自 SVGRepo 的图标（这应该是临时的）。
+
+感谢 balatro modding discord 服务器回答良性问题。
