@@ -597,13 +597,13 @@ const EditSealInfo: React.FC<EditSealInfoProps> = ({
                               icon={<PhotoIcon className="h-4 w-4" />}
                             >
                               {formData.imagePreview
-                                ? "Change Image"
-                                : "Upload Image"}
+                                ? "更换图片"
+                                : "上传图片"}
                             </Button>
                           </div>
                           <div className="text-center mt-2">
                             <p className="text-xs text-white-darker">
-                              Accepted: 71×95px or 142×190px
+                              接受尺寸：71×95像素 或 142×190像素
                             </p>
                             {(() => {
                               const credit = getImageCredit(formData);

@@ -529,7 +529,7 @@ const EditConsumableInfo: React.FC<EditConsumableInfoProps> = ({
 
   const tabs = [
     { id: "visual", label: "视觉与属性", icon: PhotoIcon },
-    { id: "description", label: "Description", icon: DocumentTextIcon },
+    { id: "description", label: "描述", icon: DocumentTextIcon },
   ];
 
   const handleKeyDown = (
@@ -881,7 +881,7 @@ const EditConsumableInfo: React.FC<EditConsumableInfoProps> = ({
               variant="danger"
               className="px-8"
             >
-              删除小丑
+              删除该卡牌
             </Button>
           </div>
         </div>

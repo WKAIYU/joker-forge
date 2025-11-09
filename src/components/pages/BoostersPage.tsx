@@ -928,7 +928,7 @@ const BoostersPage: React.FC<BoostersPageProps> = ({
 
   const currentSortLabel =
     sortOptions.find((option) => option.value === sortBy)?.label ||
-    "Id Value";
+    "Id";
 
   const currentSortDirectionLabel =
     currentSortMethod ? (sortDirection === "asc" ? currentSortMethod.ascText : currentSortMethod.descText) :
@@ -938,7 +938,7 @@ const BoostersPage: React.FC<BoostersPageProps> = ({
     <div className="min-h-screen">
       <div className="p-8 font-lexend max-w-7xl mx-auto">
         <h1 className="text-3xl text-white-light tracking-widest text-center">
-          Booster Packs
+          补充包
         </h1>
         <h1 className="text-xl text-white-dark font-light tracking-widest mb-6 text-center">
           {modName}
@@ -952,7 +952,7 @@ const BoostersPage: React.FC<BoostersPageProps> = ({
             size="md"
             className="shadow-lg hover:shadow-2xl transition-shadow"
           >
-            Add New Booster Pack
+            添加新的补充包
           </Button>
         </div>
 
@@ -961,9 +961,7 @@ const BoostersPage: React.FC<BoostersPageProps> = ({
             <div className="flex items-center gap-6 text-white-darker text-sm">
               <div className="flex items-center">
                 <GiftIcon className="h-4 w-4 mr-2 text-mint" />
-                {modName} • {filteredAndSortedBoosters.length} of{" "}
-                {boosters.length} booster
-                {boosters.length !== 1 ? "s" : ""}
+                {modName} • {filteredAndSortedBoosters.length}/{boosters.length} 个增强包
               </div>
             </div>
           </div>

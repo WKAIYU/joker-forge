@@ -203,31 +203,31 @@ const EnhancementsPage: React.FC<EnhancementsPageProps> = ({
     () => [
       {
         value: "id",
-        label: "Id Value",
+        label: "ID",
         sortFn: (a, b) => a.orderValue - b.orderValue,
-        ascText: "Least to Most",
-        descText: "Most to Least",
+        ascText: "从少到多",
+        descText: "从多到少",
       },
       {
         value: "name",
-        label: "Name",
+        label: "名称",
         sortFn: (a, b) => a.name.localeCompare(b.name),
         ascText: "A-Z",
         descText: "Z-A",
       },
       {
         value: "rules",
-        label: "Rules",
+        label: "规则数量",
         sortFn: (a, b) => (a.rules?.length || 0) - (b.rules?.length || 0),
-        ascText: "Least to Most",
-        descText: "Most to Least",
+        ascText: "从少到多",
+        descText: "从多到少",
       },
       {
         value: "edit",
-        label: "Last Edited",
+        label: "最后编辑",
         sortFn: (a, b) => (editData.indexOf(a.objectKey) || 0) - (editData.indexOf(b.objectKey) || 0),
-        ascText: "Oldest to Newest",
-        descText: "Newest to Oldest",
+        ascText: "从旧到新",
+        descText: "从新到旧",
       },
     ],
     [editData]
@@ -268,9 +268,9 @@ const EnhancementsPage: React.FC<EnhancementsPageProps> = ({
     const newEnhancement: EnhancementData = {
       objectType: "enhancement",
       id: crypto.randomUUID(),
-      name: "New Enhancement",
+      name: "新的卡牌",
       description:
-        "A {C:blue}custom{} enhancement with {C:red}unique{} effects.",
+        "一个{C:blue}自定义的{}卡牌，具有{C:red}独特的{}效果。",
       imagePreview: placeholderResult.imageData,
       objectKey: slugify("New Enhancement"),
       unlocked: true,
@@ -465,7 +465,7 @@ const EnhancementsPage: React.FC<EnhancementsPageProps> = ({
     <div className="min-h-screen">
       <div className="p-8 font-lexend max-w-7xl mx-auto">
         <h1 className="text-3xl text-white-light tracking-widest text-center">
-          Enhancements
+          增强卡牌
         </h1>
         <h1 className="text-xl text-white-dark font-light tracking-widest mb-6 text-center">
           {modName}
@@ -478,7 +478,7 @@ const EnhancementsPage: React.FC<EnhancementsPageProps> = ({
             size="md"
             className="shadow-lg hover:shadow-2xl transition-shadow"
           >
-            Add New Enhancement
+            新增增强卡牌
           </Button>
         </div>
         <div className="flex items-center mb-2">
@@ -486,9 +486,7 @@ const EnhancementsPage: React.FC<EnhancementsPageProps> = ({
             <div className="flex items-center gap-6 text-white-darker text-sm">
               <div className="flex items-center">
                 <DocumentTextIcon className="h-4 w-4 mr-2 text-mint" />
-                {modName} • {filteredAndSortedEnhancements.length} of{" "}
-                {enhancements.length} enhancement
-                {enhancements.length !== 1 ? "s" : ""}
+                {modName} • {filteredAndSortedEnhancements.length}/{enhancements.length} 个增强卡牌
               </div>
             </div>
           </div>
@@ -500,7 +498,7 @@ const EnhancementsPage: React.FC<EnhancementsPageProps> = ({
               <MagnifyingGlassIcon className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-white-darker group-focus-within:text-mint transition-colors" />
               <input
                 type="text"
-                placeholder="Search enhancements by name or description..."
+                placeholder="通过名称或描述进行搜索增强卡牌..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="w-full bg-black-darker shadow-2xl border-2 border-black-lighter rounded-lg pl-12 pr-4 py-4 text-white-light tracking-wider placeholder-white-darker focus:outline-none focus:border-mint transition-all duration-200"
@@ -536,18 +534,17 @@ const EnhancementsPage: React.FC<EnhancementsPageProps> = ({
             <div className="rounded-2xl p-8 max-w-md">
               <MagnifyingGlassIcon className="h-16 w-16 text-mint opacity-60 mb-4 mx-auto" />
               <h3 className="text-white-light text-xl font-light mb-3">
-                No Enhancements Found
+                没有找到匹配的增强卡牌
               </h3>
               <p className="text-white-darker text-sm mb-6 leading-relaxed">
-                No enhancements match your current search criteria. Try
-                adjusting your search terms.
+                没有增强卡牌符合您的搜索条件。请尝试使用不同的关键词进行搜索，或清除搜索以查看所有增强卡牌。
               </p>
               <Button
                 variant="secondary"
                 onClick={() => setSearchTerm("")}
                 fullWidth
               >
-                Clear Search
+                清除搜索
               </Button>
             </div>
           </div>
@@ -556,11 +553,10 @@ const EnhancementsPage: React.FC<EnhancementsPageProps> = ({
             <div className="rounded-2xl p-8 max-w-md">
               <DocumentTextIcon className="h-16 w-16 text-mint opacity-60 mb-4 mx-auto" />
               <h3 className="text-white-light text-xl font-light mb-3">
-                No Enhancements Yet :(
+                没有任何增强卡牌 : (
               </h3>
               <p className="text-white-darker text-sm mb-6 leading-relaxed">
-                Create your first enhancement to get started with editing its
-                information and defining its custom rules.
+                创建你的第一个增强卡牌，开始为你的模组添加独特的效果和能力吧！
               </p>
               <Button
                 variant="primary"
@@ -568,7 +564,7 @@ const EnhancementsPage: React.FC<EnhancementsPageProps> = ({
                 icon={<PlusIcon className="h-5 w-5" />}
                 fullWidth
               >
-                Create Your First Enhancement
+                创造你的第一个增强卡牌
               </Button>
             </div>
           </div>

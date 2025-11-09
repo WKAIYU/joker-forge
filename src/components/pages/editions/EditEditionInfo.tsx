@@ -786,7 +786,7 @@ const EditEditionInfo: React.FC<EditEditionInfoProps> = ({
               variant="danger"
               className="px-8"
             >
-              删除小丑
+              删除该卡牌
             </Button>
           </div>
         </div>

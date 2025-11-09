@@ -765,7 +765,7 @@ const EditJokerInfo: React.FC<EditJokerInfoProps> = ({
 
   const tabs = [
     { id: "visual", label: "视觉与属性", icon: PhotoIcon },
-    { id: "description", label: "小丑描述", icon: DocumentTextIcon },
+    { id: "description", label: "描述", icon: DocumentTextIcon },
     { id: "settings", label: "高级设置", icon: Cog6ToothIcon },
   ];
 
@@ -1548,7 +1548,7 @@ const EditJokerInfo: React.FC<EditJokerInfoProps> = ({
               保存更改
             </Button>
             <Button onClick={handleDelete} variant="danger" className="px-8">
-              删除小丑
+              删除该卡牌
             </Button>
           </div>
         </div>

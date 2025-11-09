@@ -192,12 +192,12 @@ const FloatingTabDock: React.FC<{
     {
       id: "boosters" as const,
       icon: GiftIcon,
-      label: "Boosters",
+      label: "补充包",
     },
     {
       id: "enhancements" as const,
       icon: StarIcon,
-      label: "Enhancements",
+      label: "增强卡牌",
     },
     {
       id: "seals" as const,

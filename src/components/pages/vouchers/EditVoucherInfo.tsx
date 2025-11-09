@@ -507,7 +507,7 @@ const EditVoucherInfo: React.FC<EditVoucherInfoProps> = ({
 
   const tabs = [
     { id: "visual", label: "视觉与属性", icon: PhotoIcon },
-    { id: "description", label: "Description", icon: DocumentTextIcon },
+    { id: "description", label: "描述", icon: DocumentTextIcon },
   ];
 
   const handleKeyDown = (

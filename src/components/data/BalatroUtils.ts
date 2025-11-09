@@ -313,16 +313,16 @@ let registryState: RegistryState = {
 };
 
 const VANILLA_RARITIES_DATA = [
-  { value: "common", label: "Common" },
-  { value: "uncommon", label: "Uncommon" },
-  { value: "rare", label: "Rare" },
-  { value: "legendary", label: "Legendary" },
+  { value: "common", label: "普通" },
+  { value: "uncommon", label: "罕见" },
+  { value: "rare", label: "稀有" },
+  { value: "legendary", label: "传奇" },
 ];
 
 const VANILLA_CONSUMABLE_SETS = [
-  { value: "Tarot", label: "Tarot", key: "tarot" },
-  { value: "Planet", label: "Planet", key: "planet" },
-  { value: "Spectral", label: "Spectral", key: "spectral" },
+  { value: "Tarot", label: "塔罗牌", key: "tarot" },
+  { value: "Planet", label: "行星牌", key: "planet" },
+  { value: "Spectral", label: "幻灵牌", key: "spectral" },
 ];
 
 const VANILLA_VOUCHERS = [

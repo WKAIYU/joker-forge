@@ -350,7 +350,7 @@ const EnhancementCard: React.FC<EnhancementCardProps> = ({
 
         <div className="relative z-30">
           <div className="px-6 py-1 -mt-6 rounded-md border-2 text-sm tracking-wide font-medium bg-black border-balatro-enhanced text-balatro-enhanced">
-            Enhancement
+            增强卡牌
           </div>
         </div>
       </div>
@@ -556,9 +556,7 @@ const EnhancementCard: React.FC<EnhancementCardProps> = ({
             <div className="w-px bg-black-lighter py-3"></div>
 
             <Tooltip
-              content="Export Enhancement"
-              show={hoveredButton === "export"}
-            >
+              content="导出增强牌" show={hoveredButton === "export"}>
               <div
                 className="flex flex-1 transition-colors cursor-pointer group"
                 onClick={onExport}
@@ -572,7 +570,7 @@ const EnhancementCard: React.FC<EnhancementCardProps> = ({
             </Tooltip>
             <div className="w-px bg-black-lighter py-3"></div>
 
-            <Tooltip content="Duplicate" show={hoveredButton === "duplicate"}>
+            <Tooltip content="复制" show={hoveredButton === "duplicate"}>
               <div
                 className="flex flex-1 transition-colors cursor-pointer group"
                 onClick={onDuplicate}

@@ -462,7 +462,7 @@ const EditEnhancementInfo: React.FC<EditEnhancementInfoProps> = ({
 
   const tabs = [
     { id: "visual", label: "视觉与属性", icon: PhotoIcon },
-    { id: "description", label: "Description", icon: DocumentTextIcon },
+    { id: "description", label: "描述", icon: DocumentTextIcon },
   ];
 
   const handleKeyDown = (
@@ -608,13 +608,13 @@ const EditEnhancementInfo: React.FC<EditEnhancementInfoProps> = ({
                               icon={<PhotoIcon className="h-4 w-4" />}
                             >
                               {formData.imagePreview
-                                ? "Change Image"
-                                : "Upload Image"}
+                                ? "更换图片"
+                                : "上传图片"}
                             </Button>
                           </div>
                           <div className="text-center mt-2">
                             <p className="text-xs text-white-darker">
-                              Accepted: 71×95px or 142×190px
+                              接受尺寸：71×95像素 或 142×190像素
                             </p>
                             {(() => {
                               const credit = getImageCredit(formData);
@@ -636,7 +636,7 @@ const EditEnhancementInfo: React.FC<EditEnhancementInfoProps> = ({
                               }
                               placeholder="Enter enhancement name"
                               separator={true}
-                              label="Enhancement Name"
+                              label="增强牌名称"
                               size="md"
                               error={
                                 validationResults.name &&
@@ -657,7 +657,7 @@ const EditEnhancementInfo: React.FC<EditEnhancementInfoProps> = ({
                             }
                             placeholder="Enter enhancement key"
                             separator={true}
-                            label="Enhancement Key (Code Name)"
+                            label="增强牌标识（代码名称）"
                             size="md"
                           />
                           <p className="text-xs text-white-darker -mt-2">
@@ -665,7 +665,7 @@ const EditEnhancementInfo: React.FC<EditEnhancementInfoProps> = ({
                           </p>
                           <div className=" p-4">
                             <h3 className="text-white-light font-medium mb-4">
-                              Appearance Weight
+                              出现权重
                             </h3>
                             <div className="space-y-3">
                               <div className="flex items-center gap-3">
@@ -708,8 +708,7 @@ const EditEnhancementInfo: React.FC<EditEnhancementInfoProps> = ({
                                 )}
                               </div>
                               <p className="text-xs text-white-darker">
-                                Higher values appear more frequently. Click the
-                                value to edit directly.
+                                较高的权重值会增加该增强牌在游戏中出现的概率。
                               </p>
                             </div>
                           </div>
@@ -717,17 +716,17 @@ const EditEnhancementInfo: React.FC<EditEnhancementInfoProps> = ({
                           <div>
                             <h4 className="text-white-light font-medium text-base mb-3 justify-center pt-2 flex tracking-wider items-center gap-2">
                               <BoltIcon className="h-5 w-5 text-mint" />
-                              Enhancement Properties
+                              属性与行为
                             </h4>
                             <div className="space-y-4 rounded-lg border border-black-lighter p-4 bg-black-darker/30">
                               <div>
                                 <p className="text-xs font-medium tracking-widest text-white-darker mb-2">
-                                  Default State
+                                  解锁与收集
                                 </p>
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2">
                                   <Checkbox
                                     id="unlocked_edit"
-                                    label="Unlocked by Default"
+                                    label="默认未锁定"
                                     checked={formData.unlocked !== false}
                                     onChange={(checked) =>
                                       handleCheckboxChange("unlocked", checked)
@@ -735,7 +734,7 @@ const EditEnhancementInfo: React.FC<EditEnhancementInfoProps> = ({
                                   />
                                   <Checkbox
                                     id="discovered_edit"
-                                    label="Already Discovered"
+                                    label="默认已发现"
                                     checked={formData.discovered !== false}
                                     onChange={(checked) =>
                                       handleCheckboxChange(
@@ -746,7 +745,7 @@ const EditEnhancementInfo: React.FC<EditEnhancementInfoProps> = ({
                                   />
                                   <Checkbox
                                     id="no_collection_edit"
-                                    label="Hidden from Collection"
+                                    label="在收藏中隐藏"
                                     checked={formData.no_collection === true}
                                     onChange={(checked) =>
                                       handleCheckboxChange(
@@ -759,12 +758,12 @@ const EditEnhancementInfo: React.FC<EditEnhancementInfoProps> = ({
                               </div>
                               <div>
                                 <p className="text-xs font-medium tracking-widest text-white-darker mb-2">
-                                  Card Properties
+                                  通用属性
                                 </p>
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2">
                                   <Checkbox
                                     id="any_suit_edit"
-                                    label="Works with Any Suit"
+                                    label="适用于任何卡包"
                                     checked={formData.any_suit === true}
                                     onChange={(checked) =>
                                       handleCheckboxChange("any_suit", checked)
@@ -772,7 +771,7 @@ const EditEnhancementInfo: React.FC<EditEnhancementInfoProps> = ({
                                   />
                                   <Checkbox
                                     id="replace_base_card_edit"
-                                    label="Replaces Base Card"
+                                    label="替换基础卡牌"
                                     checked={
                                       formData.replace_base_card === true
                                     }
@@ -785,7 +784,7 @@ const EditEnhancementInfo: React.FC<EditEnhancementInfoProps> = ({
                                   />
                                   <Checkbox
                                     id="always_scores_edit"
-                                    label="Always Scores"
+                                    label="始终计分"
                                     checked={formData.always_scores === true}
                                     onChange={(checked) =>
                                       handleCheckboxChange(
@@ -798,12 +797,12 @@ const EditEnhancementInfo: React.FC<EditEnhancementInfoProps> = ({
                               </div>
                               <div>
                                 <p className="text-xs font-medium tracking-widest text-white-darker mb-2">
-                                  Rank & Suit Behavior
+                                  移除卡牌属性
                                 </p>
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2">
                                   <Checkbox
                                     id="no_rank_edit"
-                                    label="Remove Rank"
+                                    label="移除等级"
                                     checked={formData.no_rank === true}
                                     onChange={(checked) =>
                                       handleCheckboxChange("no_rank", checked)
@@ -811,7 +810,7 @@ const EditEnhancementInfo: React.FC<EditEnhancementInfoProps> = ({
                                   />
                                   <Checkbox
                                     id="no_suit_edit"
-                                    label="Remove Suit"
+                                    label="移除花色"
                                     checked={formData.no_suit === true}
                                     onChange={(checked) =>
                                       handleCheckboxChange("no_suit", checked)
@@ -847,7 +846,7 @@ const EditEnhancementInfo: React.FC<EditEnhancementInfoProps> = ({
                     setAutoFormatEnabled(!autoFormatEnabled);
                   }}
                   validationResult={validationResults.description}
-                  placeholder="Describe your enhancement's effects using Balatro formatting..."
+                  placeholder="描述该增强牌的效果和用途..."
                   onInsertTag={insertTagSmart}
                 />
               )}
@@ -867,7 +866,7 @@ const EditEnhancementInfo: React.FC<EditEnhancementInfoProps> = ({
               variant="danger"
               className="px-8"
             >
-              删除小丑
+              删除该卡牌
             </Button>
           </div>
         </div>

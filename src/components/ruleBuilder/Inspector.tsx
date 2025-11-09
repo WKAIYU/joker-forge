@@ -1583,23 +1583,23 @@ const Inspector: React.FC<InspectorProps> = ({
                 {effectType.label}
               </h4>
               <span className="text-white-darker text-xs uppercase tracking-wider">
-                Effect Action ({itemType})
+                效果动作 ({itemType})
               </span>
-            </div>
-          </div>
-          <p className="text-white-light text-sm leading-relaxed">
-            {effectType.description}
-          </p>
+              </div>
+              </div>
+              <p className="text-white-light text-sm leading-relaxed">
+                {effectType.description}
+              </p>
         </div>
 
         <div className="space-y-3">
           <h5 className="text-white-light font-medium text-sm flex items-center gap-2">
             <div className="w-2 h-2 bg-effect rounded-full"></div>
-            Custom Message
+            自定义消息
           </h5>
           <div className="bg-black-darker border border-black-lighter rounded-lg p-3">
             <InputField
-              label="Message"
+              label="消息"
               value={selectedEffect.customMessage || ""}
               onChange={(e) => {
                 const value = e.target.value;
@@ -1617,7 +1617,7 @@ const Inspector: React.FC<InspectorProps> = ({
                   customMessage: value || undefined,
                 });
               }}
-              placeholder="Leave blank for default message"
+              placeholder="如果留空，则使用默认消息"
               size="sm"
             />
             {customMessageValidationError && (
@@ -1633,7 +1633,7 @@ const Inspector: React.FC<InspectorProps> = ({
           <div className="space-y-3">
             <h5 className="text-white-light font-medium text-sm flex items-center gap-2">
               <div className="w-2 h-2 bg-effect rounded-full"></div>
-              Parameters
+              参数
             </h5>
             {paramsToRender.map((param) => (
               <div
@@ -1688,9 +1688,9 @@ const Inspector: React.FC<InspectorProps> = ({
         <div className="flex items-center gap-2">
           <Bars3Icon className="h-4 w-4 text-white-darker" />
           <ChartPieIcon className="h-5 w-5 text-white-light" />
-          <h3 className="text-white-light text-sm font-medium tracking-wider">
-            Inspector ({itemType})
-          </h3>
+            <h3 className="text-white-light text-sm font-medium tracking-wider">
+              检查器 ({itemType})
+            </h3>
         </div>
         <button
           onClick={onClose}
@@ -1708,7 +1708,7 @@ const Inspector: React.FC<InspectorProps> = ({
             <div className="text-center">
               <InformationCircleIcon className="h-12 w-12 text-white-darker mx-auto mb-3 opacity-50" />
               <p className="text-white-darker text-sm">
-                Select a rule to view its properties
+                请选择一个规则以查看其详细信息。
               </p>
             </div>
           </div>

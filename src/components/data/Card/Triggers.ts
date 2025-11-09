@@ -17,7 +17,7 @@ export const SCORING_TRIGGERS = ["card_scored", "card_held"];
 
 export const CARD_TRIGGER_CATEGORIES: CategoryDefinition[] = [
   {
-    label: "Card",
+    label: "卡牌",
     icon: HandRaisedIcon,
   },
 ];
@@ -25,28 +25,28 @@ export const CARD_TRIGGER_CATEGORIES: CategoryDefinition[] = [
 export const CARD_TRIGGERS: TriggerDefinition[] = [
   {
     id: "card_scored",
-    label: "When Card is Scored",
-    description: "Triggers when this card is part of a scoring hand",
+    label: "当卡牌计分时",
+    description: "当此卡牌被计分时触发",
     category: "Card",
   },
   {
     id: "card_held",
-    label: "When Card is Held in Hand",
-    description: "Triggers when this card is in the player's hand",
+    label: "当卡牌在手牌中时",
+    description: "当此卡牌被保留在手牌中时触发",
     category: "Card",
   },
   {
     id: "card_held_in_hand_end_of_round",
-    label: "When a Card is Held in Hand at End of Round",
+    label: "回合结束时手牌中的卡牌",
     description:
-      "Triggers for each individual card currently held in your hand at the end of the round. Good for effects that mimic Gold Cards or Blue Seals.",
+      "在每个回合结束时触发，针对仍然保留在手牌中的卡牌。（如蓝色蜡封，黄金卡）",
     category: "Card",
   },
   {
     id: "card_discarded",
-    label: "When Card is Discarded",
+    label: "当卡牌被弃置时",
     description:
-      "Triggers whenever a card is discarded. Use conditions to check properties of the discarded card.",
+      "当此卡牌被弃置（从手牌或场上移除）时触发",
     category: "Card",
   },
 ];
