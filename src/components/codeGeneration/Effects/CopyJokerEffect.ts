@@ -31,7 +31,7 @@ const generateJokerCode = (
   const jokerKey = (effect.params?.joker_key?.value as string) || "";
   const position = (effect.params?.position?.value as string) || "first";
   const specificIndex = (effect.params?.specific_index?.value as number) || 1;
-  const edition = (effect.params?.edition?.value as string) || "none";
+  const edition = effect.params?.edition?.value ? `e_${effect.params.edition.value}` : "none";
   const customMessage = effect.customMessage;
   const ignoreSlots = (effect.params?.ignore_slots?.value as string) === "ignore";
   const sticker = (effect.params?.sticker?.value as string) || "none"
@@ -195,7 +195,7 @@ const generateConsumableCode = (
 ): EffectReturn => {
   const selection_method = effect.params?.selection_method?.value as string || "random";
   const amount = effect.params?.amount?.value as string || '1';
-  const edition = effect.params?.edition?.value as string || "none";
+  const edition = effect.params?.edition?.value ? `e_${effect.params.edition.value}` : "none";
   const customMessage = effect.customMessage;
 
   let copyJokerCode = `
@@ -312,7 +312,7 @@ const generateCardCode = (
     (effect.params?.selection_method?.value as string) || "random";
   const jokerKey = (effect.params?.joker_key?.value as string) || "";
   const position = (effect.params?.position?.value as string) || "first";
-  const edition = (effect.params?.edition?.value as string) || "none";
+  const edition = effect.params?.edition?.value ? `e_${effect.params.edition.value}` : "none";
   const customMessage = effect.customMessage;
 
   const normalizedJokerKey = jokerKey.startsWith("j_") 
