@@ -1968,6 +1968,12 @@ export const getRankById = (id: number) => {
   return RANKS.find((rank) => rank.id === id);
 };
 
+// Get rank label by ID 
+// (Added by Errynei for bug fix that expected the label, not the rank value, in EditCardEffect.ts)
+export const getRankLabelById = (id: number) => {
+    return RANKS.find((rank) => rank.id === id)?.label;
+};
+
 // Get suit data by value
 export const getSuitByValue = (value: string) => {
   return SUITS.find((suit) => suit.value === value);
