@@ -202,6 +202,11 @@ export interface BoosterData extends GameObjectData{
   instant_use: boolean;
   booster_type: BoosterType;
   kind?: string;
+  /* 
+    This field actually determines the group_name (Bottom
+    text while on the pack opening screen) in the loc_text.
+    Dont want to refactor the whole code so just leaving this as it is 
+  */
   group_key?: string;
   atlas?: string;
   pos?: { x: number; y: number };
