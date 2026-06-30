@@ -5,6 +5,7 @@ import { ChevronDownIcon } from "@heroicons/react/24/outline";
 interface DropdownOption {
   value: string;
   label: string;
+  valueType?: string;
 }
 
 interface InputDropdownProps {
@@ -16,7 +17,7 @@ interface InputDropdownProps {
   className?: string;
   placeholder?: string;
   value: string;
-  onChange: (value: string) => void;
+  onChange: (item: {value: string, valueType?: string}) => void
   options: DropdownOption[];
   size?: "sm" | "md" | "lg";
   labelPosition?: "left" | "center" | "right";
@@ -109,7 +110,7 @@ useEffect(() => {
 
   const selectedOption = options.find((option) => option.value === value);
   const displayText = selectedOption ? selectedOption.label : placeholder;
-
+  
   const getSeparatorColor = () => {
     if (error) return "bg-balatro-red";
     if (isFocused || isOpen) return "bg-mint";
@@ -246,7 +247,7 @@ useEffect(() => {
                 `}
                   onClick={(e) => {
                     e.stopPropagation();
-                    onChange(option.value);
+                    onChange(option)
                     setIsOpen(false);
                   }}
                 >

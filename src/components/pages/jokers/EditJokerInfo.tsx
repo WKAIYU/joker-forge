@@ -21,7 +21,7 @@ import Checkbox from "../../generic/Checkbox";
 import Button from "../../generic/Button";
 import BalatroCard from "../../generic/BalatroCard";
 import InfoDescriptionBox from "../../generic/InfoDescriptionBox";
-import { getAllVariables } from "../../codeGeneration/Jokers/variableUtils";
+import { getAllVariables } from "../../codeGeneration/lib/userVariableUtils";
 import { JokerData, UserVariable } from "../../data/BalatroUtils";
 import {
   validateJokerName,
@@ -43,9 +43,9 @@ import {
   TrashIcon,
 } from "@heroicons/react/24/solid";
 import {
-  unlockOptions,
+  jokerUnlockOptions,
   unlockTriggerOptions,
-} from "../../codeGeneration/Jokers/unlockUtils";
+} from "../../codeGeneration/lib/unlockUtils";
 import { UserConfigContext } from "../../Contexts";
 import {
   updateGameObjectIds,
@@ -78,7 +78,7 @@ interface PropertyRuleProps {
   index: number;
 }
 
-type UnlockTrigger = keyof typeof unlockOptions;
+type UnlockTrigger = keyof typeof jokerUnlockOptions;
 
 const EditJokerInfo: React.FC<EditJokerInfoProps> = ({
   isOpen,
@@ -119,6 +119,7 @@ const EditJokerInfo: React.FC<EditJokerInfoProps> = ({
 
   const [poolsInput, setPoolsInput] = useState("");
   const [infoQueueInput, setInfoQueueInput] = useState("");
+  const [dependenciesInput, setDependenciesInput] = useState("");
 
   const rarityOptions = getRarityDropdownOptions(customRarities);
 
@@ -159,14 +160,14 @@ const EditJokerInfo: React.FC<EditJokerInfoProps> = ({
   const PropertyRule: React.FC<PropertyRuleProps> = ({ formData, index }) => {
     const propertyCategoryOptions = useMemo(() => {
       if (!formData.unlockTrigger) return [];
-      return unlockOptions[formData.unlockTrigger]?.categories ?? [];
+      return jokerUnlockOptions[formData.unlockTrigger]?.categories ?? [];
     }, [formData.unlockTrigger]);
 
     const selectedPropertyCategory =
       formData.unlockProperties?.[index]?.category;
     const propertyOptions = useMemo(() => {
       if (!formData.unlockTrigger) return [];
-      const category = unlockOptions[formData.unlockTrigger]?.categories?.find(
+      const category = jokerUnlockOptions[formData.unlockTrigger]?.categories?.find(
         (c) => c.value === selectedPropertyCategory
       );
 
@@ -178,7 +179,7 @@ const EditJokerInfo: React.FC<EditJokerInfoProps> = ({
         <div className="col-span-9">
           <InputDropdown
             value={formData.unlockProperties?.[index].category || ""}
-            onChange={(value) => handleUnlockPropertyCategory(value, index)}
+            onChange={(item) => handleUnlockPropertyCategory(item.value, index)}
             options={propertyCategoryOptions || []}
             separator={true}
             label="Category"
@@ -187,7 +188,7 @@ const EditJokerInfo: React.FC<EditJokerInfoProps> = ({
         <div className="col-span-9">
           <InputDropdown
             value={formData.unlockProperties?.[index].property || ""}
-            onChange={(value) => handleUnlockProperty(value, index)}
+            onChange={(item) => handleUnlockProperty(item.value, index)}
             options={propertyOptions || []}
             separator={true}
             label="Property"
@@ -230,13 +231,10 @@ const EditJokerInfo: React.FC<EditJokerInfoProps> = ({
       try {
         const response = await fetch("/images/placeholderjokers/credit.txt");
         const text = await response.text();
-        console.log("Raw credit file content:", JSON.stringify(text));
-
         const credits: Record<number, string> = {};
 
-        text.split("\n").forEach((line, lineIndex) => {
+        text.split("\n").forEach(line => {
           const trimmed = line.trim();
-          console.log(`Line ${lineIndex}: "${trimmed}"`);
 
           if (trimmed && trimmed.includes(":")) {
             const [indexStr, nameStr] = trimmed.split(":");
@@ -298,6 +296,8 @@ const EditJokerInfo: React.FC<EditJokerInfoProps> = ({
       setValidationResults({});
       setPoolsInput((joker.pools || []).join(", "));
       setInfoQueueInput((joker.info_queues || []).join(", "));
+      setDependenciesInput((joker.card_dependencies || []).join(","));
+
     }
   }, [isOpen, joker, jokers]);
 
@@ -676,6 +676,8 @@ const EditJokerInfo: React.FC<EditJokerInfoProps> = ({
   const VariableDisplay = (variable: UserVariable) => {
     if (variable.type === "suit") return variable.initialSuit || "Spades";
     if (variable.type === "rank") return variable.initialRank || "Ace";
+    if (variable.type === "text") return variable.initialText || "Hello";
+    if (variable.type === "key") return variable.initialKey || "j_joker";
     if (variable.type === "pokerhand")
       return variable.initialPokerHand || "High Card";
     return variable.initialValue?.toString() || "0";
@@ -1051,7 +1053,7 @@ const EditJokerInfo: React.FC<EditJokerInfoProps> = ({
                           <div className="grid grid-cols-2 gap-4">
                             <InputDropdown
                               value={formData.rarity.toString()}
-                              onChange={handleRarityChange}
+                              onChange={(item) => handleRarityChange(item.value)}
                               options={rarityOptions}
                               separator={true}
                               label="Rarity"
@@ -1191,7 +1193,7 @@ const EditJokerInfo: React.FC<EditJokerInfoProps> = ({
                               <div>
                                 <InputDropdown
                                   value={getForcedEditionValue()}
-                                  onChange={handleForcedEditionChange}
+                                  onChange={(item) => handleForcedEditionChange(item.value)}
                                   options={forcedEditionOptions}
                                   separator={true}
                                   label="Force Edition"
@@ -1265,8 +1267,8 @@ const EditJokerInfo: React.FC<EditJokerInfoProps> = ({
                             <div className="grid grid-cols-4 gap-4">
                               <div className="col-span-2">
                                 <InputDropdown
-                                  value={formData.unlockTrigger || ""}
-                                  onChange={handleUnlockTrigger}
+                                  value={formData.unlockTrigger as string || ""}
+                                  onChange={(item) => handleUnlockTrigger(item.value)}
                                   options={unlockTriggerOptions}
                                   separator={true}
                                   label="Trigger"
@@ -1274,7 +1276,7 @@ const EditJokerInfo: React.FC<EditJokerInfoProps> = ({
                               </div>
                               <InputDropdown
                                 value={formData.unlockOperator || ""}
-                                onChange={handleUnlockOperator}
+                                onChange={(item) => handleUnlockOperator(item.value)}
                                 options={unlockOperatorOptions}
                                 separator={true}
                                 label="Operator"
@@ -1532,6 +1534,49 @@ const EditJokerInfo: React.FC<EditJokerInfoProps> = ({
                         Vouchers - `v_`;
                         <br/>
                         Enhancements - `m_`; Editions - `e_`; Packs - `p_`; Seals - None
+                      </p>
+                    </div>
+                     <h4 className="text-white-light font-medium text-base mb-4 flex items-center gap-2">
+                      <PuzzlePieceIcon className="h-5 w-5 text-mint" />
+                      Mod Dependencies
+                    </h4>
+                    <div className="space-y-4">
+                      <InputField
+                        value={dependenciesInput}
+                        onChange={(e) => setDependenciesInput(e.target.value)}
+                        onBlur={() => {
+                          const dependencies = dependenciesInput
+                            .split(",")
+                            .map((dependencies) => dependencies.trim())
+                            .filter((dependencies) => dependencies.length > 0);
+
+                          setFormData({
+                            ...formData,
+                            card_dependencies: dependencies.length > 0 ? dependencies : undefined,
+                          });
+                        }}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            const dependencies = dependenciesInput
+                              .split(",")
+                              .map((dependencies) => dependencies.trim())
+                              .filter((dependencies) => dependencies.length > 0);
+
+                            setFormData({
+                              ...formData,
+                              card_dependencies: dependencies.length > 0 ? dependencies : undefined,
+                            });
+                            e.currentTarget.blur();
+                          }
+                        }}
+                        placeholder="Cryptid, Bunco, MoreFluff"
+                        separator={true}
+                        label="Card Dependencies"
+                        size="md"
+                      />
+                      <p className="text-xs text-white-darker -mt-2">
+                       Card Will only appear if required mods are installed,
+                       uses Mod id to Work
                       </p>
                     </div>
                   </div>

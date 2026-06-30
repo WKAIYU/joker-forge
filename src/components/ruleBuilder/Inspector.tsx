@@ -17,17 +17,14 @@ import {
   getAllVariables,
   addPokerHandVariablesToOptions,
   addNumberVariablesToOptions,
-  addJokerVariablesToOptions,
   getNumberVariables,
-} from "../codeGeneration/Jokers/variableUtils";
+  addKeyVariablesToOptions,
+  addTextVariablesToOptions,
+} from "../codeGeneration/lib/userVariableUtils";
 
-import { getTriggerById } from "../data/Jokers/Triggers";
-import { getConditionTypeById } from "../data/Jokers/Conditions";
-import { getEffectTypeById } from "../data/Jokers/Effects";
-
-import { getConsumableTriggerById } from "../data/Consumables/Triggers";
-import { getConsumableConditionTypeById } from "../data/Consumables/Conditions";
-import { getConsumableEffectTypeById } from "../data/Consumables/Effects";
+import { getTriggerById } from "../data/Triggers";
+import { getConditionTypeById } from "../data/Conditions";
+import { getEffectTypeById } from "../data/Effects";
 
 import InputField from "../generic/InputField";
 import InputDropdown from "../generic/InputDropdown";
@@ -50,23 +47,11 @@ import {
   validateVariableName,
   validateCustomMessage,
 } from "../generic/validationUtils";
-import { GameVariable, getGameVariableById } from "../data/Jokers/GameVars";
+import { GameVariable, getGameVariableById } from "../data/GameVars";
 import { CubeIcon } from "@heroicons/react/24/outline";
 import { SelectedItem } from "./types";
-
-import { getCardTriggerById } from "../data/Card/Triggers";
-import { getCardConditionTypeById } from "../data/Card/Conditions";
-import { getCardEffectTypeById } from "../data/Card/Effects";
-
-import { getVoucherTriggerById } from "../data/Vouchers/Triggers";
-import { getVoucherConditionTypeById } from "../data/Vouchers/Conditions";
-import { getVoucherEffectTypeById } from "../data/Vouchers/Effects";
-
-import { getDeckTriggerById } from "../data/Decks/Triggers";
-import { getDeckConditionTypeById } from "../data/Decks/Conditions";
-import { getDeckEffectTypeById } from "../data/Decks/Effects";
-
 import  Checkbox  from "../generic/Checkbox";
+import {  } from "../codeGeneration/lib/userVariableUtils";
 
 
 interface InspectorProps {
@@ -112,11 +97,13 @@ interface InspectorProps {
 
 interface ParameterFieldProps {
   param: ConditionParameter | EffectParameter;
-  value: unknown;
+  item: {value: unknown, valueType?: string};
   selectedRule: Rule;
-  onChange: (value: unknown) => void;
-  parentValues?: Record<string, unknown>;
-  availableVariables?: Array<{ value: string; label: string }>;
+  onChange: (param: {value: unknown, valueType?: string}) => void;
+  selectedCondition?: Condition;
+  selectedEffect?: Effect;
+  parentValues?: Record<string, {value: unknown, valueType?: string}>;
+  availableVariables?: Array<{ value: string; label: string, valueType?: string }>;
   onCreateVariable?: (name: string, initialValue: number) => void;
   onOpenVariablesPanel?: () => void;
   onOpenGameVariablesPanel?: () => void;
@@ -130,8 +117,8 @@ interface ParameterFieldProps {
 interface ChanceInputProps {
   label: string;
   value: string | number | undefined;
-  onChange: (value: string | number) => void;
-  availableVariables: Array<{ value: string; label: string }>;
+  onChange: (param: {value: string | number, valueType?: string}) => void;
+  availableVariables: Array<{ value: string; label: string, valueType?: string }>;
   onCreateVariable: (name: string, initialValue: number) => void;
   onOpenVariablesPanel: () => void;
   onOpenGameVariablesPanel: () => void;
@@ -210,9 +197,10 @@ const ChanceInput: React.FC<ChanceInputProps> = React.memo(
           ? parseFloat(currentValue.split("|")[2] || "0")
           : 0;
 
-        onChange(
-          `GAMEVAR:${selectedGameVariable.id}|${multiplier}|${startsFrom}`
-        );
+        onChange({
+          value: `GAMEVAR:${selectedGameVariable.id}|${multiplier}|${startsFrom}`,
+          valueType: "game_var"
+        });
         onGameVariableApplied?.();
       }
     }, [selectedGameVariable, value, onChange, onGameVariableApplied]);
@@ -221,15 +209,15 @@ const ChanceInput: React.FC<ChanceInputProps> = React.memo(
       if (mode === "number") {
         setIsVariableMode(false);
         setIsRangeMode(false);
-        onChange(numericValue);
+        onChange({value: numericValue, valueType: "number"});
       } else if (mode === "variable") {
         setIsVariableMode(true);
         setIsRangeMode(false);
-        onChange("");
+        onChange({value: "", valueType: "user_var"});
       } else if (mode === "range") {
         setIsVariableMode(false);
         setIsRangeMode(true);
-        onChange("RANGE:1|5");
+        onChange({value: "RANGE:1|5", valueType: "range_var"});
       }
     };
 
@@ -240,13 +228,13 @@ const ChanceInput: React.FC<ChanceInputProps> = React.memo(
       setInputValue(newValue);
 
       if (newValue === "" || newValue === "-") {
-        onChange(0);
+        onChange({value: 0, valueType: "number"});
         return;
       }
 
       const parsed = parseFloat(newValue);
       if (!isNaN(parsed)) {
-        onChange(parsed);
+        onChange({value: parsed, valueType: "number"});
       }
     };
 
@@ -300,7 +288,7 @@ const ChanceInput: React.FC<ChanceInputProps> = React.memo(
               value={rangeValues.min.toString()}
               onChange={(e) => {
                 const newMin = parseFloat(e.target.value) ?? 1;
-                onChange(`RANGE:${newMin}|${rangeValues.max}`);
+                onChange({value: `RANGE:${newMin}|${rangeValues.max}`, valueType: "range_var"});
               }}
               size="sm"
               className="w-16"
@@ -312,7 +300,7 @@ const ChanceInput: React.FC<ChanceInputProps> = React.memo(
               value={rangeValues.max.toString()}
               onChange={(e) => {
                 const newMax = parseFloat(e.target.value) ?? 1;
-                onChange(`RANGE:${rangeValues.min}|${newMax}`);
+                onChange({value: `RANGE:${rangeValues.min}|${newMax}`, valueType: "range_var"});
               }}
               size="sm"
               className="w-16"
@@ -359,20 +347,23 @@ const ChanceInput: React.FC<ChanceInputProps> = React.memo(
 
 ChanceInput.displayName = "ChanceInput";
 
-function hasShowWhen(param: ConditionParameter | EffectParameter): param is (
+function hasShowWhen(param: ConditionParameter | EffectParameter | undefined): param is (
   | ConditionParameter
   | EffectParameter
 ) & {
   showWhen: ShowWhenCondition;
 } {
-  return "showWhen" in param && param.showWhen !== undefined;
+  if (!param || !param.showWhen) return false
+  else return "showWhen" in param;
 }
 
 const ParameterField: React.FC<ParameterFieldProps> = ({
   param,
-  value,
+  item,
   selectedRule,
   onChange,
+  selectedCondition,
+  selectedEffect,
   parentValues = {},
   availableVariables = [],
   onOpenVariablesPanel,
@@ -383,6 +374,7 @@ const ParameterField: React.FC<ParameterFieldProps> = ({
   joker = null,
   itemType,
 }) => {
+  const value = item.value
   const [isVariableMode, setIsVariableMode] = React.useState(
     typeof value === "string" &&
       !value.startsWith("GAMEVAR:") &&
@@ -428,7 +420,7 @@ const ParameterField: React.FC<ParameterFieldProps> = ({
         : 0;
 
       onChange(
-        `GAMEVAR:${selectedGameVariable.id}|${multiplier}|${startsFrom}`
+        {value: `GAMEVAR:${selectedGameVariable.id}|${multiplier}|${startsFrom}`, valueType: "game_var"}
       );
       onGameVariableApplied?.();
     }
@@ -441,16 +433,32 @@ const ParameterField: React.FC<ParameterFieldProps> = ({
   ]);
 
   if (hasShowWhen(param)) {
-    const { parameter, values } = param.showWhen;
-    const parentValue = parentValues[parameter];
-    if (!values.includes(parentValue as string)) {
-      return null;
+
+    let showing = true
+    let currentParam: ConditionParameter | EffectParameter | undefined = param
+    const parentObject = isEffect ? getEffectTypeById(selectedEffect?.type || "") : getConditionTypeById(selectedCondition?.type || "")
+
+    while (showing && currentParam && hasShowWhen(currentParam)) {
+      const { parameter, values }: ShowWhenCondition = currentParam.showWhen;
+      const parentValue = parentValues[parameter].value;
+      if (Array.isArray(parentValue) && typeof parentValue[0] === "boolean") {
+        if (!values.some(item => parentValue[parseFloat(item)])) {
+          showing = false;
+        }
+      } else if (typeof parentValue === "string") {
+        if (!values.includes(parentValue)) {
+          showing = false;        
+        }
+      }
+
+      currentParam = parentObject?.params.find(param => param.id === parameter)
     }
+    if (showing === false) return false
   }
 
   switch (param.type) {
     case "select": {
-      let options: Array<{ value: string; label: string }> = [];
+      let options: Array<{ value: string; label: string; valueType?: string, exempt?: string[] }> = [];
 
       if (typeof param.options === "function") {
         // Check if the function expects parentValues parameter
@@ -465,17 +473,97 @@ const ParameterField: React.FC<ParameterFieldProps> = ({
         options = param.options.map((option) => ({
           value: option.value,
           label: option.label,
+          valueType: option.valueType ?? 'text',
+          exempt: option.exempt ?? undefined
         }));
-      }
+      } 
+
+      const trigger = selectedRule.trigger
+      const triggerDef = getTriggerById(trigger)
 
       if (param.variableTypes?.includes("joker_context")) {
-        if (selectedRule.trigger === "joker_evaluated") {
-            options.push({value: "evaled_joker", label: "Evaluated Joker"})
+        if (trigger === "joker_evaluated") {
+            options.push({value: "evaled_joker", label: "Evaluated Joker", valueType: 'context'})
         }
         if (selectedRule.conditionGroups.some(groups => groups.conditions.some(
           condition => condition.type === "joker_selected" && condition.negate === false
         ))) {
-          options.push({value: "selected_joker", label: "Selected Joker"})
+          options.push({value: "selected_joker", label: "Selected Joker", valueType: 'context', exempt: ["joker", "card", "voucher", "deck"] })
+        }
+      }
+
+      const cardContexts: Array<{
+        context: "rank_context" | "suit_context" | "enhancement_context" | "seal_context" | "edition_context", 
+        label: string
+      }> = [
+        { context: "rank_context", label: "Rank" },
+        { context: "suit_context", label: "Suit" },
+        { context: "enhancement_context", label: "Enhancement" },
+        { context: "seal_context", label: "Seal" },
+        { context: "edition_context", label: "Edition" },
+      ]
+
+      cardContexts.forEach(item => {
+        if (param.variableTypes?.includes(item.context)) {
+          if (trigger === "card_scored") {
+            options.push({value: "scored_card", label: `Scored Card ${item.label}`, valueType: 'context'})
+          }
+          if (trigger === "card_destroyed") {
+            options.push({value: "destroyed_card", label: `Destroyed Card ${item.label}`, valueType: 'context'})
+          }
+          if (trigger === "card_discarded") {
+            options.push({value: "discarded_card", label: `Discarded Card ${item.label}`, valueType: 'context'})
+          }
+          if (trigger === "card_held_in_hand" || trigger === "card_held_in_hand_end_of_round") {
+            options.push({value: "held_card", label: `Card Held in Hand ${item.label}`, valueType: 'context'})
+          }
+          if (trigger === "card_added") {
+            options.push({value: "added_card", label: `Added Card ${item.label}`, valueType: 'context'})
+          } 
+        }
+      })
+
+      if (param.variableTypes?.includes("edition_context")) {
+        if (trigger === "joker_evaluated") {
+          options.push({value: "evaled_joker", label: `Evaluated Joker Edition`, valueType: 'context'})
+        }
+        if (selectedRule.conditionGroups.some(groups => groups.conditions.some(
+          condition => condition.type === "joker_selected" && condition.negate === false
+        ))) {
+          options.push({value: "selected_joker", label: "Selected Joker Edition", valueType: 'context', exempt: ["joker", "card", "voucher", "deck"] })
+        }
+      }
+
+      if (param.variableTypes?.includes("consumable_context")) {
+        if (trigger === "consumable_used") {
+          options.push({value: "used_consumable", label: `Used Consumable`, valueType: 'context'})
+        }
+      }
+
+      if (param.variableTypes?.includes("voucher_context")) {
+        if (trigger === "voucher_redeemd") {
+          options.push({value: "redeemed_voucher", label: `Redeemed Voucher`, valueType: 'context'})
+        }
+      }
+
+      if (param.variableTypes?.includes("booster_context")) {
+        if (trigger === "booster_opened") {
+          options.push({value: "opened_booster", label: `Opened Booster Pack`, valueType: 'context'})
+        }
+        if (trigger === "booster_skipped") {
+          options.push({value: "skipped_booster", label: `Skipped Booster Pack`, valueType: 'context'})
+        }
+        if (trigger === "booster_exited") {
+          options.push({value: "exited_booster", label: `Exited Booster Pack`, valueType: 'context'})
+        }
+      }
+      
+      if (param.variableTypes?.includes("tag_context")) {
+        if (trigger === "tag_added") {
+          options.push({value: "added_tag", label: `Added Tag`, valueType: 'context'})
+        }
+        if (trigger === "blind selected" || triggerDef?.category === "In Blind Events" || triggerDef?.category === "Hand Scoring") {
+          options.push({value: "blind_tag", label: `Current Blind Skip Tag`, valueType: 'context'})
         }
       }
 
@@ -486,6 +574,7 @@ const ParameterField: React.FC<ParameterFieldProps> = ({
           options.push(...numberVariables.map((variable) => ({
             value: variable.name,
             label: variable.name,
+            valueType: 'user_var',
           })))}
         if (param.variableTypes?.includes("suit")) {
           const suitVariables =
@@ -493,6 +582,7 @@ const ParameterField: React.FC<ParameterFieldProps> = ({
           options.push(...suitVariables.map((variable) => ({
             value: variable.name,
             label: variable.name,
+            valueType: 'user_var',
           })))}
         if (param.variableTypes?.includes("rank")) {
           const rankVariables =
@@ -500,6 +590,7 @@ const ParameterField: React.FC<ParameterFieldProps> = ({
           options.push(...rankVariables.map((variable) => ({
             value: variable.name,
             label: variable.name,
+            valueType: 'user_var',
           })))}
         if (param.variableTypes?.includes("pokerhand")) {
           const pokerHandVariables =
@@ -507,13 +598,23 @@ const ParameterField: React.FC<ParameterFieldProps> = ({
           options.push(...pokerHandVariables.map((variable) => ({
             value: variable.name,
             label: variable.name,
+            valueType: 'user_var',
           })))}
-        if (param.variableTypes?.includes("joker")) {
-          const jokerVariables =
-            joker.userVariables?.filter((v) => v.type === "joker") || [];
-          options.push(...jokerVariables.map((variable) => ({
+        if (param.variableTypes?.includes("key")) {
+          const keyVariables =
+            joker.userVariables?.filter((v) => v.type === "key") || [];
+          options.push(...keyVariables.map((variable) => ({
             value: variable.name,
             label: variable.name,
+            valueType: 'user_var',
+          })))}
+        if (param.variableTypes?.includes("text")) {
+          const textVariables =
+            joker.userVariables?.filter((v) => v.type === "text") || [];
+          options.push(...textVariables.map((variable) => ({
+            value: variable.name,
+            label: variable.name,
+            valueType: 'user_var',
           })))}
       } else {
 
@@ -533,10 +634,16 @@ const ParameterField: React.FC<ParameterFieldProps> = ({
           options = addPokerHandVariablesToOptions(options, joker)
         }
 
-        if (param.variableTypes?.includes("joker") && joker) {
-          options = addJokerVariablesToOptions(options, joker)
+        if (param.variableTypes?.includes("key") && joker) {
+          options = addKeyVariablesToOptions(options, joker)
+        }
+
+        if (param.variableTypes?.includes("text") && joker) {
+          options = addTextVariablesToOptions(options, joker)
         }
       }
+
+      options.filter(option => !option.exempt?.includes(itemType))
 
       return (
         <InputDropdown
@@ -594,16 +701,16 @@ const ParameterField: React.FC<ParameterFieldProps> = ({
         if (mode === "number") {
           setIsVariableMode(false);
           setIsRangeMode(false);
-          onChange(numericValue);
+          onChange({value: numericValue, valueType: 'number'});
           setInputValue(numericValue.toString());
         } else if (mode === "variable") {
           setIsVariableMode(true);
           setIsRangeMode(false);
-          onChange("");
+          onChange({value: "", valueType: 'user_var'});
         } else if (mode === "range") {
           setIsVariableMode(false);
           setIsRangeMode(true);
-          onChange("RANGE:1|5");
+          onChange({value: "RANGE:1|5", valueType: 'range_var'});
         }
       };
 
@@ -614,13 +721,13 @@ const ParameterField: React.FC<ParameterFieldProps> = ({
         setInputValue(newValue);
 
         if (newValue === "" || newValue === "-") {
-          onChange(0);
+          onChange({value: 0, valueType: 'number'});
           return;
         }
 
         const parsed = parseFloat(newValue);
         if (!isNaN(parsed)) {
-          onChange(parsed);
+          onChange({value: parsed, valueType: 'number'});
         }
       };
 
@@ -631,11 +738,11 @@ const ParameterField: React.FC<ParameterFieldProps> = ({
         const parsed = parseFloat(newValue) || 0;
         if (field === "multiplier") {
           onChange(
-            `GAMEVAR:${gameVariableId}|${parsed}|${gameVariableStartsFrom}`
+            {value:`GAMEVAR:${gameVariableId}|${parsed}|${gameVariableStartsFrom}`, valueType: 'game_var'}
           );
         } else {
           onChange(
-            `GAMEVAR:${gameVariableId}|${gameVariableMultiplier}|${parsed}`
+            {value:`GAMEVAR:${gameVariableId}|${gameVariableMultiplier}|${parsed}`, valueType: 'game_var'}
           );
         }
       };
@@ -643,9 +750,9 @@ const ParameterField: React.FC<ParameterFieldProps> = ({
       const handleRangeChange = (field: "min" | "max", newValue: string) => {
         const parsed = parseFloat(newValue) ?? 1;
         if (field === "min") {
-          onChange(`RANGE:${parsed}|${rangeValues.max}`);
+          onChange({value: `RANGE:${parsed}|${rangeValues.max}`, valueType: 'range_var'});
         } else {
-          onChange(`RANGE:${rangeValues.min}|${parsed}`);
+          onChange({value: `RANGE:${rangeValues.min}|${parsed}`, valueType: 'range_var'});
         }
       };
 
@@ -709,7 +816,7 @@ const ParameterField: React.FC<ParameterFieldProps> = ({
                 </div>
                 <button
                   onClick={() => {
-                    onChange(numericValue);
+                    onChange({value: numericValue, valueType: 'number'});
                     setInputValue(numericValue.toString());
                   }}
                   className="p-1 text-mint hover:text-white transition-colors cursor-pointer"
@@ -858,7 +965,7 @@ const ParameterField: React.FC<ParameterFieldProps> = ({
             value={(value as string) || ""}
             onChange={(e) => {
               const newValue = e.target.value;
-              onChange(newValue);
+              onChange({value: newValue, valueType: 'text'});
 
               if (isVariableName) {
                 const validation = validateVariableName(newValue);
@@ -908,7 +1015,7 @@ const ParameterField: React.FC<ParameterFieldProps> = ({
               if (param.checkboxOptions && Array.isArray(value)) {
                 param.checkboxOptions[index].checked = value[index] == true ? false : true
               }
-              onChange(boxes[index].checked)
+              onChange({value: boxes[index].checked, valueType: 'checkbox'})
             }}
             className="w-4 h-4 text-mint bg-black-darker border-black-lighter rounded focus:ring-mint focus:ring-2"
           />
@@ -969,43 +1076,11 @@ const Inspector: React.FC<InspectorProps> = ({
         top: position.y,
       };
 
-  const getTrigger =
-    itemType === "joker"
-      ? getTriggerById
-      : itemType === "consumable"
-      ? getConsumableTriggerById
-      : itemType === "card"
-      ? getCardTriggerById
-      : itemType === "voucher"
-      ? getVoucherTriggerById
-      : getDeckTriggerById;
-
-  const getConditionType =
-    itemType === "joker"
-      ? getConditionTypeById
-      : itemType === "consumable"
-      ? getConsumableConditionTypeById
-      : itemType === "card"
-      ? getCardConditionTypeById
-      : itemType === "voucher"
-      ? getVoucherConditionTypeById
-      : getDeckConditionTypeById;
-
-  const getEffectType =
-    itemType === "joker"
-      ? getEffectTypeById
-      : itemType === "consumable"
-      ? getConsumableEffectTypeById
-      : itemType === "card"
-      ? getCardEffectTypeById
-      : itemType === "voucher"
-      ? getVoucherEffectTypeById
-      : getDeckEffectTypeById;
-
   const availableVariables = getNumberVariables(joker).map(
     (variable: { name: string }) => ({
       value: variable.name,
       label: variable.name,
+      valueType: 'user_var'
     })
   );
 
@@ -1042,13 +1117,11 @@ const Inspector: React.FC<InspectorProps> = ({
   React.useEffect(() => {
     if (selectedGameVariable && selectedItem) {
       if (selectedItem.type === "condition" && selectedCondition) {
-        if (selectedCondition.id == "Generic Compare") {
+        if (selectedCondition.type !== "generic_compare") {
           const valueParam = selectedCondition.params.value;
           if (valueParam !== undefined) {
-            const currentValue = valueParam;
-            const isAlreadyGameVar =
-              typeof currentValue === "string" &&
-              currentValue.startsWith("GAMEVAR:");
+            const currentValue = valueParam.value as string
+            const isAlreadyGameVar = valueParam.valueType === "game_var"
             const multiplier = isAlreadyGameVar
               ? parseFloat(currentValue.split("|")[1] || "1")
               : 1;
@@ -1059,18 +1132,21 @@ const Inspector: React.FC<InspectorProps> = ({
             onUpdateCondition(selectedRule?.id || "", selectedCondition.id, {
               params: {
                 ...selectedCondition.params,
-                value: `GAMEVAR:${selectedGameVariable.id}|${multiplier}|${startsFrom}`,
+                value: {
+                  value: `GAMEVAR:${selectedGameVariable.id}|${multiplier}|${startsFrom}`,
+                  valueType: 'game_var'
+                }
               },
             });
           }
           onGameVariableApplied();
         } else {
           let valueParam, item;
-          if (selectedCondition.params.value1 === 0) {
-            valueParam = selectedCondition.params.value1;
+          if (selectedCondition.params.value1.value === 0) {
+            valueParam = selectedCondition.params.value1.value;
             item = "value1";
           } else {
-            valueParam = selectedCondition.params.value2;
+            valueParam = selectedCondition.params.value2.value;
             item = "value2";
           }
           if (valueParam !== undefined) {
@@ -1088,7 +1164,10 @@ const Inspector: React.FC<InspectorProps> = ({
             onUpdateCondition(selectedRule?.id || "", selectedCondition.id, {
               params: {
                 ...selectedCondition.params,
-                [item]: `GAMEVAR:${selectedGameVariable.id}|${multiplier}|${startsFrom}`,
+                [item]: {
+                  value: `GAMEVAR:${selectedGameVariable.id}|${multiplier}|${startsFrom}`,
+                  valueType: 'game_var'
+                }
               },
             });
           }
@@ -1098,10 +1177,8 @@ const Inspector: React.FC<InspectorProps> = ({
         const valueParam =
           selectedEffect.params.value || selectedEffect.params.repetitions;
         if (valueParam !== undefined) {
-          const currentValue = valueParam;
-          const isAlreadyGameVar =
-            typeof currentValue === "string" &&
-            currentValue.startsWith("GAMEVAR:");
+          const currentValue = valueParam.value as string
+          const isAlreadyGameVar = valueParam.valueType === "game_var"
           const multiplier = isAlreadyGameVar
             ? parseFloat(currentValue.split("|")[1] || "1")
             : 1;
@@ -1114,20 +1191,27 @@ const Inspector: React.FC<InspectorProps> = ({
           onUpdateEffect(selectedRule?.id || "", selectedEffect.id, {
             params: {
               ...selectedEffect.params,
-              [paramKey]: `GAMEVAR:${selectedGameVariable.id}|${multiplier}|${startsFrom}`,
-            }
+              [paramKey]: {
+                value: `GAMEVAR:${selectedGameVariable.id}|${multiplier}|${startsFrom}`,
+                valueType: 'game_var'
+              }
+            },
           });
           onGameVariableApplied();
         }
       } else if (selectedItem.type === "randomgroup" && selectedRandomGroup) {
         onUpdateRandomGroup(selectedRule?.id || "", selectedRandomGroup.id, {
-          chance_numerator: `GAMEVAR:${selectedGameVariable.id}|1|0`,
-        });
+          chance_numerator: {
+            value: `GAMEVAR:${selectedGameVariable.id}|1|0`,
+            valueType: "game_var",
+        }});
         onGameVariableApplied();
       } else if (selectedItem.type === "loopgroup" && selectedLoopGroup) {
         onUpdateLoopGroup(selectedRule?.id || "", selectedLoopGroup.id, {
-          repetitions: `GAMEVAR:${selectedGameVariable.id}|1|0`,
-        });
+          repetitions: {
+            value: `GAMEVAR:${selectedGameVariable.id}|1|0`,
+            valueType: "game_var"
+        }});
         onGameVariableApplied();
       }
     }
@@ -1148,7 +1232,7 @@ const Inspector: React.FC<InspectorProps> = ({
 
   const renderTriggerInfo = () => {
     if (!selectedRule) return null;
-    const trigger = getTrigger(selectedRule.trigger);
+    const trigger = getTriggerById(selectedRule.trigger);
     if (!trigger) return null;
 
     return (
@@ -1160,7 +1244,7 @@ const Inspector: React.FC<InspectorProps> = ({
             </div>
             <div>
               <h4 className="text-trigger font-medium text-lg">
-                {trigger.label}
+                {trigger.label[itemType]}
               </h4>
               <span className="text-white-darker text-xs uppercase tracking-wider">
                 Trigger Event ({itemType})
@@ -1168,7 +1252,7 @@ const Inspector: React.FC<InspectorProps> = ({
             </div>
           </div>
           <p className="text-white-light text-sm leading-relaxed">
-            {trigger.description}
+            {trigger.description[itemType]}
           </p>
         </div>
 
@@ -1215,15 +1299,31 @@ const Inspector: React.FC<InspectorProps> = ({
 
   const renderConditionEditor = () => {
     if (!selectedCondition || !selectedRule) return null;
-    const conditionType = getConditionType(selectedCondition.type);
-    if (!conditionType) return null;
+    const conditionType = getConditionTypeById(selectedCondition.type);
 
+    if (!conditionType) return null;
     const paramsToRender = conditionType.params.filter((param) => {
-      if (!hasShowWhen(param)) return true;
-      const { parameter, values } = param.showWhen;
-      const parentValue = selectedCondition.params[parameter];
-      return values.includes(parentValue as string);
-    });
+      let showing = true
+      let currentParam: ConditionParameter | undefined = param
+
+      while (showing && currentParam && hasShowWhen(currentParam)) {
+        const { parameter, values }: ShowWhenCondition = currentParam.showWhen;
+        const parentValue = selectedCondition.params[parameter].value;
+
+        if (Array.isArray(parentValue) && typeof parentValue[0] === "boolean") {
+          if (!values.some(value => parentValue[parseFloat(value)])) {
+            showing = false;
+          }
+        } else if (typeof parentValue === "string") {
+          if (!values.includes(parentValue)) {
+            showing = false;        
+          }
+        }
+
+        currentParam = conditionType?.params.find(param => param.id === parameter)
+      }
+      return showing
+    })
 
     return (
       <div className="space-y-4">
@@ -1277,12 +1377,14 @@ const Inspector: React.FC<InspectorProps> = ({
               >
                 <ParameterField
                   param={param}
-                  value={selectedCondition.params[param.id]}
+                  item={selectedCondition.params[param.id]}
                   selectedRule={selectedRule}
-                  onChange={(value) => {
+                  selectedCondition={selectedCondition}
+                  selectedEffect={selectedEffect ?? undefined}
+                  onChange={(item) => {
                     const newParams = {
                       ...selectedCondition.params,
-                      [param.id]: value,
+                      [param.id]: item,
                     };
                     onUpdateCondition(selectedRule.id, selectedCondition.id, {
                       params: newParams,
@@ -1341,10 +1443,10 @@ const Inspector: React.FC<InspectorProps> = ({
               <ChanceInput
                 key="numerator"
                 label="Numerator"
-                value={selectedRandomGroup.chance_numerator}
+                value={selectedRandomGroup.chance_numerator.value}
                 onChange={(value) => {
                   onUpdateRandomGroup(selectedRule.id, selectedRandomGroup.id, {
-                    chance_numerator: value,
+                    chance_numerator: value
                   });
                 }}
                 availableVariables={availableVariables}
@@ -1359,7 +1461,7 @@ const Inspector: React.FC<InspectorProps> = ({
               <ChanceInput
                 key="denominator"
                 label="Denominator"
-                value={selectedRandomGroup.chance_denominator}
+                value={selectedRandomGroup.chance_denominator.value}
                 onChange={(value) => {
                   onUpdateRandomGroup(selectedRule.id, selectedRandomGroup.id, {
                     chance_denominator: value,
@@ -1501,7 +1603,7 @@ const Inspector: React.FC<InspectorProps> = ({
               <ChanceInput
                 key="repetitions"
                 label=""
-                value={selectedLoopGroup.repetitions}
+                value={selectedLoopGroup.repetitions.value}
                 onChange={(value) => {
                   onUpdateLoopGroup(selectedRule.id, selectedLoopGroup.id, {
                     repetitions: value,
@@ -1534,25 +1636,41 @@ const Inspector: React.FC<InspectorProps> = ({
 
   const renderEffectEditor = () => {
     if (!selectedEffect || !selectedRule) return null;
-    const effectType = getEffectType(selectedEffect.type);
+    const effectType = getEffectTypeById(selectedEffect.type);
     if (!effectType) return null;
 
     const paramsToRender = effectType.params.filter((param) => {
       if (param.type == "checkbox") {
         let index = 0
         param.checkboxOptions?.map(box => {
-          const checklist = selectedEffect.params[param.id] as Array<boolean>
+          const checklist = selectedEffect.params[param.id].value as Array<boolean>
           if (checklist) {
           box.checked = !checklist[index] ? false : true
           index += 1
         }})
       }
-      if (!hasShowWhen(param)) return true;
-      const { parameter, values } = param.showWhen;
 
-      const parentValue = selectedEffect.params[parameter];
-      return values.includes(parentValue as string);
-    });
+      let showing = true
+      let currentParam: EffectParameter | undefined = param
+
+      while (showing && currentParam && hasShowWhen(currentParam)) {
+        const { parameter, values }: ShowWhenCondition = currentParam.showWhen;
+        const parentValue = selectedEffect.params[parameter].value;
+
+        if (Array.isArray(parentValue) && typeof parentValue[0] === "boolean") {
+          if (!values.some(value => parentValue[parseFloat(value)])) {
+            showing = false;
+          }
+        } else if (typeof parentValue === "string") {
+          if (!values.includes(parentValue)) {
+            showing = false;        
+          }
+        }
+
+        currentParam = effectType?.params.find(param => param.id === parameter)
+      }
+      return showing
+    })
 
     const isInRandomGroup = selectedRule.randomGroups.some((group) =>
       group.effects.some((effect) => effect.id === selectedEffect.id)
@@ -1658,20 +1776,22 @@ const Inspector: React.FC<InspectorProps> = ({
               >
                 <ParameterField
                   param={param}
-                  value={selectedEffect.params[param.id]}
+                  item={selectedEffect.params[param.id]}
                   selectedRule={selectedRule}
-                  onChange={(value) => { 
+                  onChange={(item) => { 
                     if (param.type == "checkbox"){
-                      value = param.checkboxOptions?.map(box => box.checked ? true : false) 
+                      item.value = param.checkboxOptions?.map(box => box.checked ? true : false) 
                     }
                     const newParams = {
                       ...selectedEffect.params,
-                      [param.id]: value,
+                      [param.id]: item,
                     };
                     onUpdateEffect(selectedRule.id, selectedEffect.id, {
                       params: newParams,
                     });
                 }}
+                  selectedCondition={selectedCondition ?? undefined}
+                  selectedEffect={selectedEffect ?? undefined}
                   parentValues={selectedEffect.params}
                   availableVariables={availableVariables}
                   onCreateVariable={handleCreateVariable}

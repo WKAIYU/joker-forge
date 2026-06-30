@@ -17,7 +17,7 @@ import Checkbox from "../../generic/Checkbox";
 import Button from "../../generic/Button";
 import BalatroCard from "../../generic/BalatroCard";
 import InfoDescriptionBox from "../../generic/InfoDescriptionBox";
-import { SealData, slugify, VANILLA_SOUNDS, } from "../../data/BalatroUtils";
+import { SealData, slugify, SOUNDS, } from "../../data/BalatroUtils";
 import {
   validateJokerName,
   validateDescription,
@@ -50,8 +50,12 @@ interface EditSealInfoProps {
   }) => void;
 }
 
-const vanillaSounds = VANILLA_SOUNDS.map(({ value, label }) => ({ value, label }))
-;
+const SoundOptions = [
+  ...SOUNDS().map((sound) => ({
+    key: sound.key,
+    label: sound.label,
+  })),
+];
 
 const predefinedColors = [
   "#FF6B6B",
@@ -837,6 +841,7 @@ const EditSealInfo: React.FC<EditSealInfoProps> = ({
                           <h5 className="text-white-light font-medium text-sm mb-3">
                             Sound Settings
                           </h5>
+                          <div className="space-y-2">
                           <div>
                             <label className="block text-xs font-medium text-white-darker mb-2">
                               Sound
@@ -851,14 +856,43 @@ const EditSealInfo: React.FC<EditSealInfoProps> = ({
                               }
                               className="w-full bg-black-darker border border-black-lighter rounded-lg px-3 py-2 text-white-light focus:outline-none focus:border-mint transition-colors text-sm"
                             >
-                              {vanillaSounds.map((sound) => (
-                                <option value={sound.value}>
+                              {SoundOptions.map((sound) => (
+                                <option value={sound.key}>
                                   {sound.label}
                                 </option>
                               ))}
                             </select>
                           </div>
-                    </div>
+                          <div className="grid grid-cols-2 gap-4">
+                          <InputField
+                            label="Pitch"
+                            value={formData.pitch?.toString() || ""}
+                            onChange={(e) =>
+                              setFormData((prev) => ({
+                                ...prev,
+                                pitch: parseFloat(e.target.value),
+                              }))
+                            }
+                            placeholder="1.2"
+                            type="number"
+                            size="sm"
+                          />
+                          <InputField
+                            label="Volume"
+                            value={formData.volume?.toString() || ""}
+                            onChange={(e) =>
+                              setFormData((prev) => ({
+                                ...prev,
+                                volume: parseFloat(e.target.value),
+                              }))
+                            }
+                            placeholder="0.4"
+                            type="number"
+                            size="sm"
+                          />
+                          </div>
+                         </div>
+                        </div>
                 </div>
               )}
             </div>

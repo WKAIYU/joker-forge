@@ -63,6 +63,10 @@ const SealsVanillaReforgedPage = lazy(
   () => import("./components/pages/vanillareforged/SealsVanillaReforgedPage")
 );
 
+const EditionsVanillaReforgedPage = lazy(
+  () => import("./components/pages/vanillareforged/EditionsVanillaReforgedPage")
+);
+
 const VouchersVanillaReforgedPage = lazy(
   () => import("./components/pages/vanillareforged/VouchersVanillaReforgedPage")
 );
@@ -101,6 +105,7 @@ import {
 import Alert from "./components/generic/Alert";
 import ConfirmationPopup from "./components/generic/ConfirmationPopup";
 import ExportModal from "./components/generic/ExportModal";
+import ErrorPopup from "./components/generic/LoadSaveErrorPopup"
 // import DonationNotification from "./components/generic/DonationNotification";
 import ResetProgressComfirmationModal from "./components/generic/ResetProgressConfirmationModal";
 import { DEFAULT_MOD_METADATA } from "./components/pages/ModMetadataPage";
@@ -108,6 +113,8 @@ import SkeletonPage from "./components/pages/SkeletonPage";
 import { UserConfigProvider } from "./components/Contexts";
 import SoundsPage from "./components/pages/SoundPage";
 import { scanGameObjectIds, scanGameObjectKeys } from "./components/generic/GameObjectOrdering";
+import { updateRuleBlocks } from "./components/generic/RuleBlockUpdater";
+import DebugPage from "./components/pages/DebugPage";
 
 interface AlertState {
   isVisible: boolean;
@@ -129,7 +136,7 @@ interface ConfirmationState {
   onCancel?: () => void;
 }
 
-interface AutoSaveData {
+export interface AutoSaveData {
   modMetadata: ModMetadata;
   jokers: JokerData[];
   sounds: SoundData[];
@@ -334,6 +341,7 @@ function AppContent() {
   const [autoSaveStatus, setAutoSaveStatus] = useState<
     "idle" | "saving" | "saved"
   >("idle");
+  const [showErrorLoadingModal, setShowErrorLoadingModal] = useState(false);
   const [showConfirmationModal, setshowConfirmationModal] = useState(false);
   const [hasLoadedInitialData, setHasLoadedInitialData] = useState(false);
   const [showExportModal, setShowExportModal] = useState(false);
@@ -500,6 +508,7 @@ function AppContent() {
     updateDataRegistry(
       customRarities,
       consumableSets,
+      sounds,
       consumables,
       boosters,
       enhancements,
@@ -512,6 +521,7 @@ function AppContent() {
   }, [
     customRarities,
     consumableSets,
+    sounds,
     consumables,
     boosters,
     enhancements,
@@ -598,6 +608,16 @@ function AppContent() {
 
       const data: AutoSaveData = JSON.parse(savedData);
 
+      const updatedData = updateRuleBlocks(
+          data.jokers,
+          data.consumables,
+          data.enhancements,
+          data.seals,
+          data.editions,
+          data.vouchers,
+          data.decks,
+        )
+
       if (!data.modMetadata || !Array.isArray(data.jokers)) {
         console.warn("Invalid auto-save data structure");
         localStorage.removeItem(AUTO_SAVE_KEY);
@@ -607,17 +627,17 @@ function AppContent() {
       console.log("Loaded auto-saved project state");
       return {
         modMetadata: data.modMetadata,
-        jokers: scanGameObjectKeys(scanGameObjectIds(data.jokers)),
+        jokers: scanGameObjectKeys(scanGameObjectIds(updatedData.jokers)),
         sounds: data.sounds,
-        consumables: scanGameObjectKeys(scanGameObjectIds(data.consumables || [])),
+        consumables: scanGameObjectKeys(scanGameObjectIds(updatedData.consumables || [])),
         customRarities: data.customRarities || [],
         consumableSets: data.consumableSets || [],
         boosters: scanGameObjectKeys(scanGameObjectIds(data.boosters || [])),
-        enhancements: scanGameObjectKeys(scanGameObjectIds(data.enhancements || [])),
-        editions: scanGameObjectKeys(scanGameObjectIds(data.editions || [])),
-        seals: scanGameObjectKeys(scanGameObjectIds(data.seals || [])),
-        vouchers: scanGameObjectKeys(scanGameObjectIds(data.vouchers || [])),
-        decks: scanGameObjectKeys(scanGameObjectIds(data.decks || [])),
+        enhancements: scanGameObjectKeys(scanGameObjectIds(updatedData.enhancements || [])),
+        editions: scanGameObjectKeys(scanGameObjectIds(updatedData.editions || [])),
+        seals: scanGameObjectKeys(scanGameObjectIds(updatedData.seals || [])),
+        vouchers: scanGameObjectKeys(scanGameObjectIds(updatedData.vouchers || [])),
+        decks: scanGameObjectKeys(scanGameObjectIds(updatedData.decks || [])),
       };
     } catch (error) {
       console.warn("Failed to load auto-save:", error);
@@ -769,15 +789,25 @@ function AppContent() {
 
   useEffect(() => {
     const loadAutoSave = async () => {
-      const savedData = loadFromLocalStorage();
-      if (savedData) {
-        await handleRestoreAutoSave();
+      try {
+        const savedData = loadFromLocalStorage();
+        if (savedData) {
+          await handleRestoreAutoSave();
+        }
+        setHasLoadedInitialData(true);
+        showAlert(
+          "success",
+          "Project Loaded",
+          "Your auto-saved project has been loaded successfully!"
+        );
+      } catch (error) {
+        console.error(error)
+        setShowErrorLoadingModal(true)
       }
-      setHasLoadedInitialData(true);
     };
-
-    loadAutoSave();
-  }, [loadFromLocalStorage]);
+    
+    loadAutoSave()
+  }, [true]); // so it doesnt't reload every millisecond
 
   useEffect(() => {
     if (!hasLoadedInitialData) return;
@@ -913,7 +943,6 @@ function AppContent() {
   const handleRestoreAutoSave = async () => {
     const savedData = loadFromLocalStorage();
     if (savedData) {
-      try {
         // Dynamically import normalization function
         const { normalizeImportedModData } = await import(
           "./components/JSONImportExport"
@@ -934,18 +963,28 @@ function AppContent() {
           decks: scanGameObjectKeys(scanGameObjectIds(savedData.decks)),
         });
 
+        const updatedData = updateRuleBlocks(
+          normalizedData.jokers,
+          normalizedData.consumables,
+          normalizedData.enhancements,
+          normalizedData.seals,
+          normalizedData.editions,
+          normalizedData.vouchers,
+          normalizedData.decks,
+        )
+
         setModMetadata(normalizedData.metadata);
-        setJokers(normalizedData.jokers);
+        setJokers(updatedData.jokers);
         setSounds(normalizedData.sounds);
-        setConsumables(normalizedData.consumables);
+        setConsumables(updatedData.consumables);
         setCustomRarities(normalizedData.customRarities);
         setConsumableSets(normalizedData.consumableSets);
-        setBoosters((normalizedData.boosters));
-        setEnhancements(normalizedData.enhancements);
-        setSeals(normalizedData.seals);
-        setEditions(normalizedData.editions);
-        setVouchers(normalizedData.vouchers);
-        setDecks(normalizedData.decks);
+        setBoosters(normalizedData.boosters);
+        setEnhancements(updatedData.enhancements);
+        setSeals(updatedData.seals);
+        setEditions(updatedData.editions);
+        setVouchers(updatedData.vouchers);
+        setDecks(updatedData.decks);
 
         setSelectedJokerId(null);
         setSelectedConsumableId(null);
@@ -970,21 +1009,6 @@ function AppContent() {
           vouchers: normalizedData.vouchers,
           decks: normalizedData.decks,
         };
-
-        showAlert(
-          "success",
-          "Project Loaded",
-          "Your auto-saved project has been loaded successfully!"
-        );
-      } catch (error) {
-        console.error("Failed to restore autosave due to invalid data:", error);
-        showAlert(
-          "error",
-          "Restore Failed",
-          "The auto-saved data is corrupted and could not be restored. Starting a fresh project."
-        );
-        clearAutoSave();
-      }
     }
   };
 
@@ -1000,6 +1024,53 @@ function AppContent() {
       content,
     });
   };
+  
+  const onDownloadFromError = () => {
+    try {
+      handleExportJSON()
+      showAlert('success', "File Downloaded", "Successfully downloaded Jokerforge File")
+    } catch (error) {
+      console.error("JSON export failed:", error);
+      showAlert('error', "Error", "Failed to Load Auto Save")
+    }
+  }
+
+  const handleExportJSONFromSidebar = () => {
+    try {
+      handleExportJSON()
+      showAlert(
+        "success",
+        "Mod Saved",
+        "Your mod has been saved as a jokerforge file!"
+      );
+    } catch (error) {
+      console.error("JSON export failed:", error);
+      showAlert(
+        "error",
+        "Save Failed",
+        "Failed to save mod as JSON. Please try again."
+      );
+    }
+  }
+
+  const onRetryLoadAutoSave = () => {
+    try {
+      const savedData = loadFromLocalStorage();
+      if (savedData) {
+        handleRestoreAutoSave();
+      }
+      setHasLoadedInitialData(true);
+      setShowErrorLoadingModal(false)
+      showAlert(
+        "success",
+        "Project Loaded",
+        "Your auto-saved project has been loaded successfully!"
+      );
+    } catch (error) {
+      console.error('ERROR: Failed to load mod data', error)
+      showAlert('error', "Error", "Failed to Load Auto Save")
+    }
+  }
 
   const hideAlert = () => {
     setAlert((prev) => ({ ...prev, isVisible: false }));
@@ -1102,6 +1173,7 @@ function AppContent() {
   };
 
 const startNewProject = () => {
+    setShowErrorLoadingModal(false)
     setModMetadata(DEFAULT_MOD_METADATA);
     setJokers([]);
     setSounds([]);
@@ -1153,7 +1225,6 @@ const handleDiscardAndStartFresh = () => {
   };
 
   const handleExportJSON = async () => {
-    try {
       const { exportModAsJSON } = await import("./components/JSONImportExport");
 
       exportModAsJSON(
@@ -1170,19 +1241,6 @@ const handleDiscardAndStartFresh = () => {
         vouchers,
         decks
       );
-      showAlert(
-        "success",
-        "Mod Saved",
-        "Your mod has been saved as a jokerforge file!"
-      );
-    } catch (error) {
-      console.error("JSON export failed:", error);
-      showAlert(
-        "error",
-        "Save Failed",
-        "Failed to save mod as JSON. Please try again."
-      );
-    }
   };
 
   const handleImportJSON = async () => {
@@ -1196,17 +1254,27 @@ const handleDiscardAndStartFresh = () => {
       if (importedData) {
         const normalizedData = normalizeImportedModData(importedData);
 
+        const updatedData = updateRuleBlocks(
+          normalizedData.jokers,
+          normalizedData.consumables,
+          normalizedData.enhancements,
+          normalizedData.seals,
+          normalizedData.editions,
+          normalizedData.vouchers,
+          normalizedData.decks,
+        )
+
         setModMetadata(normalizedData.metadata);
-        setJokers(normalizedData.jokers);
-        setConsumables((normalizedData.consumables));
+        setJokers(updatedData.jokers);
+        setConsumables(updatedData.consumables);
         setCustomRarities(normalizedData.customRarities);
         setConsumableSets(normalizedData.consumableSets);
         setBoosters(normalizedData.boosters);
-        setEnhancements(normalizedData.enhancements || []);
-        setSeals(normalizedData.seals || []);
-        setEditions(normalizedData.editions || []);
-        setVouchers(normalizedData.vouchers || []);
-        setDecks(normalizedData.decks || []);
+        setEnhancements(updatedData.enhancements || []);
+        setSeals(updatedData.seals || []);
+        setEditions(updatedData.editions || []);
+        setVouchers(updatedData.vouchers || []);
+        setDecks(updatedData.decks || []);
         setSounds(normalizedData.sounds);
         setSelectedJokerId(null);
         setSelectedConsumableId(null);
@@ -1219,17 +1287,17 @@ const handleDiscardAndStartFresh = () => {
 
         prevDataRef.current = {
           modMetadata: normalizedData.metadata,
-          jokers: scanGameObjectKeys(scanGameObjectIds(normalizedData.jokers)),
+          jokers: scanGameObjectKeys(scanGameObjectIds(updatedData.jokers)),
           sounds: normalizedData.sounds,
-          consumables: scanGameObjectKeys(scanGameObjectIds(normalizedData.consumables)),
+          consumables: scanGameObjectKeys(scanGameObjectIds(updatedData.consumables)),
           customRarities: normalizedData.customRarities,
           consumableSets: normalizedData.consumableSets,
           boosters: scanGameObjectKeys(scanGameObjectIds(normalizedData.boosters)),
-          enhancements: scanGameObjectKeys(scanGameObjectIds(normalizedData.enhancements || [])),
-          seals: scanGameObjectKeys(scanGameObjectIds(normalizedData.seals || [])),
-          editions: scanGameObjectKeys(scanGameObjectIds(normalizedData.editions || [])),
-          vouchers: scanGameObjectKeys(scanGameObjectIds(normalizedData.vouchers || [])),
-          decks: scanGameObjectKeys(scanGameObjectIds(normalizedData.decks || [])),
+          enhancements: scanGameObjectKeys(scanGameObjectIds(updatedData.enhancements || [])),
+          seals: scanGameObjectKeys(scanGameObjectIds(updatedData.seals || [])),
+          editions: scanGameObjectKeys(scanGameObjectIds(updatedData.editions || [])),
+          vouchers: scanGameObjectKeys(scanGameObjectIds(updatedData.vouchers || [])),
+          decks: scanGameObjectKeys(scanGameObjectIds(updatedData.decks || [])),
         };
         showAlert(
           "success",
@@ -1255,7 +1323,7 @@ const handleDiscardAndStartFresh = () => {
         projectName={modMetadata.id || "mycustommod"}
         onExport={handleExport}
         onNewmod={handleCreateNewmod}
-        onExportJSON={handleExportJSON}
+        onExportJSON={handleExportJSONFromSidebar}
         onImportJSON={handleImportJSON}
         exportLoading={exportLoading}
         jokers={jokers}
@@ -1541,7 +1609,7 @@ const handleDiscardAndStartFresh = () => {
               </Suspense>
             }
           />
-            <Route
+          <Route
             path="/vouchers"
             element={
               <Suspense
@@ -1562,6 +1630,22 @@ const handleDiscardAndStartFresh = () => {
                   modPrefix={modMetadata.prefix || ""}
                   showConfirmation={showConfirmation}
                 />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/debug"
+            element={
+              <Suspense
+                fallback={
+                  <SkeletonPage
+                    variant="grid"
+                    showFloatingDock={true}
+                    showFilters={true}
+                  />
+                }
+              >
+                <DebugPage />
               </Suspense>
             }
           />
@@ -1675,6 +1759,29 @@ const handleDiscardAndStartFresh = () => {
                   }}
                   onNavigateToSeals={() => {
                     navigate("/seals");
+                  }}
+                />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/vanilla/editions"
+            element={
+              <Suspense
+                fallback={
+                  <SkeletonPage
+                    variant="grid"
+                    showFloatingDock={true}
+                    showFilters={true}
+                  />
+                }
+              >
+                <EditionsVanillaReforgedPage
+                  onDuplicateToProject={(item) => {
+                    setEditions([...editions, item as EditionData]);
+                  }}
+                  onNavigateToEditions={() => {
+                    navigate("/editions");
                   }}
                 />
               </Suspense>
@@ -1822,13 +1929,6 @@ const handleDiscardAndStartFresh = () => {
         isOpen={showExportModal}
         onClose={() => setShowExportModal(false)}
       />
-      <Alert
-        isVisible={alert.isVisible}
-        type={alert.type}
-        title={alert.title}
-        content={alert.content}
-        onClose={hideAlert}
-      />
       <ConfirmationPopup
         isVisible={confirmation.isVisible}
         type={confirmation.type}
@@ -1840,6 +1940,19 @@ const handleDiscardAndStartFresh = () => {
         icon={confirmation.icon}
         onConfirm={handleConfirm}
         onCancel={handleCancel}
+      />
+      <ErrorPopup
+        isVisible={showErrorLoadingModal}
+        onRetry={onRetryLoadAutoSave}
+        onSaveFile={onDownloadFromError}
+        onStartNew={startNewProject}
+      />
+      <Alert
+        isVisible={alert.isVisible}
+        type={alert.type}
+        title={alert.title}
+        content={alert.content}
+        onClose={hideAlert}
       />
     </div>
   );

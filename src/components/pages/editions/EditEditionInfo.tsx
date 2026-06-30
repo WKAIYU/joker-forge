@@ -22,7 +22,7 @@ import {
   EditionData,
   slugify,
   VANILLA_SHADERS,
-  VANILLA_SOUNDS,
+  SOUNDS
 } from "../../data/BalatroUtils";
 import {
   validateJokerName,
@@ -55,8 +55,9 @@ interface EditEditionInfoProps {
   }) => void;
 }
 
-const vanillaSounds = VANILLA_SOUNDS.map((sound) => ({ value: sound.value, label: sound.label }))
-;
+const SoundOptions = [
+  ...SOUNDS()
+];
 
 const shaderOptions = [
   { value: "", label: "None" },
@@ -514,7 +515,7 @@ const EditEditionInfo: React.FC<EditEditionInfoProps> = ({
                               ? ""
                               : formData.shader || ""
                           }
-                          onChange={handleShaderChange}
+                          onChange={(item) => handleShaderChange(item.value)}
                           options={shaderOptions}
                           placeholder="Select a shader"
                           size="md"
@@ -737,6 +738,7 @@ const EditEditionInfo: React.FC<EditEditionInfoProps> = ({
                           <h5 className="text-white-light font-medium text-sm mb-3">
                             Sound Settings
                           </h5>
+                          <div className="space-y-2">
                           <div>
                             <label className="block text-xs font-medium text-white-darker mb-2">
                               Sound
@@ -751,13 +753,42 @@ const EditEditionInfo: React.FC<EditEditionInfoProps> = ({
                               }
                               className="w-full bg-black-darker border border-black-lighter rounded-lg px-3 py-2 text-white-light focus:outline-none focus:border-mint transition-colors text-sm"
                             >
-                              {vanillaSounds.map((sound) => (
-                                <option value={sound.value}>
+                              {SoundOptions.map((sound) => (
+                                <option value={sound.key}>
                                   {sound.label}
                                 </option>
                               ))}
                             </select>
                           </div>
+                          <div className="grid grid-cols-2 gap-4">
+                          <InputField
+                            label="Pitch"
+                            value={formData.pitch?.toString() || ""}
+                            onChange={(e) =>
+                              setFormData((prev) => ({
+                                ...prev,
+                                pitch: parseFloat(e.target.value),
+                              }))
+                            }
+                            placeholder="1.2"
+                            type="number"
+                            size="sm"
+                          />
+                          <InputField
+                            label="Volume"
+                            value={formData.volume?.toString() || ""}
+                            onChange={(e) =>
+                              setFormData((prev) => ({
+                                ...prev,
+                                volume: parseFloat(e.target.value),
+                              }))
+                            }
+                            placeholder="0.4"
+                            type="number"
+                            size="sm"
+                          />
+                          </div>
+                         </div>
                         </div>
                       </div>
                     </div>

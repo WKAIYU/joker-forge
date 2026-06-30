@@ -23,7 +23,6 @@ interface ConsumableCardData extends BaseCardData {
   set: string;
 }
 
-
 interface BoosterCardData extends BaseCardData {
   config: {
     extra: number;
@@ -49,7 +48,6 @@ interface DeckCardData extends BaseCardData {
   Config_consumables?: string[];
 }
 
-
 type CardData =
   | JokerCardData
   | ConsumableCardData
@@ -57,10 +55,17 @@ type CardData =
   | BaseCardData
   | EditionCardData
   | VoucherCardData
-  | DeckCardData
+  | DeckCardData;
 
 interface BalatroCardProps {
-  type: "joker" | "consumable" | "booster" | "card" | "edition" | "voucher" | "deck";
+  type:
+    | "joker"
+    | "consumable"
+    | "booster"
+    | "card"
+    | "edition"
+    | "voucher"
+    | "deck";
   data: CardData;
   onClick?: () => void;
   className?: string;
@@ -152,6 +157,7 @@ const BalatroCard: React.FC<BalatroCardProps> = ({
       },
       { key: "HC_A_clubs", name: "♣", color: "text-blue-500" },
       { key: "HC_A_spades", name: "♠", color: "text-white-lighter" },
+      { key: "HC_J_jimbo", name: "🃏", color: "text-orange-500" },
     ],
   ];
 
@@ -252,8 +258,8 @@ const BalatroCard: React.FC<BalatroCardProps> = ({
     }
     if (type === "voucher") {
       return {
-        bg: "bg-balatro-shadoworange",
-        shadow: "bg-balatro-orange",
+        bg: "bg-balatro-voucher_badgetag_shadow",
+        shadow: "bg-balatro-voucher_badgetag",
       };
     }
     return {
@@ -337,10 +343,10 @@ const BalatroCard: React.FC<BalatroCardProps> = ({
       return data.name || "New Edition";
     }
     if (type === "voucher") {
-      return data.name || "New Voucher";
+      return setName || "Voucher";
     }
     if (type === "deck") {
-      return data.name || "New Deck";
+      return setName || "Deck";
     }
     return "";
   };
@@ -350,7 +356,7 @@ const BalatroCard: React.FC<BalatroCardProps> = ({
       const jokerData = data as JokerCardData;
       if (jokerData.locVars && Array.isArray(jokerData.locVars.vars)) {
         const colours = jokerData.locVars.vars.filter(
-          (v) => typeof v === "string"
+          (v) => typeof v === "string",
         ) as string[];
         return colours.length > 0 ? { colours } : undefined;
       }
@@ -366,6 +372,9 @@ const BalatroCard: React.FC<BalatroCardProps> = ({
     const parts = aceKey.split("_");
     const contrast = parts[0] === "HC" ? "High Contrast" : "Low Contrast";
     const suit = parts[2].charAt(0).toUpperCase() + parts[2].slice(1);
+    if (suit === "Jimbo") {
+      return `${suit}`;
+    }
     return `${contrast} Ace of ${suit}`;
   };
 

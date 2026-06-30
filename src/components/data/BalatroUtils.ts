@@ -1,5 +1,4 @@
-import { unlockOptions } from "../codeGeneration/Jokers/unlockUtils";
-import { vouchersunlockOptions } from "../codeGeneration/Vouchers/unlockUtils";
+import { jokerUnlockOptions, vouchersUnlockOptions } from "../codeGeneration/lib/unlockUtils";
 import { Rule } from "../ruleBuilder/types";
 
 export const slugify = (text: string): string => {
@@ -55,7 +54,7 @@ export interface UserConfig {
 export interface UserVariable {
   id: string;
   name: string;
-  type?: "number" | "suit" | "rank" | "pokerhand" | "joker";
+  type?: "number" | "suit" | "rank" | "pokerhand" | "key" | "text";
   description?: string;
   initialValue?: number;
   initialSuit?: "Spades" | "Hearts" | "Diamonds" | "Clubs";
@@ -87,7 +86,8 @@ export interface UserVariable {
     | "Straight Flush"
     | "Flush House"
     | "Flush Five";
-  initialJoker?: string;
+  initialKey?: string;
+  initialText?: string;
 }
 
 export interface GameObjectData {
@@ -117,7 +117,7 @@ export interface JokerData extends GameObjectData {
   force_polychrome?: boolean;
   force_negative?: boolean;
   appears_in_shop?: boolean;
-  unlockTrigger?: keyof typeof unlockOptions;
+  unlockTrigger?: keyof typeof jokerUnlockOptions;
   unlockProperties?: Array<{ category: string; property: string }>;
   unlockOperator?: string;
   unlockCount?: number;
@@ -142,6 +142,7 @@ export interface JokerData extends GameObjectData {
   scale_h?: number;
   pools?: string[];
   info_queues?: string[];
+  card_dependencies?: string[];
 }
 
 export interface RarityData {
@@ -201,6 +202,11 @@ export interface BoosterData extends GameObjectData{
   instant_use: boolean;
   booster_type: BoosterType;
   kind?: string;
+  /* 
+    This field actually determines the group_name (Bottom
+    text while on the pack opening screen) in the loc_text.
+    Dont want to refactor the whole code so just leaving this as it is 
+  */
   group_key?: string;
   atlas?: string;
   pos?: { x: number; y: number };
@@ -242,6 +248,8 @@ export interface SealData extends GameObjectData{
   unlocked?: boolean;
   no_collection?: boolean;
   sound?: string;
+  pitch?: number;
+  volume?: number;
   rules?: Rule[];
   userVariables?: UserVariable[];
   placeholderCreditIndex?: number;
@@ -258,6 +266,8 @@ export interface EditionData extends GameObjectData{
   apply_to_float?: boolean;
   badge_colour?: string;
   sound?: string;
+  pitch?: number;
+  volume?: number;
   disable_shadow?: boolean;
   disable_base_shader?: boolean;
   rules?: Rule[];
@@ -282,7 +292,7 @@ export interface VoucherData extends GameObjectData {
   no_collection?: boolean;
   requires?: string;
   requires_activetor?: boolean;
-  unlockTrigger?: keyof typeof vouchersunlockOptions;
+  unlockTrigger?: keyof typeof vouchersUnlockOptions;
   unlockProperties?: Array<{ category: string; property: string }>;
   unlockOperator?: string;
   unlockCount?: number;
@@ -290,6 +300,7 @@ export interface VoucherData extends GameObjectData {
   rules?: Rule[];
   placeholderCreditIndex?: number;
   hasUserUploadedImage?: boolean;
+  draw_shader_sprite?: string | false;
 }
 
 export interface DeckData extends GameObjectData{
@@ -313,6 +324,7 @@ export interface DeckData extends GameObjectData{
 interface RegistryState {
   customRarities: RarityData[];
   consumableSets: ConsumableSetData[];
+  sounds: SoundData[],
   consumables: ConsumableData[];
   boosters: BoosterData[];
   enhancements: EnhancementData[];
@@ -326,6 +338,7 @@ interface RegistryState {
 let registryState: RegistryState = {
   customRarities: [],
   consumableSets: [],
+  sounds: [],
   consumables: [],
   boosters: [],
   enhancements: [],
@@ -384,7 +397,6 @@ const VANILLA_VOUCHERS = [
   {key: "v_palette", value: "v_palette", label: "Palette" },
 ];
 
-
 const VANILLA_DECKS = [
   {key: "Red Deck", value: "Red Deck", label: "Red Deck" },
   {key: "Blue Deck", value: "Blue Deck", label: "Blue Deck" },
@@ -413,6 +425,7 @@ export const DataRegistry = {
   update: (
     customRarities: RarityData[],
     consumableSets: ConsumableSetData[],
+    sounds: SoundData[],
     consumables: ConsumableData[],
     boosters: BoosterData[],
     enhancements: EnhancementData[],
@@ -425,6 +438,7 @@ export const DataRegistry = {
     registryState = {
       customRarities,
       consumableSets,
+      sounds,
       consumables,
       boosters,
       enhancements,
@@ -455,6 +469,14 @@ export const DataRegistry = {
       key: set.key,
     }));
     return [...VANILLA_CONSUMABLE_SETS, ...custom];
+  },
+
+ getSounds: (): Array<{ key: string; label: string }> => {
+    const custom = registryState.sounds.map((sound) => ({
+      key: `${registryState.modPrefix}_${sound.key}`,
+      label: sound.key,
+    }));
+    return [...VANILLA_SOUNDS, ...custom];
   },
 
   getConsumables: (): Array<{ value: string; label: string; set: string }> => {
@@ -581,6 +603,7 @@ export const getModPrefix = () => {
 export const updateDataRegistry = (
   customRarities: RarityData[],
   consumableSets: ConsumableSetData[],
+  sounds: SoundData[],
   consumables: ConsumableData[],
   boosters: BoosterData[],
   enhancements: EnhancementData[],
@@ -593,6 +616,7 @@ export const updateDataRegistry = (
   DataRegistry.update(
     customRarities,
     consumableSets,
+    sounds,
     consumables,
     boosters,
     enhancements,
@@ -621,27 +645,12 @@ export const VANILLA_SHADERS = [
 
 export const CUSTOM_SHADERS = [
   {
-    label: "Anaglyphic (SMODS)",
-    key: "anaglyphic",
-    filepath: "/shaders/anaglyphic.fs",
-  },
-  {
     label: "Flipped (stupxd)",
     key: "flipped",
     filepath: "/shaders/flipped.fs",
   },
-  {
-    label: "Fluorescent (SMODS)",
-    key: "fluorescent",
-    filepath: "/shaders/fluorescent.fs",
-  },
   { label: "Gilded (SMODS)", key: "gilded", filepath: "/shaders/gilded.fs" },
   { label: "Gold (stupxd)", key: "gold", filepath: "/shaders/gold.fs" },
-  {
-    label: "Greyscale (SMODS)",
-    key: "greyscale",
-    filepath: "/shaders/greyscale.fs",
-  },
   { label: "Ionized (SMODS)", key: "ionized", filepath: "/shaders/ionized.fs" },
   {
     label: "Laminated (SMODS)",
@@ -652,11 +661,6 @@ export const CUSTOM_SHADERS = [
     label: "Monochrome (SMODS)",
     key: "monochrome",
     filepath: "/shaders/monochrome.fs",
-  },
-  {
-    label: "Overexposed (SMODS)",
-    key: "overexposed",
-    filepath: "/shaders/overexposed.fs",
   },
   { label: "Sepia (SMODS)", key: "sepia", filepath: "/shaders/sepia.fs" },
 ] as const;
@@ -917,6 +921,182 @@ export const isCustomBooster = (
         }` === key
     )
   );
+};
+
+// =============================================================================
+// SOUNDS SECTION
+// =============================================================================
+
+export const SOUNDS = () => DataRegistry.getSounds();
+export const SOUNDS_KEYS = () => SOUNDS().map((sound) => sound.key);
+export const SOUNDS_LABELS = () => SOUNDS().map((sound) => sound.label);
+
+const VANILLA_SOUNDS = [
+  { key: "ambientFire1", label: "AmbientFire" },
+  { key: "ambientFire2", label: "AmbientFire 2" },
+  { key: "ambientFire3", label: "AmbientFire 3" },
+  { key: "ambientOrgan1", label: "AmbientOrgan" },
+  { key: "button", label: "Button" },
+  { key: "cancel", label: "Cancel" },
+  { key: "card1", label: "Card" },
+  { key: "card3", label: "Card 3" },
+  { key: "cardFan2", label: "Card Fan 2" },
+  { key: "cardSlide1", label: "Card Slide" },
+  { key: "cardSlide2", label: "Card Slide 2" },
+  { key: "chips1", label: "Chips" },
+  { key: "chips2", label: "Chips 2" },
+  { key: "coin1", label: "Coin" },
+  { key: "coin2", label: "Coin 2" },
+  { key: "coin3", label: "Coin 3" },
+  { key: "coin4", label: "Coin 4" },
+  { key: "coin5", label: "Coin 5" },
+  { key: "coin6", label: "Coin 6" },
+  { key: "coin7", label: "Coin 7" },
+  { key: "crumple1", label: "Crumple" },
+  { key: "crumple2", label: "Crumple 2" },
+  { key: "crumple3", label: "Crumple 3" },
+  { key: "crumple4", label: "Crumple 4" },
+  { key: "crumple5", label: "Crumple 5" },
+  { key: "crumpleLong1", label: "Crumple Long" },
+  { key: "crumpleLong2", label: "Crumple Long 2" },
+  { key: "explosion1", label: "Explosion" },
+  { key: "explosion_buildup1", label: "Explosion Buildup" },
+  { key: "explosion_release1", label: "Explosion Release" },
+  { key: "foil1", label: "Foil" },
+  { key: "foil2", label: "Foil 2" },
+  { key: "generic1", label: "Generic" },
+  { key: "glass1", label: "Glass" },
+  { key: "glass2", label: "Glass 2" },
+  { key: "glass3", label: "Glass 3" },
+  { key: "glass4", label: "Glass 4" },
+  { key: "glass5", label: "Glass 5" },
+  { key: "glass6", label: "Glass 6" },
+  { key: "gold_seal", label: "Gold Seal" },
+  { key: "gong", label: "Gong" },
+  { key: "highlight1", label: "Highlight" },
+  { key: "highlight2", label: "Highlight 2" },
+  { key: "holo1", label: "Holo" },
+  { key: "introPad1", label: "Intro Pad" },
+  { key: "magic_crumple", label: "Magic Crumple" },
+  { key: "magic_crumple2", label: "Magic Crumple 2" },
+  { key: "magic_crumple3", label: "Magic Crumple 3" },
+  { key: "multhit1", label: "Mult" },
+  { key: "multhit2", label: "Mult 2" },
+  { key: "music1", label: "Music (Menu Music)" },
+  { key: "music2", label: "Music 2 (Arcana Pack Music)" },
+  { key: "music3", label: "Music 3 (Celestial Pack Music)" },
+  { key: "music4", label: "Music 4 (Shop Music)" },
+  { key: "music5", label: "Music 5 (Boss Blind Music)" },
+  { key: "negative", label: "Negative" },
+  { key: "other1", label: "Other" },
+  { key: "paper1", label: "Paper" },
+  { key: "polychrome1", label: "Polychrome" },
+  { key: "slice1", label: "Slice" },
+  { key: "splash_buildup", label: "Splash Buildup" },
+  { key: "tarot1", label: "Tarot" },
+  { key: "tarot2", label: "Tarot 2" },
+  { key: "timpani", label: "Timpani" },
+  { key: "voice1", label: "Voice" },
+  { key: "voice2", label: "Voice 2" },
+  { key: "voice3", label: "Voice 3" },
+  { key: "voice4", label: "Voice 4" },
+  { key: "voice5", label: "Voice 5" },
+  { key: "voice6", label: "Voice 6" },
+  { key: "voice7", label: "Voice 7" },
+  { key: "voice8", label: "Voice 8" },
+  { key: "voice9", label: "Voice 9" },
+  { key: "voice10", label: "Voice 10" },
+  { key: "voice11", label: "Voice 11" },
+  { key: "whoosh", label: "Whoosh" },
+  { key: "whoosh1", label: "Whoosh 1" },
+  { key: "whoosh2", label: "Whoosh 2" },
+  { key: "whoosh_long", label: "Whoosh Long" },
+  { key: "win", label: "Win" },
+];
+
+type VanillaSound = {
+  key: string;
+  label: string;
+  isCustom: false;
+};
+
+type CustomSoundOption = {
+  key: string;
+  label: string;
+  isCustom: true;
+  customData: SoundData;
+};
+
+type SoundOption = VanillaSound | CustomSoundOption;
+
+export const getAllSounds = (
+  sounds: SoundData[] = registryState.sounds
+): SoundOption[] => {
+  const vanillaSounds: VanillaSound[] = VANILLA_SOUNDS.map(
+    (sound) => ({
+      key: sound.key,
+      label: sound.key,
+      isCustom: false,
+    })
+  );
+
+  const customSoundOptions: CustomSoundOption[] = sounds.map(
+    (sound) => ({
+      key: sound.key,
+      label: sound.key,
+      isCustom: true,
+      customData: sound,
+    })
+  );
+
+  return [...vanillaSounds, ...customSoundOptions];
+};
+
+export const getSoundByKey = (
+  key: string,
+  sounds: SoundData[] = registryState.sounds
+): SoundOption | undefined => {
+  const allCustomSounds = getAllSounds(sounds);
+  return allCustomSounds.find((sound) => sound.key === key);
+};
+
+export const getSoundDisplayName = (
+  key: string,
+  sounds: SoundData[] = registryState.sounds
+): string => {
+  const sound = getSoundByKey(key, sounds);
+  return sound?.label || "Unknown";
+};
+
+export const isCustomSound = (
+  key: string,
+  sounds: SoundData[] = registryState.sounds,
+  modPrefix: string = registryState.modPrefix
+): boolean => {
+  if (typeof key === "string") {
+    return (
+      key.includes("_") &&
+      sounds.some((sound) => `${modPrefix}_${sound.key}` === key)
+    );
+  }
+  return false;
+};
+
+export const getCustomSoundData = (
+  key: string,
+  sounds: SoundData[] = registryState.sounds
+): SoundData | null => {
+  const sound = getSoundByKey(key, sounds);
+  return sound?.isCustom ? sound.customData : null;
+};
+
+export const getSoundDropdownOptions = (
+  sounds: SoundData[] = registryState.sounds
+) => {
+  return getAllSounds(sounds).map((sound) => ({
+    key: sound.key.toString(),
+    label: sound.label,
+  }));
 };
 
 // =============================================================================
@@ -1276,7 +1456,7 @@ export const JOKERS = [
   { key: "j_card_sharp", label: "Card Sharp" },
   { key: "j_red_card", label: "Red Card" },
   { key: "j_madness", label: "Madness" },
-  { key: "j_square_joker", label: "Square Joker" },
+  { key: "j_square", label: "Square Joker" },
   { key: "j_seance", label: "Séance" },
   { key: "j_riff_raff", label: "Riff-Raff" },
   { key: "j_vampire", label: "Vampire" },
@@ -1317,7 +1497,7 @@ export const JOKERS = [
   { key: "j_castle", label: "Castle" },
   { key: "j_smiley", label: "Smiley Face" },
   { key: "j_campfire", label: "Campfire" },
-  { key: "j_golden_ticket", label: "Golden Ticket" },
+  { key: "j_ticket", label: "Golden Ticket" },
   { key: "j_mr_bones", label: "Mr. Bones" },
   { key: "j_acrobat", label: "Acrobat" },
   { key: "j_sock_and_buskin", label: "Sock and Buskin" },
@@ -1448,7 +1628,7 @@ export const VANILLA_EDITIONS = [
 export const STICKERS = [
   { key: "eternal", value: "eternal", label: "Eternal (Can't be sold or destroyed)" },
   { key: "rental", value: "rental", label: "Rental (Lose money at end of round)" },
-  { key: "perishable", value: "perishable", label: "Perishable (Debuffed after 3 rounds)" },
+  { key: "perishable", value: "perishable", label: "Perishable (Debuffed after 5 rounds)" },
 ] as const;
 
 export const STICKER_KEYS = STICKERS.map((sticker) => sticker.key);
@@ -1549,6 +1729,45 @@ export const ALL_CONSUMABLES = [
 export const ALL_CONSUMABLE_KEYS = ALL_CONSUMABLES.map((card) => card.key);
 export const ALL_CONSUMABLE_VALUES = ALL_CONSUMABLES.map((card) => card.value);
 export const ALL_CONSUMABLE_LABELS = ALL_CONSUMABLES.map((card) => card.label);
+
+// Vanilla Booster Packs
+export const VANILLA_BOOSTERS = [
+  {value: "p_arcana_normal_1", label: "Arcana Pack 1" },
+  {value: "p_arcana_normal_2", label: "Arcana Pack 2" },
+  {value: "p_arcana_normal_3", label: "Arcana Pack 3" },
+  {value: "p_arcana_normal_4", label: "Arcana Pack 4" },
+  {value: "p_arcana_jumbo_1", label: "Jumbo Arcana Pack 1" },
+  {value: "p_arcana_jumbo_2", label: "Jumbo Arcana Pack 2" },
+  {value: "p_arcana_mega_1", label: "Mega Arcana Pack 1" },
+  {value: "p_arcana_mega_2", label: "Mega Arcana Pack 2" },
+  {value: "p_celestial_normal_1", label: "Celestial Pack 1" },
+  {value: "p_celestial_normal_2", label: "Celestial Pack 2" },
+  {value: "p_celestial_normal_3", label: "Celestial Pack 3" },
+  {value: "p_celestial_normal_4", label: "Celestial Pack 4" },
+  {value: "p_celestial_jumbo_1", label: "Jumbo Celestial Pack 1" },
+  {value: "p_celestial_jumbo_2", label: "Jumbo Celestial Pack 2" },
+  {value: "p_celestial_mega_1", label: "Mega Celestial Pack 1" },
+  {value: "p_celestial_mega_2", label: "Mega Celestial Pack 2" },
+  {value: "p_spectral_normal_1", label: "Spectral Pack 1" },
+  {value: "p_spectral_normal_2", label: "Spectral Pack 2" },
+  {value: "p_spectral_jumbo_1", label: "Jumbo Spectral Pack" },
+  {value: "p_spectral_mega_1", label: "Mega Spectral Pack" },
+  {value: "p_standard_normal_1", label: "Standard Pack 1" },
+  {value: "p_standard_normal_2", label: "Standard Pack 2" },
+  {value: "p_standard_normal_3", label: "Standard Pack 3" },
+  {value: "p_standard_normal_4", label: "Standard Pack 4" },
+  {value: "p_standard_jumbo_1", label: "Jumbo Standard Pack 1" },
+  {value: "p_standard_jumbo_2", label: "Jumbo Standard Pack 2" },
+  {value: "p_standard_mega_1", label: "Mega Standard Pack 1" },
+  {value: "p_standard_mega_2", label: "Mega Standard Pack 2" },
+  {value: "p_buffoon_normal_1", label: "Buffoon Pack 1" },
+  {value: "p_buffoon_normal_2", label: "Buffoon Pack 2" },
+  {value: "p_buffoon_jumbo_1", label: "Jumbo Buffoon Pack" },
+  {value: "p_buffoon_mega_1", label: "Mega Buffoon Pack" },
+];
+
+export const VANILLA_BOOSTERS_VALUES = VANILLA_BOOSTERS.map((booster) => booster.value);
+export const VANILLA_BOOSTERS_LABELS = VANILLA_BOOSTERS.map((booster) => booster.label);
 
 // Blind Types
 export const BLIND_TYPES = [
@@ -1674,7 +1893,7 @@ export const TAG_TYPES: Record<string, string> = {
   juggle: "tag_juggle",
   d_six: "tag_d_six",
   top_up: "tag_top_up",
-  speed: "tag_skip",
+  skip: "tag_skip",
   orbital: "tag_orbital",
   economy: "tag_economy",
 } as const;
@@ -1694,95 +1913,21 @@ export const CONSUMABLE_TYPE_LABELS = CONSUMABLE_TYPES.map(
   (type) => type.label
 );
 
-export const VANILLA_SOUNDS = [
-  { value: "ambientFire1", label: "AmbientFire" },
-  { value: "ambientFire2", label: "AmbientFire 2" },
-  { value: "ambientFire3", label: "AmbientFire 3" },
-  { value: "ambientOrgan1", label: "AmbientOrgan" },
-  { value: "button", label: "Button" },
-  { value: "cancel", label: "Cancel" },
-  { value: "card1", label: "Card" },
-  { value: "card3", label: "Card 3" },
-  { value: "cardFan2", label: "Card Fan 2" },
-  { value: "cardSlide1", label: "Card Slide" },
-  { value: "cardSlide2", label: "Card Slide 2" },
-  { value: "chips1", label: "Chips" },
-  { value: "chips2", label: "Chips 2" },
-  { value: "coin1", label: "Coin" },
-  { value: "coin2", label: "Coin 2" },
-  { value: "coin3", label: "Coin 3" },
-  { value: "coin4", label: "Coin 4" },
-  { value: "coin5", label: "Coin 5" },
-  { value: "coin6", label: "Coin 6" },
-  { value: "coin7", label: "Coin 7" },
-  { value: "crumple1", label: "Crumple" },
-  { value: "crumple2", label: "Crumple 2" },
-  { value: "crumple3", label: "Crumple 3" },
-  { value: "crumple4", label: "Crumple 4" },
-  { value: "crumple5", label: "Crumple 5" },
-  { value: "crumpleLong1", label: "Crumple Long" },
-  { value: "crumpleLong2", label: "Crumple Long 2" },
-  { value: "explosion1", label: "Explosion" },
-  { value: "explosion_buildup1", label: "Explosion Buildup" },
-  { value: "explosion_release1", label: "Explosion Release" },
-  { value: "foil1", label: "Foil" },
-  { value: "foil2", label: "Foil 2" },
-  { value: "generic1", label: "Generic" },
-  { value: "glass1", label: "Glass" },
-  { value: "glass2", label: "Glass 2" },
-  { value: "glass3", label: "Glass 3" },
-  { value: "glass4", label: "Glass 4" },
-  { value: "glass5", label: "Glass 5" },
-  { value: "glass6", label: "Glass 6" },
-  { value: "gold_seal", label: "Gold Seal" },
-  { value: "gong", label: "Gong" },
-  { value: "highlight1", label: "Highlight" },
-  { value: "highlight2", label: "Highlight 2" },
-  { value: "holo1", label: "Holo" },
-  { value: "introPad1", label: "Intro Pad" },
-  { value: "magic_crumple", label: "Magic Crumple" },
-  { value: "magic_crumple2", label: "Magic Crumple 2" },
-  { value: "magic_crumple3", label: "Magic Crumple 3" },
-  { value: "multhit1", label: "Mult" },
-  { value: "multhit2", label: "Mult 2" },
-  { value: "music1", label: "Music (Menu Music)" },
-  { value: "music2", label: "Music 2 (Arcana Pack Music)" },
-  { value: "music3", label: "Music 3 (Celestial  Pack Music)"},
-  { value: "music4", label: "Music 4 (Shop Music)" },
-  { value: "music5", label: "Music 5 (Boss Blind Music)" },
-  { value: "negative", label: "Negative" },
-  { value: "other1", label: "Other" },
-  { value: "paper1", label: "Paper" },
-  { value: "polychrome1", label: "Polychrome" },
-  { value: "slice1", label: "Slice" },
-  { value: "splash_buildup", label: "Splash Buildup" },
-  { value: "tarot1", label: "Tarot" },
-  { value: "tarot2", label: "Tarot 2" },
-  { value: "timpani", label: "Timpani" },
-  { value: "voice1", label: "Voice" },
-  { value: "voice2", label: "Voice 2" },
-  { value: "voice3", label: "Voice 3" },
-  { value: "voice4", label: "Voice 4" },
-  { value: "voice5", label: "Voice 5" },
-  { value: "voice6", label: "Voice 6" },
-  { value: "voice7", label: "Voice 7" },
-  { value: "voice8", label: "Voice 8" },
-  { value: "voice9", label: "Voice 9" },
-  { value: "voice10", label: "Voice 10" },
-  { value: "voice11", label: "Voice 11" },
-  { value: "whoosh", label: "Whoosh" },
-  { value: "whoosh1", label: "Whoosh 1" },
-  { value: "whoosh2", label: "Whoosh 2" },
-  { value: "whoosh_long", label: "Whoosh Long" },
-  { value: "win", label: "Win" },
-] as const;
+export const VANILLA_MISCS = [
+  {key: "common", label: "Common Rarity" },
+  {key: "uncommon", label: "Uncommon Rarity" },
+  {key: "rare", label: "Rare Rarity" },
+  {key: "legendary", label: "Legendary Rarity" },
+  {key: "Playing Card", label: "Playing Card Booster Type" },
+  {key: "Joker", label: "Joker Booster Type" },
+  {key: "Tarot", label: "Tarot Booster Type" },
+  {key: "Planet", label: "Planet Booster Type" },
+  {key: "Spectral", label: "Spectral Booster Type" },
+  {key: "Voucher", label: "Voucher Booster Type" },
+];
 
-export const VANILLA_SOUNDS_TYPE_VALUES = VANILLA_SOUNDS.map(
-  (sound) => sound.value
-);
-export const VANILLA_SOUNDS_TYPE_LABELS = VANILLA_SOUNDS.map(
-  (sound) => sound.label
-);
+export const MISCS_KEYS = VANILLA_MISCS.map((misc) => misc.key);
+export const MISCS_LABELS = VANILLA_MISCS.map((misc) => misc.label);
 
 // Comparison Operators
 export const COMPARISON_OPERATORS = [
@@ -1826,6 +1971,12 @@ export const getRankByValue = (value: string) => {
 // Get rank data by ID
 export const getRankById = (id: number) => {
   return RANKS.find((rank) => rank.id === id);
+};
+
+// Get rank label by ID 
+// (Added by Errynei for bug fix that expected the label, not the rank value, in EditCardEffect.ts)
+export const getRankLabelById = (id: number) => {
+    return RANKS.find((rank) => rank.id === id)?.label;
 };
 
 // Get suit data by value

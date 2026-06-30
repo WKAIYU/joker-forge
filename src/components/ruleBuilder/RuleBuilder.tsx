@@ -23,12 +23,12 @@ import {
 import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
 import { sortableKeyboardCoordinates, arrayMove } from "@dnd-kit/sortable";
 import type {
-  EffectTypeDefinition,
+  GlobalEffectTypeDefinition,
   Rule,
   Condition,
   Effect,
   RandomGroup,
-  ConditionTypeDefinition,
+  GlobalConditionTypeDefinition,
   LoopGroup,
   SelectedItem,
 } from "./types";
@@ -44,13 +44,11 @@ import {
   WindowIcon,
   Squares2X2Icon,
 } from "@heroicons/react/24/outline";
-import { getConditionTypeById } from "../data/Jokers/Conditions";
-import { getEffectTypeById } from "../data/Jokers/Effects";
+import { getConditionTypeById } from "../data/Conditions";
+import { getEffectTypeById } from "../data/Effects";
 import GameVariables from "./GameVariables";
-import { GameVariable } from "../data/Jokers/GameVars";
+import { GameVariable } from "../data/GameVars";
 import { motion } from "framer-motion";
-import { getConsumableConditionTypeById } from "../data/Consumables/Conditions";
-import { getConsumableEffectTypeById } from "../data/Consumables/Effects";
 import {
   JokerData,
   ConsumableData,
@@ -60,13 +58,8 @@ import {
   VoucherData,
   DeckData,
 } from "../data/BalatroUtils";
-import { getCardConditionTypeById } from "../data/Card/Conditions";
-import { getCardEffectTypeById } from "../data/Card/Effects";
-import { getVoucherConditionTypeById } from "../data/Vouchers/Conditions";
-import { getVoucherEffectTypeById } from "../data/Vouchers/Effects";
-import { getDeckConditionTypeById } from "../data/Decks/Conditions";
-import { getDeckEffectTypeById } from "../data/Decks/Effects";
 import { UserConfigContext } from "../Contexts";
+import { detectValueType } from "../generic/RuleBlockUpdater";
 
 export type ItemData =
   | JokerData
@@ -113,26 +106,8 @@ const RuleBuilder: React.FC<RuleBuilderProps> = ({
 
   const [isFirstSelection, setIsFirstSelection] = useState(true);
 
-  const getConditionType =
-    itemType === "joker"
-      ? getConditionTypeById
-      : itemType === "consumable"
-      ? getConsumableConditionTypeById
-      : itemType === "card"
-      ? getCardConditionTypeById
-      : itemType === "voucher"
-      ? getVoucherConditionTypeById
-      : getDeckConditionTypeById;
-  const getEffectType =
-    itemType === "joker"
-      ? getEffectTypeById
-      : itemType === "consumable"
-      ? getConsumableEffectTypeById
-      : itemType === "card"
-      ? getCardEffectTypeById
-      : itemType === "voucher"
-      ? getVoucherEffectTypeById
-      : getDeckEffectTypeById;
+  const getConditionType = getConditionTypeById
+  const getEffectType = getEffectTypeById
 
   const [rules, setRules] = useState<Rule[]>([]);
   const [selectedItem, setSelectedItem] = useState<SelectedItem>(null);
@@ -513,11 +488,14 @@ const RuleBuilder: React.FC<RuleBuilderProps> = ({
 
   const generateAutoTitle = (
     item: Condition | Effect,
-    typeDefinition: ConditionTypeDefinition | EffectTypeDefinition,
+    typeDefinition: GlobalConditionTypeDefinition | GlobalEffectTypeDefinition,
     isCondition: boolean
   ): string => {
     const baseLabel = typeDefinition.label;
-    const params = item.params;
+    const params: Record <string, unknown> = {}
+    Object.entries(item.params).map(([key, object]) => {
+      params[key] = object.value
+    });
 
     if (!params || Object.keys(params).length === 0) {
       return baseLabel;
@@ -536,7 +514,7 @@ const RuleBuilder: React.FC<RuleBuilderProps> = ({
 
     let title = "";
 
-    if (params.operator && params.value !== undefined) {
+    if (params.operator && params !== undefined) {
       const operatorMap: Record<string, string> = {
         equals: "=",
         not_equals: "≠",
@@ -568,7 +546,7 @@ const RuleBuilder: React.FC<RuleBuilderProps> = ({
       processedParams.add("operator");
       processedParams.add("value");
     } else if (params.value !== undefined && !params.operator) {
-      title = `${prefix}${baseLabel} = ${params.value}`;
+      title = `${prefix}${baseLabel} = ${params.value}`
       processedParams.add("value");
     } else if (params.specific_rank || params.rank_group) {
       const rank = params.specific_rank || params.rank_group;
@@ -622,7 +600,6 @@ const RuleBuilder: React.FC<RuleBuilderProps> = ({
     } else {
       title = baseLabel;
     }
-
     const additionalParams: string[] = [];
 
     Object.entries(params).forEach(([key, value]) => {
@@ -633,9 +610,7 @@ const RuleBuilder: React.FC<RuleBuilderProps> = ({
       ) {
         return;
       }
-
       const stringValue = value as string;
-
       if (
         key === "suit" ||
         key === "rank" ||
@@ -795,12 +770,16 @@ const RuleBuilder: React.FC<RuleBuilderProps> = ({
   const addCondition = useCallback(
     (conditionType: string) => {
       if (!selectedItem) return;
+
       const conditionTypeData = getConditionType(conditionType);
-      const defaultParams: Record<string, unknown> = {};
+      const defaultParams: Record<string, {value: unknown, valueType?: string}> = {};
+
       if (conditionTypeData) {
         conditionTypeData.params.forEach((param) => {
-          if (param.default !== undefined) {
-            defaultParams[param.id] = param.default;
+          const defaultValue = param.default ?? undefined
+          defaultParams[param.id] = {
+            value: defaultValue,
+            valueType: detectValueType(defaultValue)
           }
         });
       }
@@ -939,8 +918,8 @@ const RuleBuilder: React.FC<RuleBuilderProps> = ({
   const addRandomGroup = (ruleId: string) => {
     const newGroup: RandomGroup = {
       id: crypto.randomUUID(),
-      chance_numerator: 1,
-      chance_denominator: 4,
+      chance_numerator: {value: 1, valueType: "number"},
+      chance_denominator: {value: 4, valueType: "number"},
       respect_probability_effects: true,
       custom_key: "",
       effects: [],
@@ -966,7 +945,7 @@ const RuleBuilder: React.FC<RuleBuilderProps> = ({
   const addLoopGroup = (ruleId: string) => {
     const newLoop: LoopGroup = {
       id: crypto.randomUUID(),
-      repetitions: 1,
+      repetitions: {value: 1, valueType: "number"},
       effects: [],
     };
     setRules((prev) =>
@@ -1090,8 +1069,8 @@ const RuleBuilder: React.FC<RuleBuilderProps> = ({
   const createRandomGroupFromEffect = (ruleId: string, effectId: string) => {
     const newGroup: RandomGroup = {
       id: crypto.randomUUID(),
-      chance_numerator: 1,
-      chance_denominator: 4,
+      chance_numerator: {value: 1, valueType: "number"},
+      chance_denominator: {value: 4, valueType: "number"},
       respect_probability_effects: true,
       custom_key: "",
       effects: [],
@@ -1139,7 +1118,7 @@ const RuleBuilder: React.FC<RuleBuilderProps> = ({
   const createLoopGroupFromEffect = (ruleId: string, effectId: string) => {
     const newGroup: LoopGroup = {
       id: crypto.randomUUID(),
-      repetitions: 1,
+      repetitions: {value: 1, valueType: "number"},
       effects: [],
     };
     setRules((prev) =>
@@ -1186,11 +1165,14 @@ const RuleBuilder: React.FC<RuleBuilderProps> = ({
     if (!selectedItem) return;
 
     const effectTypeData = getEffectType(effectType);
-    const defaultParams: Record<string, unknown> = {};
+    const defaultParams: Record<string, {value: unknown, valueType?: string}> = {};
+
     if (effectTypeData) {
       effectTypeData.params.forEach((param) => {
-        if (param.default !== undefined) {
-          defaultParams[param.id] = param.default;
+        const defaultValue = param.default ?? undefined
+        defaultParams[param.id] = {
+          value: defaultValue,
+          valueType: detectValueType(defaultValue)
         }
       });
     }
@@ -1453,7 +1435,7 @@ const RuleBuilder: React.FC<RuleBuilderProps> = ({
     );
   };
 
-  const getParameterCount = (params: Record<string, unknown>) => {
+  const getParameterCount = (params: Record<string, {value: unknown, valueType?: string}>): number => {
     return Object.keys(params).length;
   };
 

@@ -15,12 +15,15 @@ import {
   MusicalNoteIcon,
   ClipboardIcon,
   SparklesIcon,
+  GiftIcon,
+  ArchiveBoxIcon,
 } from "@heroicons/react/24/outline";
 import {
   JOKERS,
   TAROT_CARDS,
   PLANET_CARDS,
   SPECTRAL_CARDS,
+  VANILLA_BOOSTERS,
   ENHANCEMENTS,
   SEALS,
   EDITIONS,
@@ -28,7 +31,8 @@ import {
   TAGS,
   VOUCHERS,
   DECKS,
-  VANILLA_SOUNDS,
+  SOUNDS,
+  VANILLA_MISCS
 } from "../data/BalatroUtils";
 
 interface KeyItemProps {
@@ -137,6 +141,15 @@ const SECTIONS = {
     items: [...TAROT_CARDS, ...PLANET_CARDS, ...SPECTRAL_CARDS],
     color: "text-mint",
   },
+  boosters: {
+    title: "Boosters",
+    icon: GiftIcon,
+    items: VANILLA_BOOSTERS.map((booster) => ({
+      key: booster.value,
+      label: booster.label,
+    })),
+    color: "text-balatro-attention",
+  },
   enhancements: {
     title: "Enhancements",
     icon: StarIcon,
@@ -188,8 +201,20 @@ const SECTIONS = {
   sounds: {
     title: "Sounds",
     icon: MusicalNoteIcon,
-    items: VANILLA_SOUNDS.map((sound) => ({ key: sound.value, label: sound.label })),
+    items: SOUNDS().map((sound) => ({
+      key: sound.key,
+      label: sound.label,
+    })),
     color: "text-balatro-gold",
+  },
+  miscs: {
+    title: "Miscellaneous",
+    icon: ArchiveBoxIcon,
+    items: VANILLA_MISCS.map((misc) => ({
+      key: misc.key,
+      label: misc.label,
+    })),
+    color: "text-balatro-lightgrey",
   },
 };
 

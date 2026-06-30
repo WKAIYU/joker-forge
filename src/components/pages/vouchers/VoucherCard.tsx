@@ -23,7 +23,16 @@ import {
   getObjectName,
 } from "../../generic/GameObjectOrdering";
 import PlaceholderPickerModal from "../../generic/PlaceholderPickerModal";
-import { generateKeyFromName } from "./EditVoucherInfo";
+
+const generateKeyFromName = (name: string): string => {
+  return (
+    name
+      .toLowerCase()
+      .replace(/[^a-zA-Z0-9\s]/g, "")
+      .replace(/\s+/g, "_")
+      .replace(/^[0-9]+/, "") || "custom_voucher"
+  );
+};
 
 interface VoucherCardProps {
   voucher: VoucherData;
@@ -125,6 +134,25 @@ const VoucherCard: React.FC<VoucherCardProps> = ({
 
   const [nameValidationError, setNameValidationError] = useState<string>("");
 
+const getShaderDisplayName = (shader?: string | false) => {
+    if (!shader) return "";
+
+    const shaderNames: Record<string, string> = {
+      foil: "Foil",
+      holo: "Holographic",
+      polychrome: "Polychrome",
+      booster: "Booster",
+      debuff: "Debuff",
+      voucher: "Voucher",
+      negative: "Negative",
+      negative_shine: "Negative Shine",
+    };
+
+    return (
+      shaderNames[shader] || shader.charAt(0).toUpperCase() + shader.slice(1)
+    );
+  };
+  
   const handleEditRules = () => {
     onEditRules();
   };
@@ -276,6 +304,8 @@ const VoucherCard: React.FC<VoucherCardProps> = ({
     },
   ];
 
+    const shaderName = getShaderDisplayName(voucher.draw_shader_sprite);
+  
   return (
     <div className="flex gap-4 relative">
       <div className="relative flex flex-col items-center">
@@ -306,6 +336,13 @@ const VoucherCard: React.FC<VoucherCardProps> = ({
               ${voucher.cost || 10}
             </span>
           )}
+          {shaderName && (
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="bg-black/80 text-white px-3 py-1 rounded-lg text-sm font-bold border-2 border-white/50">
+                  {shaderName}
+                </div>
+              </div>
+            )}
         </div>
 
         <div className="w-42 z-10 relative group">
@@ -368,7 +405,7 @@ const VoucherCard: React.FC<VoucherCardProps> = ({
         </div>
 
         <div className="relative z-30">
-          <div className="px-6 py-1 -mt-6 rounded-md bg-black-dark border-2 text-sm tracking-wide font-medium text-balatro-orange">
+          <div className="px-6 py-1 -mt-6 rounded-md bg-black-dark border-2 text-sm tracking-wide font-medium text-balatro-voucher">
             Voucher
           </div>
         </div>
